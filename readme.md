@@ -1,6 +1,11 @@
 # DOMtaiko
 this is a taiko player for KaiOS. It is currently work in progress.
 
+it's called DOMtaiko because, originally, it was only going to use the DOM for graphics. however i quickly switched to other methods to try to improve performance on actual devices.
+
+[demo on device](https://youtu.be/BOYv75n20d8) - shows the application running on an actual device.  
+[demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen.
+
 ## warning
 there will be bugs, because i did not test it a lot.
 
