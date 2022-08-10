@@ -1,7 +1,7 @@
 (function(){
 	var unseenSongs = [].concat(database.songsIds);
 	
-	beginScanTest(function(file, filePathParts, fileHash){
+	beginScan(function(file, filePathParts, fileHash){
 		return (new Promise(function(resolve, reject){
 			var thisFileInfo = {
 				changed: false,
