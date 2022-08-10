@@ -4,6 +4,13 @@ this is a taiko player for KaiOS. It is currently work in progress.
 ## warning
 there will be bugs, because i did not test it a lot.
 
+## controls
+i made like a taiko drum thingy.
+
+`4` and `6` are don. `1` and `3` are kat.
+
+at the moment you can not change them without changing the code.
+
 ## setup
 place songs in your default media location. the location is
 
@@ -27,4 +34,4 @@ place sounds in
 	.domtaiko/custom/don.ogg
 	.domtaiko/custom/kat.ogg
 
-due to reason it needs to be ogg.
+due to reasons it needs to be ogg.
