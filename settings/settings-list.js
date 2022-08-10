@@ -1,0 +1,328 @@
+var 
+settingsList = {
+    /* 
+    'setting-name': {
+        'label': string,
+        //is just the label. it is different from setting-name.
+
+        'values': ['setting value 1', 'setting value 2', 'etc'],
+        //values is what will be displayed, when type is not [ 4 ], [ 2 ], or [ 3 ].
+
+        'type': number,
+        //type of setting.
+        // 0 = select 1 setting only (radio)
+        // 1 = select multiple (checkbox)
+        // 2 = number input
+        // 3 = text input
+        // 4 = excecute function
+        // 5 = go to settings page
+
+        'action': () => {} or string,
+        //when type is [ 4 ] it will excecute the function. should be function.
+        //when type is [ 5 ] it will go to that setting category. should be string.
+        //any other type, it will excecute the function after it changes the setting.
+
+        'default': number or string,
+        //default setting
+
+        'check': function,
+        //used for text input, to check for valid input.
+
+        'help': string,
+        //used for the "help" action. shows what the setting will do, or something.
+    }
+    */
+
+    'offset-mode': { //timeOffset
+        label: 'Offset Mode',
+        type: 0,
+        values: [
+            'Earlier (-)',
+            'Later (+)'
+        ],
+        default: 1
+    },
+
+    'offset': { //timeOffset
+        label: 'Offset (ms)',
+        type: 2,
+        default: 0
+    },
+
+    'show-judge-offset':{
+        label: 'Show Delays',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 0
+    },
+
+    'hit-sounds': {
+        label: 'Hit Sounds',
+        type: 0,
+        values: [
+            'None',
+            'Taiko-ish',
+            'Wood Blocks',
+            'Snare Drum',
+            'Custom'
+        ],
+        default: 1
+    },
+
+    'metronome': {
+        label: 'Metronome',
+        type: 0,
+        values: [
+            'Off',
+            'On'
+        ],
+        default: 0
+    },
+
+    'balloon-pop-sound': {
+        label: 'Balloon Pop Sound',
+        type: 0,
+        values: [
+            'Disabled',
+            'Enabled'
+        ],
+        default: 1
+    },
+
+    'judge-animation-mode': { //judgeAnimationMode
+        label: 'Judge Animation Mode',
+        type: 0,
+        values: [
+            'Disabled',
+            'Simple',
+            'Full'
+        ],
+        default: 1
+    },
+
+    'show-background': {
+        label: 'Show Background',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+
+    'background-dim': {
+        label: 'Background Dim (%)',
+        type: 2,
+        default: 0,
+        check: (n)=>{
+            return (
+                !isNaN(parseInt(n)) &&
+                (n >= 0) &&
+                (n <= 100)
+            );
+        }
+    },
+
+    'super-wide-hit-windows': { 
+        label: 'Super Wide Hit Windows',
+        type: 0,
+        values: [
+            'Disabled',
+            'Enabled'
+        ],
+        default: 0
+    },
+
+    'show-lyrics': { //show-lyrics
+        label: 'Show Lyrics',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+
+    'show-notes': { //drawingEnabled
+        label: 'Show Notes',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+
+    'timer-mode': { //timerMode
+        label: 'Timer Mode',
+        type: 0,
+        values: [
+            'Linked To Audio',
+            'Independent'
+        ],
+        default: 0
+    },
+
+    'note-rendering-mode': {
+        label: 'Note Render Mode',
+        type: 0,
+        values: [
+            'WebGL x PixiJS',
+            'Canvas',
+            'DOM'
+        ],
+        default: 0
+    },
+
+    'canvas-anti-alias-circles': {
+        label: 'Anti-Aliased Circles',
+        type: 0,
+        values: [
+            'False',
+            'True'
+        ],
+        default: 1
+    },
+
+    'media-play-mode': { //mediaPlayMode
+        label: 'Media Play Mode',
+        type: 0,
+        values: [
+            'HTML Audio',
+            'AudioContext'
+        ],
+        default: 1
+    },
+
+    'show-file-errors': {
+        label: 'Show File Errors',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 0
+    },
+	
+	'bottom-stage-style': {
+        label: 'Bottom Stage Style',
+        type: 0,
+        values: [
+            'Simple',
+            'Failed Idol',
+			'Livestream',
+        ],
+        default: 0
+    },
+
+    'category-default': {
+        action: 'default',
+        label: 'Settings',
+        type: 5
+    },
+	'category-offset': {
+        action: 'offset',
+        label: 'Offset Settings',
+        type: 5
+    },
+	'category-sounds': {
+        action: 'sounds',
+        label: 'Sound Settings',
+        type: 5
+    },
+	'category-visual': {
+        action: 'visual',
+        label: 'Visual Settings',
+        type: 5
+    },
+	'category-bottom-stage': {
+        action: 'bottom-stage',
+        label: 'Bottom Stage',
+        type: 5
+    },
+	'category-game': {
+        action: 'game',
+        label: 'Game Settings',
+        type: 5
+    },
+	'category-advanced': {
+        action: 'advanced',
+        label: 'Advanced Settings',
+        type: 5
+    },
+},
+
+settingsListCategories = {
+
+    //label is the label of the category.
+    //settings is an array with the names from above. they will be displayed in this order.
+
+    'default': {
+        label: 'Settings',
+        settings: [
+			'category-offset',
+			'category-game',
+			'category-visual',
+			'category-sounds',
+			'category-advanced'
+        ]
+    },
+	
+	'offset': {
+		label: 'Offset',
+		settings: [
+            'offset-mode',
+            'offset'
+		]
+	},
+	
+	'sounds': {
+		label: 'Sound Settings',
+		settings: [
+			'metronome',
+            'hit-sounds',
+            'balloon-pop-sound'
+		]
+	},
+	
+	'visual': {
+		label: 'Visual Settings',
+		settings: [
+			'category-bottom-stage',
+            'show-judge-offset',
+			'judge-animation-mode',
+            'show-notes'
+		]
+	},
+	
+	'bottom-stage': {
+		label: 'Bottom Stage',
+		settings: [
+			'bottom-stage-style',
+			'background-dim',
+			'show-background',
+			'show-lyrics'
+		]
+	},
+	
+	'game': {
+		label: 'Game Settings',
+		settings: [
+            'super-wide-hit-windows',
+		]
+	},
+	
+	'advanced': {
+        label: 'Advanced Settings',
+		settings: [
+            'timer-mode',
+            'note-rendering-mode',
+            'canvas-anti-alias-circles',
+            'media-play-mode',
+            'show-file-errors'
+		]
+	},
+};

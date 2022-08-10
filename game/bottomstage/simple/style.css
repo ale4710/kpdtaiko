@@ -1,0 +1,15 @@
+#bottom-stage > * {
+	position: absolute;
+}
+
+#bottom-stage .cover {
+    transition: opacity ease-out var(--transition-length);
+    background: #000;
+    opacity: 1;
+}
+body.ready #bottom-stage .cover {opacity: var(--bg-dim);}
+body.ended #bottom-stage .cover {opacity: 0.8;}
+
+#bottom-stage .image {
+	object-fit: cover;
+}

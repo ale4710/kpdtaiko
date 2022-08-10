@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <script type="text/javascript" src="test.js" defer></script> -->
+    
+    <script type="text/javascript" src="../common/js/resourceAdder.js" defer></script>
+    <script type="text/javascript" src="../common/js/globalResources.js" defer></script>
+    <script src="resources.js" defer></script>
+</head>
+<body class="hide-navbar">
+    <div id="screen">
+        <div id="progress-container" class="hide-on-ended">
+            <div id="progress"></div>
+        </div>
+        <div id="top-info" class="hide-on-ended">
+            <div id="top-info-left">
+                <span>
+                    <span id="bpm-display"></span>
+                    <span id="bpm-display-after">bpm</span>
+                </span>
+            </div>
+            <div id="top-info-center"></div>
+            <div id="top-info-right">
+                <span id="progress-text"></span>
+            </div>
+        </div>
+
+        <div id="game-stats-dg" class="hide-on-ended">
+            <div>
+                <span id="game-stats-dg-combo">0</span>
+                <span class="label">Combo</span>
+        </div>
+            <div>
+                <span id="game-stats-dg-accuracy">--.--%</span>
+                <span class="label">Accuracy</span>
+            </div>
+        </div>
+		
+		<div id="bottom-stage"></div>
+
+        <div id="playfield">
+            <div id="notes-display">
+                <div class="note target">
+                </div>
+                <div class="info-hitarea" id="judge"></div>
+                <div class="info-hitarea hide-on-ended" id="judge-offset"></div>
+            </div>
+            <div id="playfield-glow" class="fill"></div>
+            <div class="fill notes-display-cover" id="end-display">
+                <div class="vertical-center" id="end-display-in">
+                    <span id="end-display-normal-complete">Song complete!</span>
+                    <span id="end-display-full-combo">Full combo!</span>
+                    <span id="end-display-perfect">Perfect!</span>
+                    <span id="end-display-autoplay-tried">I tried my best.</span>
+                </div>
+            </div>
+            <div class="fill notes-display-cover" id="loading-display">
+                <div id="loading-display-in" class="center">Initializing...</div>
+            </div>
+        </div>
+
+        <div id="song-info" class="hide-on-ended text-outline">
+            <div id="info-title"></div>
+            <div class="subtitle" id="info-artist"></div>
+            <div class="subtitle" id="info-difficulty"></div>
+        </div>
+
+        <div id="lyrics-display" class="hide-on-ended text-outline"></div>
+
+        <div id="game-stats" class="game-stats">
+            <table>
+                <tr class="label">
+                    <td>Good</td>
+                    <td>Okay</td>
+                    <td>Miss</td>
+                </tr>
+                <tr class="data">
+                    <td><span id="game-stats-good">0</span></td>
+                    <td><span id="game-stats-okay">0</span></td>
+                    <td><span id="game-stats-miss">0</span></td>
+                </tr>
+                <tr class="label">
+                    <td>Drumroll</td>
+                    <td>Accuracy</td>
+                    <td>Combo</td>
+                </tr>
+                <tr class="data">
+                    <td><span id="game-stats-drumroll">0</span></td>
+                    <td><span id="game-stats-accuracy">0</span></td>
+                    <td><span id="game-stats-max-combo">0</span></td>
+                </tr>
+            </table>
+            <div id="game-stats-extra-info"></div>
+        </div>
+		
+		<div id="game-stats-details" class="game-stats">
+			<div>
+				<div id="game-stats-histogram-container">
+					<div class="target"></div>
+					<img id="game-stats-histogram" />
+					<div id="game-stats-histogram-labels">
+						<span class="early">early</span>
+						<span class="late">late</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				early <span id="game-stats-early"></span>,
+				late <span id="game-stats-late"></span>,
+				avg <span id="game-stats-average"></span>ms
+			</div>
+			<div class="note">*early/late counts include goods</div>
+		</div>
+
+        <div id="bl" class="text-outline">
+            <span id="fps"></span> fps
+            <span id="ups"></span> ups
+        </div>
+    </div>
+</body></html>

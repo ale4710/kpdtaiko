@@ -1,0 +1,56 @@
+:root {
+    /* bg color is #000 */
+    --background-color-r: 0;
+    --background-color-g: 0;
+    --background-color-b: 0;
+
+    --background-color: rgb(
+        var(--background-color-r),
+        var(--background-color-g),
+        var(--background-color-b)
+    );
+    --background-color-o75: rgba(
+        var(--background-color-r),
+        var(--background-color-g),
+        var(--background-color-b),
+        0.75
+    ); /* same as background-color with 75% opacity */
+    --background-color-o50: rgba(
+        var(--background-color-r),
+        var(--background-color-g),
+        var(--background-color-b),
+        0.5
+    ); /* same as above but with 50% opacity */
+    --background-color-o90: rgba(
+        var(--background-color-r),
+        var(--background-color-g),
+        var(--background-color-b),
+        0.9
+    ); /* same as background-color with 90% opacity */
+    --background-color-2: #181818;
+    --background-color-3: #2D2D2D;
+
+    --background-color-navbar: var(--background-color);
+
+    --text-color: #fff;
+    --text-color-dim: #aaa;
+    --text-link-color: #66f;
+    --header-text-color: var(--text-color); /* against --accent-color-2 */
+    --hilight-text: var(--text-color);
+
+    --throbber-primary: #fff;
+    --throbber-background: #444;
+
+    --focus-invert: 0; /* for menu items with icons */
+    --icon-invert: 0; /* for standard icons, against --background-color. please take into account the above setting too */
+    --icon-navbar-invert: 0; /* against --background-color-navbar */
+
+    --accent-color-1: #444; /* example used in: focus elements */
+    --accent-color-2: #666; /* example used in: header */
+    --accent-color-3: #fff; /* example used in: special text */
+    /* 645ec8 */
+
+    --border-color: #fff;
+    --border-color-dim: #777;
+    --border-color-focus: var(--border-color);
+}

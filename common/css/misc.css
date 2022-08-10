@@ -1,0 +1,12 @@
+:root {
+    --playfield-height: 0.15;
+    --playfield-top: 0.2;
+    --playfield-cover-color: #222;
+}
+
+/* mods view */
+.mods-view.small {font-size: 9px;}
+.mods-view.medium {font-size: 12px;}
+.mods-view.small > * {padding: 0 2px;}
+.mods-view.medium > * {padding: 0 1px;}
+.mods-view-label {padding-left: 2px;}

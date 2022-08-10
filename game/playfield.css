@@ -1,0 +1,184 @@
+/* note: playfield size definitions have been moved to /common/css/misc.css */
+#playfield, #playfield * {
+    position: absolute;
+}
+#playfield {
+    width: var(--width);
+    top: calc(var(--playfield-top) * var(--height));
+    height: calc(var(--playfield-height) * var(--height));
+    background: #333;
+}
+#playfield > div {
+    top: 0;
+    height: 100%;
+}
+#playfield #notes-display > .group {
+    width: 100%;
+    height: 100%;
+    /* border-left: 1px solid #fff; */
+}
+#playfield #notes-display {
+    left: 0;
+    width: 100%;
+    /* width: calc((1 - var(--drum-display-width)) * var(--width)); */
+}
+#playfield #notes-display .note {
+    --note-size: 0.42; /* with respect to height of playfield */
+    --border: 0.15; /* with respect to the --note-size */
+
+    --pf-height-px: calc(var(--playfield-height) * var(--height));
+    --note-size-px: calc((var(--note-size) * var(--pf-height-px)));
+    --border-px:  calc(var(--border) * var(--note-size-px));
+
+
+    height: var(--note-size-px);
+    width: 0;
+    padding-right: var(--note-size-px);
+    border: solid #fff;
+    border-width: var(--border-px);
+    border-radius: calc((var(--note-size-px) + (var(--border-px) * 2)) * 0.5);
+    top: 50%;
+    transform: translatey(-50%);
+    /* transform: translate(
+        calc(-50% + ((var(--playfield-height) * var(--height)) / 2)),
+        -50%
+    ); */
+
+    margin-left: calc(
+        (var(--pf-height-px) * 0.5) -
+        (((var(--note-size-px)) * 0.5) + var(--border-px))
+    );
+
+    /* margin-left: calc(
+        (
+            (var(--note-size) * 0.5) +
+            ((1 - var(--note-size)) * 0.5)
+        )
+        * var(--playfield-height) * var(--height)
+    ); */
+    /* margin-left: calc(
+        ((1 - (var(--note-size) * (1 + var(--border)))) * 0.5)
+        * var(--playfield-height) * var(--height)
+    ); */
+    /* margin-left: calc(
+        (((1 - var(--note-size)) * 0.5) + (var(--note-size) * var(--border)))
+        * var(--playfield-height) * var(--height)
+    ); */
+    
+    background: #000;
+}
+#playfield #notes-display .note.big {
+    --note-size: 0.6; /* with respect to height of playfield */
+}
+#playfield #notes-display > .note.target {
+    --note-size: 0.52;
+    background: none;
+    left: 0;
+    background: #fff;
+    opacity: 0.5;
+}
+#playfield #notes-display .note.barline {
+    height: 100%;
+    width: 1px;
+    padding: 0;
+    margin-left: calc(var(--pf-height-px) * 0.5);
+    border: none;
+    background: #fff;
+    opacity: 0.6;
+
+}
+#playfield #notes-display .note.missed {background: #666}
+#playfield #notes-display .note.balloon {background: none}
+
+#playfield #notes-display > div.info-hitarea {
+    width: calc(var(--playfield-height) * var(--height));
+    text-align: center;
+    z-index: var(--highest-zindex);
+}
+
+#playfield #notes-display > div#judge {
+    bottom: 100%;
+    left: 0;
+    --nudge-amount: -20%;
+}
+#judge.judge-red {color: #f00}
+#judge.judge-white {color: #fff}
+#judge.judge-yellow {color: #ff0}
+
+#judge.number {color: #fff;}
+
+#judge.nudged {transform: translateY(var(--nudge-amount))}
+
+.nudgeAnimation {
+    animation-name: nudge;
+    animation-duration: 0.06s;
+    animation-timing-function: ease-out;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+}
+@keyframes nudge {
+    from {transform: translateY(0)}
+    to {transform: translateY(var(--nudge-amount))}
+}
+
+#playfield #judge-offset {
+    left: calc(var(--playfield-height) * var(--height));
+    bottom: 100%;
+    font-size: 12px;
+}
+#playfield #judge-offset.late {color: #f33}
+#playfield #judge-offset.early {color: #55f}
+
+#playfield #notes-display .note.don:not(.missed) {background: #f00;}
+#playfield #notes-display .note.kat:not(.missed) {background: #55f;}
+#playfield #notes-display .note.drumroll {background: #ff0;color:#000}
+
+#playfield-glow {
+    width: 200%;
+    left: -50%;
+    box-shadow: #fff 0 0 5px;
+    opacity: 0;
+}
+body.special #playfield-glow {
+    opacity: 1;
+}
+
+/* overlay */
+.notes-display-cover {
+    /* width: 100%; */
+    z-index: var(--highest-zindex);
+    background-color: var(--playfield-cover-color);
+    /* display: none; */
+}
+
+/* loading display */
+#playfield #loading-display {
+    transform: translateX(0);
+}
+body.ready #playfield #loading-display {
+    transition: transform ease-out 1s;
+    transform: translateX(-100%);
+}
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+#loading-display-in {
+    animation: fadein 0.2s forwards;
+}
+
+/* end display */
+#playfield #end-display {
+    transform: translateX(100%);
+}
+body.ended #playfield #end-display {
+    transition: transform ease-out 1s;
+    transform: translateX(0);
+}
+#end-display-in {
+    width: 100%;
+    text-align: center;
+}
+#end-display-in span {
+    position: unset;
+}

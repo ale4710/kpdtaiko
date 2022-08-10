@@ -1,0 +1,37 @@
+:root {
+    
+    /* sizes */
+    --width: 240px;
+    --height: 320px;
+
+    /* --width: 320px;
+    --height: 240px; */
+
+    /* others */
+    --transition-length: 1s;
+}
+
+body {
+    margin: 0;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: 'open sans','noto sans',sans-serif;
+    /* overflow: hidden; */
+}
+.hidden {display: none!important;}
+.dim {background: var(--background-color-o75)}
+.dimmer {background: var(--background-color-o50)}
+.solid-background {background: var(--background-color);}
+:focus {outline: none;}
+
+#alertMessage {
+    transition: transform 0.1s;
+    transform: translateY(-100%);
+    position: absolute;
+    top: 0;
+    width: 90vw;
+    padding: 5px 5vw;
+    height: auto;
+    z-index: 100;
+    background: rgba(37,37,37,0.75);
+}

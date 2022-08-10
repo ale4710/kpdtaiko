@@ -1,0 +1,20 @@
+:root {
+    --highest-zindex: 100;
+}
+
+#bl {
+    bottom: 0;
+    left: 0;
+    font-size: 10px;
+    position: absolute;
+    display: none;
+}
+#bl > span:nth-child(n+2)::before {
+	content: ' / ';
+}
+body.ready:not(.ended) #bl {
+    display: unset;
+}
+.screen {
+    z-index: var(--highest-zindex);
+}

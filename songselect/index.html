@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="/common/js/resourceAdder.js" defer></script>
+    <script type="text/javascript" src="/common/js/globalResources.js" defer></script>
+    <script src="resources.js" defer></script>
+</head>
+<body>
+    <div id="screen">
+        <div id="main-screen">
+            <div class="header">
+                <span>Song Select</span>
+                <div id="mods-display-c" class="vertical-center"></div>
+            </div>
+            <div id="song-info">
+                <div id="song-info-img-container">
+                    <div id="song-info-img-throbber" class="center"><div class="throbber"></div></div>
+                </div>
+                <div class="song-info-text"><span id="song-info-title"></span></div>
+                <div class="song-info-text">
+					<span id="song-info-misc">
+						<span id="song-info-artist">
+							<img src="/img/person.png" />
+							<span class="text"></span>
+						</span>
+						<span id="song-info-filetype">
+							<img src="/img/file.png" />
+							<span class="text"></span>
+						</span>
+						<span id="song-info-creator">
+							<img src="/img/pencil.png" />
+							<span class="text"></span>
+						</span>
+						<span id="song-info-source">
+							<img src="/img/tv.png" />
+							<span class="text"></span>
+						</span>
+					</span>
+                </div>
+            </div>
+            <div class="selection hidden" id="song-select-list">
+                <div id="song-select-list-overlay" class="fill"></div>
+            </div>
+            <div class="selection hidden" id="difficulty-list"></div>
+            <div class="selection" id="selection-list-throbber"><div class="center"><div class="throbber"></div></div></div>
+        </div>
+        <div id="intro-slider">
+            <div id="intro-slider-text" class="vertical-center">
+                <div id="intro-slider-title"></div>
+                <div id="intro-slider-artist"></div>
+            </div>
+        </div>
+    </div>
+</body></html>

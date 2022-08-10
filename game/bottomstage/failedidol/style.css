@@ -1,0 +1,235 @@
+#bottom-stage > * {
+	position: absolute;
+}
+#bottom-stage {
+	--bg-height: 75%;
+}
+#bottom-stage > div.cover {
+	background: #000;
+	opacity: 0;
+	transition: opacity var(--transition-length);
+}
+body.ended #bottom-stage > div.cover {
+	opacity: 1;
+}
+
+#bottom-stage .floor {
+	background: #222;
+	height: calc(100% - var(--bg-height));
+	width: 100%;
+	top: var(--bg-height);
+}
+
+:root {
+	--bottom-stage-primary-color: #fff;
+}
+#bottom-stage .bg-container {
+	text-align: center;
+	background: #000;
+	height: var(--bg-height);
+	background-color: var(--bottom-stage-primary-color);
+	width: 100%;
+	overflow: hidden;
+	
+	--screen-height: 80%;
+}
+#bottom-stage .bg-container > .bg {
+	/* opacity: calc(1 - var(--bg-dim)); */
+	object-fit: cover;
+	width: 80%;
+	height: var(--screen-height);
+	position: absolute;
+	top: calc(100% - var(--screen-height));
+}
+
+#bottom-stage .bg-container > .bg-placeholder {
+	animation-name: huerotate;
+	animation-timing-function: linear;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-play-state: paused;
+}
+body.special:not(.background-image-exists) #bottom-stage .bg-container > .bg-placeholder {
+	animation-play-state: running;
+}
+@keyframes huerotate {
+	from {filter: hue-rotate(0);}
+	from {filter: hue-rotate(1turn);}
+}
+
+#bottom-stage .bg-container > .cover {
+	background-color: #000;
+	background-image: linear-gradient(0deg, rgba(0,0,0,0.25) 0%, rgb(0,0,0) 100%);
+	position: absolute;
+	top: 0; left: 0;
+	transition: background-color var(--transition-length);
+}
+body.ready #bottom-stage .bg-container > .cover {
+	background-color: unset;
+}
+
+#bottom-stage .bg-container > .stage-lights-container {
+	width: 100%;
+	height: calc(100% - var(--screen-height));
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	/* justify-content: space-evenly; */ /* this does notwork in kaios */
+	align-items: center;
+	
+	opacity: 0.2;
+	/* will-change: opacity; */
+}
+#bottom-stage .bg-container > .stage-lights-container > .stage-light {
+	width: 5%;
+}
+
+body.special #bottom-stage .bg-container > .stage-lights-container {
+	--sl-hue: 0deg;
+	filter: hue-rotate(var(--sl-hue));
+	opacity: 0.4;
+}
+:root {
+	--stage-light-color-1: #ff0;
+	--stage-light-color-2: #f0f;
+	--stage-light-color-3: #0f0;
+	--stage-light-color-4: #0ff;
+}
+body.special #bottom-stage .bg-container > .stage-lights-container > .stage-light > div {background: var(--stage-light-color-1)}
+body.special #bottom-stage .bg-container > .stage-lights-container > .stage-light:nth-child(2n+1) > div {background: var(--stage-light-color-2)}
+body.special #bottom-stage .bg-container > .stage-lights-container > .stage-light:nth-child(3n+1) > div {background: var(--stage-light-color-3)}
+body.special #bottom-stage .bg-container > .stage-lights-container > .stage-light:nth-child(5n+2) > div {background: var(--stage-light-color-4)}
+
+#bottom-stage .bg-container > .stage-lights-container > .stage-light > div {
+	width: 100%;
+	padding-bottom: 100%;
+	background: #fff;
+	border-radius: 50%;
+}
+body.special #bottom-stage .bg-container > .stage-lights-container.flash {
+	animation-name: stage-lights-flash;
+    animation-duration: 100ms;
+    animation-timing-function: linear;
+}
+@keyframes stage-lights-flash {
+	from {opacity: 1}
+	to {opacity: 0.4}
+}
+
+#bottom-stage .bg-container .bg.filter {
+	/* background-image: url('bottomstage/livestage/img/bgfilter.png'); */
+	background-image: url('img/bgfilter.png');
+	background-repeat: repeat;
+	background-position: center;
+	background-color: #fff;
+	transition: background-color var(--transition-length);
+}
+body.ready #bottom-stage .bg-container .bg.filter {
+	background-color: rgba(255,255,255,0);
+}
+#bottom-stage .bg-container .bg.glow {
+	box-shadow: 0 0 3px var(--bottom-stage-primary-color);
+	opacity: 0;
+}
+body.special #bottom-stage .bg-container .bg.glow {
+	opacity: 1;
+}
+
+#bottom-stage .character-container {
+	height: 40%;
+	bottom: calc((100% - var(--bg-height)) / 2);
+	width: 100%;
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	/* justify-content: space-evenly; */ /* this does notwork in kaios */
+}
+#bottom-stage .character-container > div {
+	width: 40%;
+	text-align: center;
+	position: relative;
+}
+#bottom-stage .character-container .character-positioner {
+	height: 100%;
+	width: 100%;
+}
+#bottom-stage .character {
+	height: 100%;
+	transform-origin: bottom center;
+	filter: brightness(0);
+	position: relative;
+	/* image-rendering: pixelated; */
+}
+body.ready #bottom-stage .character {
+	/* filter: brightness(1); */
+	filter: none;
+	transition: filter var(--transition-length);
+}
+#bottom-stage .floor-light {
+	background: #fff;
+	opacity: 0;
+	height: 20%;
+	width: 120%;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 50%);
+}
+body.ready #bottom-stage .floor-light {
+	opacity: 0.4;
+	transition: opacity var(--transition-length);
+}
+#bottom-stage .character.bop:not(.spin) {
+    animation-name: bop;
+    animation-duration: 70ms;
+    animation-timing-function: linear;
+}
+@keyframes bop {
+	from {transform: scaleY(0.95)}
+	to {transform: scaleY(1)}
+}
+
+#bottom-stage .character.spin {
+    animation-name: spin;
+    animation-duration: 150ms;
+    animation-timing-function: ease-in-out;
+}
+@keyframes spin {
+	0% {transform: scaleX(1)}
+	50% {transform: scaleX(-1)}
+	100% {transform: scaleX(1)}
+}
+
+#bottom-stage .character.jump {
+    animation-name: jump;
+    animation-duration: 140ms;
+    animation-timing-function: ease-in-out;
+	/* animation-direction: alternate;
+    animation-iteration-count: 2; */
+}
+@keyframes jump {
+	/* from {transform: translateY(0)}
+	to {transform: translateY(-12%)} */
+	
+	0% {transform: translateY(0)}
+	50% {transform: translateY(-12%)}
+	100% {transform: translateY(0)}
+}
+
+#bottom-stage .character.jump-spin {
+    animation-name: jump-spin;
+    animation-duration: 140ms;
+    animation-timing-function: ease-in-out;
+	/* animation-direction: alternate;
+    animation-iteration-count: 2; */
+}
+@keyframes jump-spin {
+	/* from {transform: translateY(0)}
+	to {transform: translateY(-12%)} */
+	
+	0% {transform: translateY(0) scaleX(1)}
+	50% {transform: translateY(-12%) scaleX(-1)}
+	100% {transform: translateY(0) scaleX(1)}
+}

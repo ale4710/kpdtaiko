@@ -1,0 +1,26 @@
+#settings-list {
+    height: calc(100% - 32px);
+}
+
+#progress {
+    background: var(--background-color);
+}
+
+.setting {
+    padding: 2px 5px;
+    position: relative;
+    height: 45px;
+    overflow: hidden;
+}
+.menu-entry .input {
+    float: right;
+    position: relative;
+    top: 2px;
+}
+
+.setting-value {
+    font-size: 14px;
+    font-style: italic;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

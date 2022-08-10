@@ -1,0 +1,8 @@
+#bottom-stage {
+    width: 100%;
+    top: calc((var(--playfield-top) + var(--playfield-height)) * var(--height));
+    left: 0;
+    height: calc((1 - (var(--playfield-top) + var(--playfield-height))) * var(--height));
+    overflow: hidden;
+	position: absolute;
+}

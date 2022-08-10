@@ -1,0 +1,35 @@
+#bottom-stage > .chat-space {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 110%;
+	font-size: 12px;
+}
+#bottom-stage > .chat-space > div {
+	margin-right: 10%;
+	padding: 0 5% 2%;
+	position: relative;
+	
+	--w: 8%;
+}
+#bottom-stage > .chat-space > div.system-message {
+	text-align: center;
+}
+body.ended #bottom-stage > .chat-space > div.chat-message,
+body.show-stats #bottom-stage > .chat-space > div.system-message
+{
+	opacity: 0.2;
+}
+#bottom-stage > .chat-space > div.chat-message > .img {
+	width: var(--w);
+	left: 0;
+	top: 0;
+	position: absolute;
+}
+#bottom-stage > .chat-space > div.chat-message > .text {
+	margin-left: var(--w);
+	line-height: 1.2;
+}
+
+#bottom-stage > .init-msg {
+	width: 100%;
+}

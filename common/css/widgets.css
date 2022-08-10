@@ -1,0 +1,267 @@
+#screen {
+    width: var(--width);
+    height: var(--height);
+    position: relative;
+    overflow: hidden;
+    outline: 1px solid #fff;
+    /* background: #000;
+    color: #fff; */
+}
+:root {
+    --header-height: 30px;
+    --header-padding: 3px; /* excluding height! */
+}
+.header {
+    height: calc(var(--header-height) - (var(--header-padding) * 2));
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: var(--header-padding);
+
+    background: var(--accent-color-2);
+    color: var(--header-text-color);
+}
+
+/*** navigation bar ***/
+:root {
+    --navbar-height: 30px;
+    --navbar-padding: 5px;
+}
+body.hide-navbar #navbar {display: none;}
+body.transparent-navbar #navbar {background-color: transparent;}
+#navbar {
+    position: absolute;
+    width: 100%;
+    height: var(--navbar-height);
+    bottom: 0;
+    background-color: var(--background-color-navbar);
+}
+#navbar-left, #navbar-right, #navbar-center {
+    position: absolute; 
+    top: 50%;
+    transform: translateY(-50%);
+    text-transform: capitalize;
+}
+#navbar-center {
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+#navbar-left, #navbar-right {font-size: 14px}
+#navbar-left {left: var(--navbar-padding)}
+#navbar-right {right: var(--navbar-padding)}
+
+.menuheader, .menusubheader {
+    /* background: var(--accent-color-2); */
+    background: var(--background-color-3);
+    height: 24px;
+    /* font-family: 'open sans light'; */
+    white-space: nowrap;
+}
+.menusubheader {
+    /* color: #ff015b; */
+    font-style: italic;
+    padding: 0 10px;
+}
+.menuheader {
+    text-align: center;
+    height: 24px;
+    font-size: 16px;
+    padding: 3px 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.tabstrip {
+    height: 26px;
+    padding-top: 3px;
+    padding-bottom: 10px; /* to hide the scrollbar */
+	background: var(--background-color-2);
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+.tabstrip-cont {
+	overflow: hidden;
+	height: 30px;
+}
+.tabstrip-tab {
+    border-bottom: 2px solid rgba(0,0,0,0);
+    display: inline-block;
+    /* min-width: 70px; */
+    text-align: center;
+    padding: 0 8px;
+}
+.tabstrip-tab.active {
+    border-bottom: 2px solid var(--accent-color-2);
+    font-weight: bold;
+}
+.screen {
+    /* height: calc(100vh - 60px); */
+    height: calc(100% - 30px);
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+.scrollable-screen {
+    overflow-y: scroll;
+    position: relative;
+}
+.focusable-item:focus {
+    background:var(--accent-color-1);
+    color:var(--hilight-text)
+}
+
+/* menu */
+.menu {
+    overflow-y: scroll;
+    height: 100%;
+}
+.menu-entry {
+    --mePadding: 5px;
+    padding: 0 var(--mePadding);
+    position: relative;
+    overflow: hidden;
+    position: relative;
+}
+
+.menu-entry.menu-seperator {
+	font-style: italic;
+	margin-top: 10px;
+	border-bottom: 1px solid #fff;
+	/* border-width: 1px 0;
+	border-style: solid;
+	border-color: #fff; */
+}
+
+.menu-entry .menu-entry-right-text {
+    float: right;
+}
+
+/* options menu */
+.option-menu-cont {
+    background:0;
+    bottom:0;
+    left:0;
+    position: absolute;
+    width:100%;
+    background: var(--background-color);
+    max-height: 100%;
+}
+.option-menu {
+    height: unset;
+    max-height: calc(100% - 100px);
+}
+.option-menu.message-box {
+    padding: 5px 5px 0;
+}
+.button-styled-rg {
+    background: var(--button-bg-border); 
+    border-radius: 23%;
+}
+.button-styled-rg > img {
+    background: var(--button-bg-inner); 
+    height: 85%;
+    width: 85%;
+}
+.button-styled-rg, .button-styled-rg > img {
+    border-radius: 23%;
+}
+
+/* inputs and other stuff */
+.menu-entry input + span {right: var(--mePadding)}
+input[type=checkbox], input[type=radio] {display: none;}
+
+input[type=checkbox] + span {--pd: 0.8}
+input[type=radio] + span {--pd: 0.7}
+
+input[type=text],
+input[type=tel] {
+    --border-width: 1px;
+    height: 20px;
+    width: 90%;
+    border: var(--border-width) solid var(--border-color);
+    color: var(--text-color);
+    background: var(--background-color);
+    margin: 3% calc(3% - (var(--border-width) * 2));
+    padding: 2%;
+    font-size: 16px;
+    display: inline-block;
+}
+input[type=tel] {
+    text-align: center;
+}
+input[type=checkbox] + span, input[type=radio] + span {
+    --ts: 0.8em;
+    --fs: calc(var(--pd) * var(--ts));
+    display: inline-block;
+    padding: calc((var(--ts) - var(--fs)) / 2);
+    width: var(--fs);
+    height: var(--fs);
+    /* filter: invert(var(--icon-invert)); */ /* we are using a border, not an image. no need for this rule. */
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+input[type=checkbox] + span::before, input[type=radio] + span::before {
+    content: "";
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: var(--border-color);
+}
+input[type=checkbox] + span, input[type=checkbox] + span::before {border-radius: 5%}
+input[type=radio] + span, input[type=radio] + span::before {border-radius: 50%}
+
+:focus input[type=checkbox] + span, :focus input[type=radio] + span {
+    filter: invert(var(--icon-invert));
+}
+input[type=checkbox]:checked + span::before,
+input[type=radio]:checked + span::before {
+    display: block;
+}
+
+progress {
+    background: var(--time-bar-background);
+    border: none;
+}
+progress::-moz-progress-bar {
+    background: var(--time-bar-foreground);
+}
+
+input[type=range].options-menu-range {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background: none;
+    border: none;
+}
+
+input[type=range].options-menu-range::-moz-range-thumb,
+input[type=range].options-menu-range::-moz-range-progress {
+    background: #fff;
+}
+
+input[type=range].options-menu-range::-moz-range-track {
+    border-radius: 0;
+    background-color: rgba(255,255,255,0.5);
+}
+input[type=range].options-menu-range::-moz-range-progress {
+    border: none;
+    border-radius: 50%;
+}
+
+/* animations and little icons */
+.throbber {
+    border-radius: 50%;
+    animation: throbber 1s linear infinite;
+    /* border: 6px solid rgba(255,255,255,0.25); */
+    border: 6px solid var(--throbber-background);
+    border-left: 6px solid var(--throbber-primary);
+    height: 34px;
+    width: 34px;
+    display: inline-block;
+}
+@keyframes throbber {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}

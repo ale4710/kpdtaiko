@@ -1,0 +1,208 @@
+:root {
+    --song-info-height: 0.28;
+}
+
+/* song info */
+#song-info {
+    height: calc((var(--height) - var(--header-height) - var(--navbar-height)) * var(--song-info-height));
+    position: relative;
+    font-size: 12px;
+}
+#song-info > div {
+    white-space: nowrap;
+    overflow: hidden;
+}
+.song-info-text {
+	padding: 0 3%;
+	position: relative;
+}
+.song-info-text::before, .song-info-text::after {
+	content: '';
+	display: block;
+	height: 100%;
+	width: 3%;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	background-image: linear-gradient(var(--bg-rot), #000 0%, transparent 100%);
+}
+.song-info-text::before {
+	left: 0;
+	--bg-rot: 90deg;
+}
+.song-info-text::after {
+	right: 0;
+	--bg-rot: -90deg;
+}
+.song-info-text > span {
+	display: inline-block;
+}
+#song-info-title {font-size: 16px;}
+#song-info-img-container {
+    height: calc((var(--height) - var(--header-height) - var(--navbar-height)) * var(--song-info-height));
+    width: calc((var(--height) - var(--header-height) - var(--navbar-height)) * (var(--song-info-height) * 1.25));
+    position: relative;
+    float: left;
+	/* padding-right: 3%; */
+}
+#song-info-img {
+    object-fit: cover;
+}
+#song-info-img-throbber {
+    z-index: -1;
+}
+#song-info-misc img {
+	height: 11px;
+}
+#song-info-misc > span:not(.last) {margin-right: 5px}
+
+/* song select */
+#song-select-list-overlay {
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%); 
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* z-index: 1; */
+}
+/* #song-select-list > .menu {
+	scroll-behavior: smooth;
+} */
+#song-select-list div.menu-entry {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#song-select-list > .menu > .menu-entry {
+    z-index: -1;
+}
+
+#song-select-list > .menu > .menu-entry.menu-seperator::before {
+	content: "";
+	--size: 12px;
+	width: var(--size);
+	height: var(--size);
+	background-image: url('/img/folder.png');
+	background-size: cover;
+	background-position: center;
+	display: inline-block;
+	vertical-align: baseline;
+	margin-right: 5px;
+}
+
+/* song difficulty */
+:root {
+	--difficulty-color-0: #6ffcfc;
+	--difficulty-color-1: #b5fc6f;
+	--difficulty-color-2: #fcfc6f;
+	--difficulty-color-3: #fc6ffc;
+	--difficulty-color-4: #9402fc;
+	--difficulty-color-5: #fff;
+}
+.difficulty {
+    --left-border-size: 5px;
+    --diff-color: #fff;
+    border-left-width: var(--left-border-size);
+    border-left-style: solid;
+    border-left-color: var(--diff-color);
+    position: relative;
+    /* width: calc(100% - var(--left-border-size)); */
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	
+}
+.difficulty::before {
+	content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+	opacity: 0.35;
+}
+.difficulty:focus {background: none;}
+.difficulty:focus::before {
+    background: var(--diff-color);
+}
+.difficulty.difficulty-lv0 {--diff-color: var(--difficulty-color-0)}
+.difficulty.difficulty-lv1 {--diff-color: var(--difficulty-color-1)}
+.difficulty.difficulty-lv2 {--diff-color: var(--difficulty-color-2)}
+.difficulty.difficulty-lv3 {--diff-color: var(--difficulty-color-3)}
+.difficulty.difficulty-lv4 {--diff-color: var(--difficulty-color-4)}
+.difficulty.difficulty-lv5 {--diff-color: var(--difficulty-color-5)}
+.difficulty-indicator {
+    text-align: right;
+}
+
+/* list for selecting stuff */
+.selection {
+    height: calc((var(--height) - var(--header-height) - var(--navbar-height)) * (1 - var(--song-info-height)));
+	overflow-x: hidden;
+    position: relative;
+	
+	--right-sc-hide: 50vw;
+}
+.selection div.menu {
+	width: calc(100% + var(--right-sc-hide));
+}
+.selection div.menu-entry {
+	margin-right: var(--right-sc-hide);
+}
+.selection div.menu-entry:first-child {margin-top: 50%;}
+.selection div.menu-entry:last-child {margin-bottom: 50%;}
+
+/* mods display in header */
+#mods-display-c {
+    position: absolute;
+    right: var(--header-padding);
+}
+.mods-view img {
+    vertical-align: top;
+}
+
+/* intro sequence */
+@keyframes fade {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+:root {
+    --intro-animation-duration: 0.5s;
+    --intro-animation-timingfn: ease-out;
+}
+body.intro #main-screen {
+    animation-name: fade;
+    animation-duration: var(--intro-animation-duration);
+    animation-timing-function: var(--intro-animation-timingfn);
+    animation-fill-mode: forwards;
+}
+@keyframes slide {
+    from {transform: translatex(100%)}
+    to {transform: translatex(0)}
+}
+#intro-slider {
+    display: none;
+    top: calc(var(--height) * var(--playfield-top));
+    height: calc(var(--height) * var(--playfield-height));
+    width: 100%;
+    position: absolute;
+    background: var(--playfield-cover-color);
+    z-index: 5;
+    text-align: center;
+    overflow: hidden;
+}
+#intro-slider-text {width: 100%;}
+#intro-slider-text > div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+#intro-slider-artist {font-size: 12px}
+
+body.intro #intro-slider {
+    display: unset;
+    animation-name: slide;
+    animation-duration: var(--intro-animation-duration);
+    animation-timing-function: var(--intro-animation-timingfn);
+    animation-fill-mode: forwards;
+}

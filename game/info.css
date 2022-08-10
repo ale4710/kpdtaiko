@@ -1,0 +1,204 @@
+/* song info */
+#song-info {
+    left: 0;
+    top: calc((var(--playfield-top) + var(--playfield-height)) * var(--height));
+    width: 100%;
+    transition: opacity ease-out var(--transition-length);
+    position: absolute;
+	display: none;
+}
+body.ended .hide-on-ended {
+    opacity: 0;
+}
+body.ready #song-info {
+	display: unset;
+    animation-name: song-info-slide-in;
+    animation-duration: var(--transition-length);
+    animation-timing-function: ease-out;
+}
+@keyframes song-info-slide-in {
+    from{transform: translatex(100%);}
+    to{transform: translatex(0);}
+}
+body.ended.show-stats #song-info {
+    top: calc((var(--playfield-top) * 0.5) * var(--height));
+    transform: translateY(-50%);
+    opacity: 1;
+}
+body.ended.show-stats #song-info > div {
+    text-align: center;
+}
+
+/* #song-info div {
+    position: relative;
+} */
+#song-info > div {
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 3%;
+}
+
+#info-title {font-size: 16px;}
+#song-info .subtitle {font-size: 12px;}
+
+/* lyrics-display */
+#lyrics-display {
+    bottom: calc(var(--height) * 0.05);
+    width: 100%;
+    text-align: center;
+    position: absolute;
+	font-size: 14px;
+}
+
+/* game stats during gameplay */
+#game-stats-dg {
+    display: none;
+    width: 100%;
+    right: 3%;
+    text-align: right;
+    top: calc(var(--playfield-top) * var(--height));
+    transform: translateY(-100%);
+    transition: opacity ease-out var(--transition-length);
+    position: absolute;
+}
+body.ready #game-stats-dg {
+    display: unset;
+}
+/* #game-stats-dg div {
+    position: relative;
+} */
+#game-stats-dg .label {
+    font-size: 10px;
+    margin-left: 1%;
+}
+
+/* game stats final */
+.game-stats {
+	top: calc((var(--playfield-top) + var(--playfield-height)) * var(--height));
+	position: absolute;
+	text-align: center;
+}
+#game-stats {
+    /* top: calc((var(--playfield-top) + var(--playfield-height) + var(--song-info-height)) * var(--height)); */
+    transform: translateY(calc(var(--height) * var(--playfield-height) * -1));
+    opacity: 0;
+	width: 100%;
+}
+body.ended.show-stats #game-stats {
+    transform: translateY(0);
+    opacity: 1;
+    transition: opacity ease-out var(--transition-length), transform ease-out var(--transition-length);
+}
+#game-stats > table {
+    width: 100%;
+}
+#game-stats td {
+    text-align: center;
+}
+#game-stats .data td {
+    font-size: 20px;
+}
+#game-stats .hilight {
+    text-shadow: #ff0 0 0 5px;
+    color: #ff8;
+}
+
+#game-stats-details { /*showing in modal style*/
+	width: 100%;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: #fff;
+	background-color: rgba(0,0,0,0.8);
+	margin-top: 5%;
+	padding: 2% 0;
+}
+#game-stats-details > .note {
+	font-size: 12px;
+}
+#game-stats-histogram {
+	border-bottom: 1px solid #fff;
+	position: relative;
+}
+#game-stats-histogram-container {
+	border: 1px solid #fff;
+	display: inline-block;
+	position: relative;
+}
+#game-stats-histogram-container > .target {
+	width: 1px;
+	height: 100%;
+	background-color: #f00;
+	position: absolute;
+	left: calc(50% - 0.5px);
+	top: 0;
+}
+#game-stats-histogram-labels {
+	text-align: left;
+	font-size: 12px;
+	line-height: 1;
+	position: relative;
+	bottom: 3px;
+	padding: 0 1%;
+}
+#game-stats-histogram-labels > .late {float: right;}
+
+/* game stats final but more detailed */
+#game-stats-details {
+	display: none;
+}
+body.show-stats-detailed #game-stats-details {
+	display: unset;
+}
+
+/* song progress */
+:root {--progress-height: 3px;}
+#progress-container, #progress-container * {position: absolute;}
+#progress-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--progress-height);
+    transition: opacity ease-out var(--transition-length);
+}
+#progress {
+    background: #fff;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+/* top info stuff */
+#top-info {
+    width: 100%;
+    top: var(--progress-height);
+    font-size: 10px;
+    position: absolute;
+    display: none;
+    transition: opacity ease-out var(--transition-length);
+}
+body.ready #top-info {display: unset;}
+body.ended #top-info {opacity: 0;}
+#top-info > div {
+    width: 100%;
+    top: 0;
+    position: absolute;
+}
+#top-info-left {left: 3%;}
+#top-info-center {text-align: center;}
+#top-info-right {right: 3%; text-align: right;}
+
+/* mods view */
+#top-info-center .mods-view img {
+    vertical-align: sub;
+    padding-top: 1px;
+}
+#game-stats .mods-view {margin-bottom: 0.2rem}
+#game-stats .mods-view img {vertical-align: top}
+
+/* bpm subtitle */
+#bpm-display-after {
+    font-size: 9px;
+}
