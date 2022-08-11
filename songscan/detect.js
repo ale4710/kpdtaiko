@@ -80,6 +80,8 @@
 							songInfo.difficultyLabel || songInfo.difficulty
 						);
 						
+						songData.source = 'user';
+						
 						[
 							'id',
 							'title',

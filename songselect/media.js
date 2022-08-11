@@ -68,6 +68,13 @@ var loadMedia = (function(){
 							);
 							break;
 						case 'user':
+							getSongDirFile(path)
+							.then(function(file){
+								loadMediaSuccess(path, file)
+							})
+							.catch(function(){
+								loadMediaError(path);
+							});
 							break;
 					}
 				}

@@ -99,7 +99,8 @@ var databaseTools = (function(){
 						'image',
 						'previewFile',
 						'previewTime',
-						'mediaSource'
+						'mediaSource',
+						'source'
 					].forEach((property)=>{
 						group[property] = song[property];
 					});

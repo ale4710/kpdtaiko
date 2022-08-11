@@ -7,9 +7,9 @@ function getSongList() {
 		if(sl.length === 0) {
 			reject('empty');
 		} else {
-			sl.forEach((e)=>{
+			/* sl.forEach((e)=>{
 				e.source = 'internal';
-			});
+			}); */
 			resolve(sl);
 		}
     }));
