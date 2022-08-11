@@ -18,7 +18,9 @@ function beginScan(detectedFn) {
 						filePathParsed.pathArray.length === 2
 					)
 				) {
-					md5blob(file).then((fileHash)=>{
+					fileReaderA(file, 'arraybuffer')
+					.then((fileHash)=>{
+						fileHash = md5(fileHash);
 						detectedFn(
 							file,
 							filePathParsed,

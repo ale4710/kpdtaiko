@@ -146,7 +146,7 @@ var databaseTools = (function(){
 						}
 					} catch(e) {
 						console.error(e);
-						errorMsg = apfErr(fileType, e);
+						errorMsg = apfErr(type, e);
 					}
 					
 					if(parsedSong) {

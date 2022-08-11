@@ -110,7 +110,7 @@ function parseTjaFile(file, options) {
                     if(!discardCourse) {
                         courseInfoEach.push(unassignedCourseData);
                     }
-                    unassignedCourseData = {};
+                    unassignedCourseData = Object.assign({}, unassignedCourseData);
                 }
 
                 if(targetCourseFound) {break mainFileCheck}
@@ -479,8 +479,8 @@ function parseTjaFile(file, options) {
                     tjaFinal.difficulty = 'Unknown';
                     course = unlabeledCourseCounter.toString();
                     if(checkAllCourse) {
-                        unassignedCourseData.course = course;
-                        unassignedCourseData.courseLabel = tjaFinal.difficulty;
+                        unassignedCourseData.difficulty = course;
+                        unassignedCourseData.difficultyLabel = tjaFinal.difficulty;
                     }
                     unlabeledCourseCounter++;
                 }
