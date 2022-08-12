@@ -11,7 +11,7 @@
 		'etc',
 		
         'scan',
-		'test',
+		//'test',
 		
 		'detect'
     ].forEach((fn)=>{

@@ -18,6 +18,7 @@ function beginScan(detectedFn) {
 						filePathParsed.pathArray.length === 2
 					)
 				) {
+					outputProgress(`now scanning ${filePathParsed.filename}`);
 					fileReaderA(file, 'arraybuffer')
 					.then((fileHash)=>{
 						fileHash = md5(fileHash);

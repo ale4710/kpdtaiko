@@ -1,7 +1,7 @@
 (function(){
 	var unseenSongs = [].concat(database.songsIds);
 	
-	beginScan(function(file, filePathParts, fileHash){
+	(testing? beginScanTest : beginScan)(function(file, filePathParts, fileHash){
 		return (new Promise(function(resolve, reject){
 			var thisFileInfo = {
 				changed: false,
@@ -80,7 +80,7 @@
 							songInfo.difficultyLabel || songInfo.difficulty
 						);
 						
-						songData.source = 'user';
+						songData.source = (testing? 'internal' : 'user');
 						
 						[
 							'id',

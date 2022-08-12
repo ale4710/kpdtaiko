@@ -1,3 +1,5 @@
+var testing = false;
+
 initDatabase();
 
 function outputProgress(text) {
