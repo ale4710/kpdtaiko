@@ -3,7 +3,7 @@ gameSubDirectories = {
     songs: 'songs',
     userMedia: 'custom'
 },
-deviceStorage = navigator.getDeviceStorage('sdcard'),
+deviceStorage = (navigator.getDeviceStorage && navigator.getDeviceStorage('sdcard')) || null,
 
 notifyOnError = true;
 
@@ -73,13 +73,17 @@ function getDirectoryChangedStatus() {
 function resetDirectoryChangedStatus() {
     sessionStorage.removeItem(directoryChangedLSkey);
 }
-deviceStorage.addEventListener('change',(e)=>{
-    var sdf = '/' + formFullgameDirectory() + '/';
-    console.log(sdf, e.path.substr(0, sdf.length));
-    if(e.path.substr(0, sdf.length) === sdf) {
-        if(!getDirectoryChangedStatus()) {
-            sessionStorage.setItem(directoryChangedLSkey,true);
-            window.dispatchEvent(directoryChangedEvent);
-        }
-    }
-});
+
+if(deviceStorage) {
+	deviceStorage.addEventListener('change',(e)=>{
+		var sdf = '/' + formFullgameDirectory() + '/';
+		console.log(sdf, e.path.substr(0, sdf.length));
+		if(e.path.substr(0, sdf.length) === sdf) {
+			if(!getDirectoryChangedStatus()) {
+				sessionStorage.setItem(directoryChangedLSkey,true);
+				window.dispatchEvent(directoryChangedEvent);
+			}
+		}
+	});
+
+}
