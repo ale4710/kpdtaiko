@@ -1,3 +1,5 @@
+var testing = false;
+
 function eid(id) {return document.getElementById(id);}
 function ecls(cn) {return document.getElementsByClassName(cn);}
 function actEl(){return document.activeElement}

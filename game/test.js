@@ -1,9 +1,3 @@
-var testingMode = true;
-
-/* localStorage.setItem('scroll-speed', 1);
-localStorage.setItem('audio-speed', 1);
-localStorage.setItem('autoplay-enabled', true); */
-
 (()=>{
     var folderInput = document.createElement('input'),
     fileNameInput = document.createElement('input'),

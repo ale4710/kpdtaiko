@@ -18,8 +18,6 @@
 	
     //scripts
     [
-		user+'test',
-
         //lib
         //lib+'localforage',
         lib+'md5',
@@ -40,7 +38,9 @@
         user+'control',
         user+'tjaParse',
         user+'osuParse',
-        user+'resourceAdder'
+        user+'resourceAdder',
+		
+		user+'test'
     ].forEach((fn)=>{
         addGlobalReference(0, 
             bg + fn

@@ -4,7 +4,8 @@ currentCategory = 'default',
 settingNavigationHistory = [],
 curpage = 0;
 
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('load',function(){
+	console.log('loaded');
     if(location.hash === '#bootup') {
         console.log('app has been started.');
         sessionStorage.setItem('apprunning',true);

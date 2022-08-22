@@ -1,5 +1,3 @@
-testing = true;
-
 function beginScanTest(detectedFn){
 	var sl,
 	cur = 0,

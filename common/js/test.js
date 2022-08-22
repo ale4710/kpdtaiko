@@ -1,3 +1,7 @@
+testing = true;
+
+addGlobalReference(0, 'test').catch(emptyfn);
+
 (function(){
 	//define keys
 	var keys = {};
