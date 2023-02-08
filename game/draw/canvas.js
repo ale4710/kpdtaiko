@@ -264,7 +264,7 @@
                                     x
                                 );
                             }
-                            //if(notesMissed.indexOf(cur.id) !== -1) {remove = true;}
+                            if(notesMissed.indexOf(cur.id) !== -1) {remove = true;}
                             break;
                         case 2: //drumroll
                             var now = curTime(),
