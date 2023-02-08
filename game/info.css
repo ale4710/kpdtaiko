@@ -164,10 +164,14 @@ body.show-stats-detailed #game-stats-details {
     transition: opacity ease-out var(--transition-length);
 }
 #progress {
-    background: #fff;
+    background: none;
     height: 100%;
+	width: 100%;
     left: 0;
     top: 0;
+}
+#progress::-moz-progress-bar {
+	background: #fff;
 }
 
 /* top info stuff */

@@ -185,10 +185,10 @@ function updateTimeProgessBar() {
     lastObjTime = gameFile.objects[gameFile.objects.length - 1].time,
     timePastFirstObject = curTime() - firstObjTime;
 
-    eid('progress').style.width = (Math.max(0, Math.min(1,
+    eid('progress').value = Math.max(0, Math.min(1,
         timePastFirstObject /
         (lastObjTime - firstObjTime)
-    )) * 100) + '%';
+    ));
 
     if(timePastFirstObject < 0) {
         eid('progress-text').textContent = `(${timeformat(((firstObjTime - curTime()) * playbackRateScaler) / 1000)})`;
