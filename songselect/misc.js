@@ -47,7 +47,8 @@ var scrollers = (function(){
 	
 	[
 		'song-info-title',
-		'song-info-misc'
+		'song-info-misc',
+		'song-info-difficulty-summary'
 	].forEach((e)=>{
 		s.push(
 			new ScrollHandler(
@@ -68,3 +69,32 @@ var scrollers = (function(){
 		resetAll: resetAll
 	}
 })();
+
+//difficulty class name
+function makeDifficultyClassName(d) {
+	return `difficulty-lv${d}`
+}
+
+//make a difficulty element
+function createDifficultyHTMLElement(innerText, difficultyLevel) {
+	let mainEl = document.createElement('span');
+	
+	mainEl.classList.add('difficulty-summary-entry');
+	if(difficultyLevel !== undefined) {
+		mainEl.classList.add(makeDifficultyClassName(difficultyLevel));
+	}
+	
+	if(!innerText) {
+		if(typeof(difficultyLevel) === 'number') {
+			let dltp = difficultyLevel + 1;
+			if(dltp > 5) {
+				dltp = '?';
+			}
+			innerText = 'L' + dltp;
+		} else {
+			innerText = '?';
+		}
+	}
+	mainEl.textContent = innerText;
+	return mainEl;
+}

@@ -291,6 +291,21 @@ function updateSongInfoDisplay() {
 	});
 	lastc.classList.add('last');
 	
+	//difficulty summary
+	let diffSummaryContainer = eid('song-info-difficulty-summary');
+	while(diffSummaryContainer.children.length !== 0) {
+		diffSummaryContainer.children[0].remove();
+	}
+	let localDifficultySummary = [].concat(curSong.difficultySummary);
+	localDifficultySummary.sort((a,b)=>{return a.sort - b.sort});
+	localDifficultySummary.forEach((dentry)=>{
+		diffSummaryContainer.appendChild(
+			createDifficultyHTMLElement(
+				dentry.difficulty,
+				dentry.sort
+			)
+		);
+	});
 
 	//basic data for intro sequence
 	eid('intro-slider-title').textContent = curSong.title;
@@ -375,7 +390,10 @@ function selectSong() {
 		diffs.forEach((diff)=>{
 			var diffEl = difficultyListMenu.addOption(diff.difficultyLabel || diff.difficulty),
 			diffLvlIndicator = document.createElement('div');
-			diffEl.classList.add('difficulty', `difficulty-lv${diff.difficultySort}`);
+			diffEl.classList.add(
+				'difficulty', 
+				makeDifficultyClassName(diff.difficultySort)
+			);
 
 			diffLvlIndicator.classList.add('difficulty-indicator');
 			diffLvlIndicator.textContent = '★ = ';

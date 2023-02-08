@@ -97,10 +97,17 @@
 	--difficulty-color-3: #fc6ffc;
 	--difficulty-color-4: #9402fc;
 	--difficulty-color-5: #fff;
+	--diff-color: #fff;
 }
+.difficulty-lv0 {--diff-color: var(--difficulty-color-0)}
+.difficulty-lv1 {--diff-color: var(--difficulty-color-1)}
+.difficulty-lv2 {--diff-color: var(--difficulty-color-2)}
+.difficulty-lv3 {--diff-color: var(--difficulty-color-3)}
+.difficulty-lv4 {--diff-color: var(--difficulty-color-4)}
+.difficulty-lv5 {--diff-color: var(--difficulty-color-5)}
+
 .difficulty {
     --left-border-size: 5px;
-    --diff-color: #fff;
     border-left-width: var(--left-border-size);
     border-left-style: solid;
     border-left-color: var(--diff-color);
@@ -125,14 +132,29 @@
 .difficulty:focus::before {
     background: var(--diff-color);
 }
-.difficulty.difficulty-lv0 {--diff-color: var(--difficulty-color-0)}
-.difficulty.difficulty-lv1 {--diff-color: var(--difficulty-color-1)}
-.difficulty.difficulty-lv2 {--diff-color: var(--difficulty-color-2)}
-.difficulty.difficulty-lv3 {--diff-color: var(--difficulty-color-3)}
-.difficulty.difficulty-lv4 {--diff-color: var(--difficulty-color-4)}
-.difficulty.difficulty-lv5 {--diff-color: var(--difficulty-color-5)}
 .difficulty-indicator {
     text-align: right;
+}
+
+/* song difficulty summary */
+#song-info-difficulty-summary-container {
+	--inner-size: 16px;
+	--border-width: 2px; /* additional to --size */
+	--whole-size: calc(var(--inner-size) + (var(--border-width) * 2));
+	height: var(--whole-size);
+	margin-top: 2px;
+}
+.difficulty-summary-entry {
+	height: var(--inner-size);
+	width: var(--inner-size);
+	border-radius: calc(var(--whole-size) / 2);
+	border-color: var(--diff-color);
+	border-width: var(--border-width);
+	border-style: solid;
+	font-size: calc(var(--inner-size) * 0.75);
+	text-align: center;
+	margin-right: 2px;
+	display: inline-block;
 }
 
 /* list for selecting stuff */
