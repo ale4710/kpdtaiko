@@ -1,24 +1,12 @@
 (function() {
-    //initialize
-	var loaded = 0, needed = 2;
-	function loadCheck() {
-		if(++loaded === needed) {
-			loadCheck = null;
-			
-			loaded = null;
-			needed = null;
-			
-			pixiReady();
-		}
-	}
-    addGlobalReference(0, '../common/lib/pixi.min').then(loadCheck);
-    addGlobalReference(0, '../common/lib/pixi.unsafe-eval.min').then(loadCheck);
-
     var width = notesDisplay.clientWidth,
     height = notesDisplay.clientHeight,
     halfHeight = height / 2;
 
-    function pixiReady() {
+    Promise.all([
+		addGlobalReference(0, '../common/lib/pixi.min'),
+		addGlobalReference(0, '../common/lib/pixi.unsafe-eval.min')
+	]).then(function(){
         pixiReady = null;
 		pxapp = (new PIXI.Application({
 			width: width,
@@ -382,5 +370,5 @@
 
             broadcastDrawReady();
         });
-    }
+    });
 })();
