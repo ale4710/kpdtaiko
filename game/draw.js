@@ -69,7 +69,7 @@ judgeStyles = {
 
 },
 judgeTimeout,
-judgeAnimationMode = 1, //0 = off, 1 = simple, 2 = full
+judgeAnimationMode = getSettingValue('judge-animation-mode'), //0 = off, 1 = simple, 2 = full
 judgeSimpleAnimTimeout;
 function postJudge(js,nohide) {
     var judge = eid('judge');
