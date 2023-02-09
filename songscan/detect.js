@@ -1,19 +1,19 @@
 (function(){
-	var unseenSongs = [].concat(database.songsIds);
+	let unseenSongs = [].concat(database.songsIds);
 	
-	var scanBeginner;
+	let scanBeginner;
 	
 	function beginScanForReal() {
 		beginScanForReal = undefined;
 
 		scanBeginner(function(file, filePathParts, fileHash){
 			return (new Promise(function(resolve, reject){
-				var thisFileInfo = {
+				let thisFileInfo = {
 					changed: false,
 					newFile: false
 				};
 				
-				var existingSongSearchQuery = {
+				let existingSongSearchQuery = {
 					hash: database.songsDb({hash: fileHash}),
 					path: database.songsDb({filePath: filePathParts.filePath})
 				};
@@ -73,7 +73,7 @@
 						}
 						
 						parsedSong.forEach(function(songInfo){
-							var songData = databaseTools.createSongData();
+							let songData = databaseTools.createSongData();
 							songData.fileType = filePathParts.fileExtention;
 							songData.filePath = filePathParts.filePath;
 							songData.hash = fileHash;
@@ -98,7 +98,7 @@
 								['previewFile', 'audio'],
 								['previewTime', 'previewPoint']
 							].forEach(function(prop){
-								var a, b;
+								let a, b;
 								if(Array.isArray(prop)) {
 									a = prop[0];
 									b = prop[1];
@@ -123,7 +123,7 @@
 			}));
 		}).then(function(){
 			console.log('finishing up!!!!');
-			var songsToRemove = database.songsDb({id: unseenSongs});
+			let songsToRemove = database.songsDb({id: unseenSongs});
 			console.log('remove', songsToRemove.count(), 'total songs');
 			songsToRemove.remove();
 			
