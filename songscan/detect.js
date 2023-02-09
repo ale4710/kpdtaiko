@@ -13,33 +13,31 @@
 					newFile: false
 				};
 				
-				var proceedToScan = false;
-				
 				var existingSongSearchQuery = {
 					hash: database.songsDb({hash: fileHash}),
 					path: database.songsDb({filePath: filePathParts.filePath})
 				};
 				
-				(()=>{
-					var existingSong = (
-						existingSongSearchQuery.hash.first() || 
-						existingSongSearchQuery.path.first()
-					);
-
-					if(existingSong) {
-						arraySearchAndRemove(
-							unseenSongs,
-							existingSong.id
-						);
-					} else {
-						thisFileInfo.newFile = true;
-					}
-				})();
-				
-				var songDatabaseExistance = (
+				let songDatabaseExistance = (
 					(existingSongSearchQuery.hash.count() !== 0) +
 					((existingSongSearchQuery.path.count() !== 0) << 1)
 				);
+				
+				//remove existing songs from unseenSongs list
+				if(songDatabaseExistance !== 0) {
+					//exists
+					let sidList = existingSongSearchQuery.hash.select('id');
+					sidList.concat(existingSongSearchQuery.path.select('id'));
+					
+					sidList.forEach((id)=>{
+						arraySearchAndRemove(
+							unseenSongs,
+							id
+						);
+					});
+				}
+				
+				let proceedToScan = false;
 				console.log(songDatabaseExistance);
 				switch(songDatabaseExistance) {
 					// 0 0
