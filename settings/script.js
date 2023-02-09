@@ -10,9 +10,14 @@ window.addEventListener('load',function(){
         console.log('app has been started.');
         sessionStorage.setItem('apprunning',true);
         initSettings(0,true);
-
+		
+		let rescan = (localStorage.getItem('do-not-rescan') !== '1');
         setTimeout(()=>{
-            location = '/songscan/index.html';
+			if(rescan) {
+				location = '/songscan/index.html';
+			} else {
+				location = '/songselect/index.html';
+			}
         }, 10);
         } else {
             disableControls = false;
