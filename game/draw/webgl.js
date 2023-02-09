@@ -64,7 +64,7 @@
 
             //util fns
             function lgnxp(time, la, to) {
-                return /* Math.floor */((getNoteXpos(time, la, to) * width) + noteTools.targetPos);
+                return ((getNoteXpos(time, la, to) * width) + noteTools.targetPos);
             }
 
             function makeNoteSprite(tex) {
@@ -134,7 +134,7 @@
                         if(barlinesOnScreen.length !== 0) {
                             for(var i = 0; i < barlinesOnScreen.length;) {        
                                 var cb = barlinesOnScreen[i],
-                                lp = /* Math.floor */(lgnxp(
+                                lp = (lgnxp(
                                     cb.time,
                                     cb.lookAhead
                                 ));
@@ -143,8 +143,10 @@
                                     barlinesOnScreen.splice(i,1)
                                     barlinesWaitingRoom.push(cb);
                                     cb.sprite.visible = false;
-                                    } else {
-                                    lp = Math.floor(lp);
+								} else {
+                                    //lp = Math.floor(lp);
+									lp = (lp | 0); //floors it
+									
                                     //sprite.visible is false default.
                                     //it will be enabled when in view.
                                     if(lp <= width) {
@@ -197,8 +199,9 @@
         
                 //notes
                 if(latestObjectDrawn in drawingOrder) {
+					let newObjectAdded = false;
                     while(drawingOrder[latestObjectDrawn].startDraw <= curTime()) {
-                        //console.log('checking');
+                        newObjectAdded = true;
         
                         var cur = drawingOrder[latestObjectDrawn],
                         obj = gf[cur.id];
@@ -239,7 +242,8 @@
                             drumrollBody.body.y = halfHeight;
                             drumrollBody.body.pivot.set(
                                 0,
-                                Math.floor(drumrollBody.body.height / 2)
+                                //Math.floor(drumrollBody.body.height / 2)
+								((drumrollBody.body.height / 2) | 0) //floor
                             );
                             pxapp.stage.addChild(drumrollBody.body);
 
@@ -248,7 +252,6 @@
 
                         objectPrintInfo.sprite.visible = false;
                         objectPrintInfo.sprite.zIndex = zi;
-                        pxapp.stage.sortChildren();
 
                         var push = false;
                         orderCheck: if(objectsPrinted.length !== 0) {
@@ -272,6 +275,9 @@
                         latestObjectDrawn++;
                         if(latestObjectDrawn === drawingOrder.length) {break;}
                     }
+					if(newObjectAdded){ //sort at end, and only when new object
+						pxapp.stage.sortChildren();
+					}
                 }
             
                 //actually drawing
@@ -294,8 +300,8 @@
                                 break;
                             case 2: //drumroll
                                 var now = curTime(),
-                                sx = /* Math.floor */(lgnxp(curObj.time, curObj.lookAhead)), 
-                                ex = /* Math.floor */(lgnxp(curObj.time + curObj.length, curObj.lookAhead)),
+                                sx = (lgnxp(curObj.time, curObj.lookAhead)), 
+                                ex = (lgnxp(curObj.time + curObj.length, curObj.lookAhead)),
                                 tns = noteTools.dimentions[cur.size];
 
                                 if(ex < (tns / 2) * -1) {

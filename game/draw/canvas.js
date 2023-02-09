@@ -24,7 +24,7 @@
 
         function lgnxp(time, la, to, abs) {
             var a = abs? 0 : targetPos;
-            return /* Math.floor */((getNoteXpos(time, la, to) * canvas.width) + a);
+            return ((getNoteXpos(time, la, to) * canvas.width) + a);
         }
 
         //prerendering notes!!!!
@@ -47,69 +47,29 @@
                     }
                 }
 
-                drw = Math.floor(drw);
+                //drw = Math.floor(drw);
+				drw = (drw | 0);
             
                 ctx.drawImage(
                     idtu,
 
                     //source dims
-                    Math.floor(drx), 
+                    //Math.floor(drx), 
+					(drx | 0), //floor
                     0,
                     drw,
                     idtu.height,
 
                     //dest dims
                     Math.floor(x - ((drw / 2) * !oxd)),
-                    Math.floor(y),
+                    //Math.floor(y),
+					//((x - ((drw / 2) * !oxd)) | 0),
+					(y | 0),
                     drw,
                     idtu.height
                 );
             }
         }
-
-        /* function createGroup(groupInfo) {
-            bufferCtx.clearRect(0,0,buffer.width,buffer.height);
-            bufferCtx.globalCompositeOperation = 'destination-over';
-
-            var fo = groupInfo[0], endTime, width;
-
-            groupInfo.forEach((obj, ocp)=>{
-                var go = gf[obj.id], x = lgnxp(
-                    go.time,
-                    go.lookAhead,
-                    fo.time,
-                    true
-                ) + noteSizes.big;
-
-                drawNoteSimple(
-                    bufferCtx,
-                    noteTypes[go.type],
-                    noteSizes[Number(go.big)],
-                    x
-                );
-
-                if(ocp === groupInfo.length) {
-                    endTime = go.time;
-                    width = x + noteSizes.big;
-                }
-            });
-
-            return {
-                start: fo.time,
-                end: endTime,
-                lookAhead: fo.lookAhead,
-                image: bufferCtx.getImageData(
-                    0,0,
-                    width,
-                    noteSizes.big
-                )
-            };
-        } */
-
-        //define game fns
-        /* preDrawFn = function(){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-        } */
 
         barlineManager = barlineInitialize(
             (function(){
@@ -149,19 +109,24 @@
                         bcctx.strokeStyle = '#fff';
                         bcctx.lineWidth = 1;
                         bcctx.beginPath();
-                        for(var i = 0; i < barlinesOnScreen.length;) {
+                        for(let i = 0; i < barlinesOnScreen.length;) {
                             barlineExistedBefore = true;
                         
-                            var cb = barlinesOnScreen[i],
-                            lp = Math.floor(lgnxp(
+                            let cb = barlinesOnScreen[i];
+                            /* let lp = Math.floor(lgnxp(
                                 cb.time,
                                 cb.lookAhead
-                            ));
+                            )); */
+							let lp = lgnxp(
+                                cb.time,
+                                cb.lookAhead
+                            );
                             
                             if(lp < 0) {
                                 barlinesOnScreen.splice(i,1);
                             } else {
-                                lp = Math.floor(lp);
+                                //lp = Math.floor(lp);
+								lp = (lp | 0);
                                 if(lp <= canvas.width) {
                                     bcctx.moveTo(lp, 0);
                                     bcctx.lineTo(lp, canvas.height);
@@ -267,14 +232,16 @@
                             if(notesMissed.indexOf(cur.id) !== -1) {remove = true;}
                             break;
                         case 2: //drumroll
-                            var now = curTime(),
-                            sx = 0, 
-                            ex = Math.floor(lgnxp(curObj.time + curObj.length, curObj.lookAhead)), 
-                            tns = noteDims[cur.size];
+                            var now = curTime();
+                            var sx = 0;
+                            var ex = Math.floor(lgnxp(curObj.time + curObj.length, curObj.lookAhead));
+							//var ex = ((lgnxp(curObj.time + curObj.length, curObj.lookAhead)) | 0); //floor (but it only works when positive)
+                            var tns = noteDims[cur.size];
                         
                             //draw the start?
                             if(!cur.startGone) {
                                 sx = Math.floor(lgnxp(curObj.time, curObj.lookAhead));
+								//sx = ((lgnxp(curObj.time, curObj.lookAhead)) | 0);
                             
                                 drawNote(
                                     cur.type,
@@ -293,11 +260,12 @@
                         
                             //rectangle.
                             //borders first
-                            var rds = noteBorderDims[cur.size],
-                            ry = drawOffset[cur.size],
-                            rw = ex - sx,
-                            rih = rds.innerHeight,
-                            rbt = rds.borderSize;
+                            var rds = noteBorderDims[cur.size];
+                            var ry = drawOffset[cur.size];
+                            var rw = ex - sx;
+                            var rih = rds.innerHeight;
+                            var rbt = rds.borderSize;
+							
                             ctx.fillStyle = '#fff';
                             ctx.beginPath();
                             ctx.rect(
@@ -331,8 +299,8 @@
                             } 
                             break;
                         case 3: //balloon
-                            var t,
-                            now = curTime();
+                            var t;
+                            var now = curTime();
                             if(now > curObj.length) { //past the end of the balloon
                                 t = curObj.length;
                             } else if(now < curObj.time) { //before the beginning of the balloon
@@ -397,5 +365,3 @@
         broadcastDrawReady();
     });
 })();
-
-//drawCanvasInit();
