@@ -23,9 +23,9 @@ var parseOsuFile = (function(){
         return sm;
     },
 
-    typeGate = parseInt('1011',2),
-    hitsoundColorGate = parseInt('1010',2),
-    hitsoundBigGate = parseInt('100',2);
+    typeGate = 0b1011,
+    hitsoundColorGate = 0b1010,
+    hitsoundBigGate = 0b0100;
 
     function getHitObjectType(type,hitsounds) {
         var r = {
