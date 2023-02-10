@@ -4,7 +4,7 @@ line_break_column=72
 auto_continue_multiline=true
 
 [file_prefs]
-final_new_line=true
+final_new_line=false
 ensure_convert_new_lines=false
 strip_trailing_spaces=false
 replace_tabs=false
@@ -18,20 +18,18 @@ detect_indent_width=false
 indent_mode=2
 
 [project]
-name=drumgame
+name=domtaiko
 base_path=./
-description=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
-FILE_NAME_0=495;None;0;EUTF-8;1;1;0;%2Fmedia%2FSekibanki%2Fmegasync%2Fdrumgame%2Fdrumgame;0;4
+current_page=-1
 
 [VTE]
-last_dir=/media/Sekibanki/kaiosp/bankitube
+last_dir=/home/ale4710/Documents/vndspcp
 
 [prjorg]
 source_patterns=*.c;*.C;*.cpp;*.cxx;*.c++;*.cc;*.m;
