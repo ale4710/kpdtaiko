@@ -1,0 +1,38 @@
+{
+    "version": "0.0.1",
+    "name": "docutaiko",
+	"id": "docutaiko",
+    "display": "docutaiko",
+    "short_name": "docutaiko",
+    "description":"docutaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files.",
+    "lang": "en-US",
+	"orientation": "portrait",
+	"display": "fullscreen",
+    "start_url":"/settings/index.html#bootup",
+    "type":"privileged",
+    "theme_color": "#FFFFFF",
+    "fullscreen": "true",
+	"icons": [
+		{
+			"src": "/img/icon/56.png",
+			"type": "image/png",
+			"sizes": "56x56"
+		},
+		{
+			"src": "/img/icon/112.png",
+			"type": "image/png",
+			"sizes": "112x112"
+		}
+	],
+	"b2g_features": {
+		"version": "0.0.1",
+		"subtitle":"A rhythm game for KaiOS.",
+		"developer":{
+		   "name":"ale4710",
+		   "url": "https://alego.web.fc2.com/"
+		},
+		"permissions":{
+			"device-storage:sdcard":{"access":"readonly"}
+		}
+	}
+}
