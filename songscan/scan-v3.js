@@ -36,7 +36,11 @@ function beginScan(detectedFn) {
 			}
 		};
 		
-		function next() {fileIterate.next().then(reciever)}
+		function next() {
+			fileIterate.next()
+			.then(reciever)
+			.catch(errhandle)
+		}
 		
 		next();
 	});

@@ -128,21 +128,14 @@
 			songsToRemove.remove();
 			
 			finish();
-		});
+		}).catch(errhandle);
 	};
 	
 	if(testing) {
-		function bstec(){
-			if('beginScanTest' in window) {
-				bstec = undefined;
-				scanBeginner = beginScanTest;
-				beginScanForReal();
-			} else {
-				setTimeout(bstec);
-			}
-		};
-		
-		bstec();
+		addGlobalReference(0, scriptFileName).then(()=>{
+			scanBeginner = beginScanTest;
+			beginScanForReal();
+		});
 	} else {
 		let scriptFileName = ('scan-v' + [
 			'2.5',
