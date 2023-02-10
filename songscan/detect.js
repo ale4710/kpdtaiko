@@ -144,7 +144,14 @@
 		
 		bstec();
 	} else {
-		scanBeginner = beginScan;
-		beginScanForReal();
+		let scriptFileName = ('scan-v' + [
+			'2.5',
+			'3'
+		][0 + ('b2g' in navigator)]);
+		
+		addGlobalReference(0, scriptFileName).then(()=>{
+			scanBeginner = beginScan;
+			beginScanForReal();
+		});
 	}
 })();

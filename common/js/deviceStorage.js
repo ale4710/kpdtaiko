@@ -3,7 +3,7 @@ gameSubDirectories = {
     songs: 'songs',
     userMedia: 'custom'
 },
-deviceStorage = (navigator.getDeviceStorage && navigator.getDeviceStorage('sdcard')) || null,
+deviceStorage = (getb2g().getDeviceStorage && getb2g().getDeviceStorage('sdcard')) || null,
 
 notifyOnError = true;
 

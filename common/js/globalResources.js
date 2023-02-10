@@ -23,6 +23,7 @@
         lib+'md5',
 		lib+'taffy-min',
         //normal scripts
+		user+'compat',
         user+'etcf',
         user+'settings',
         user+'gameFn',
@@ -38,9 +39,9 @@
         user+'control',
         user+'tjaParse',
         user+'osuParse',
-        user+'resourceAdder',
+        user+'resourceAdder'
 		
-		user+'test'
+		//user+'test'
     ].forEach((fn)=>{
         addGlobalReference(0, 
             bg + fn
