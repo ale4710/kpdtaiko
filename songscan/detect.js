@@ -131,20 +131,19 @@
 		}).catch(errhandle);
 	};
 	
+	let scriptFileName;
 	if(testing) {
-		addGlobalReference(0, scriptFileName).then(()=>{
-			scanBeginner = beginScanTest;
-			beginScanForReal();
-		});
+		scriptFileName = 'test';
 	} else {
-		let scriptFileName = ('scan-v' + [
+		scriptFileName = ('scan-v' + [
 			'2.5',
 			'3'
 		][0 + ('b2g' in navigator)]);
-		
-		addGlobalReference(0, scriptFileName).then(()=>{
-			scanBeginner = beginScan;
-			beginScanForReal();
-		});
 	}
+	
+	addGlobalReference(0, scriptFileName).then(()=>{
+		scanBeginner = beginScan;
+		beginScanForReal();
+	});
+	scriptFileName = undefined;
 })();

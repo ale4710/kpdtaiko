@@ -1,4 +1,4 @@
-function beginScanTest(detectedFn){
+function beginScan(detectedFn){
 	var sl,
 	cur = 0,
 	
