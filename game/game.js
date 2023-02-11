@@ -223,19 +223,29 @@ function gameLoop(proceed) {
 }
 
 var gameAnimRefNum;
+var gameAnimMethod = getSettingValue('draw-loop-method');
 function gameAnim(proceed) {
     draw();
 
     if(proceed !== false) {
         eid('fps').textContent = fpsCheck('fps');
-        gameAnimRefNum = requestAnimationFrame(gameAnim);
+        if(gameAnimMethod === 0) {
+			gameAnimRefNum = requestAnimationFrame(gameAnim);
+		} else {
+			gameAnimRefNum = setTimeout(gameAnim);
+		}
     }
 }
 
 function gameLoopStop() {
     //cancelAnimationFrame(gameLoopReferenceNumber);
     clearTimeout(gameLoopReferenceNumber);
-    cancelAnimationFrame(gameAnimRefNum);
+    
+    if(gameAnimMethod === 0) {
+		cancelAnimationFrame(gameAnimRefNum);
+	} else {
+		clearTimeout(gameAnimRefNum);
+	}
 }
 
 function checkingReset() {

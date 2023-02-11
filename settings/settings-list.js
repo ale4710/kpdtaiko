@@ -196,6 +196,16 @@ settingsList = {
         ],
         default: 1
     },
+    
+    'draw-loop-method': {
+		label: 'Draw Loop Method',
+		type: 0,
+		values: [
+			'requestAnimationFrame',
+			'setTimeout'
+		],
+		default: 0
+	},
 
     'show-file-errors': {
         label: 'Show File Errors',
@@ -319,6 +329,7 @@ settingsListCategories = {
         label: 'Advanced Settings',
 		settings: [
             'timer-mode',
+            'draw-loop-method',
             'note-rendering-mode',
             'canvas-anti-alias-circles',
             'media-play-mode',
