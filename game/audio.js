@@ -204,8 +204,16 @@ function createAudioContext() {
             r('audioContext already started.');
         }));
     }
-
+    
     audioCtx = new AudioContext();
+    //check if latency settings are supported
+    if(audioCtx.baseLatency) {
+		//recreate the audio context
+		audioCtx.close();
+		audioCtx = new AudioContext({
+			latencyHint: 'interactive'
+		});
+	}
 
     //media sound adjust
     audioCtxSpace.mediaGain = audioCtx.createGain();
