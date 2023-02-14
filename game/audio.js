@@ -48,52 +48,6 @@ var audioControl = (function(){
 	return ctrls;
 })();
 
-function audioControl(action) {
-	//console.log(action);
-	
-    if(audio) {
-        switch(action + (mediaPlayMode << 4)) {
-            //theyre the same!
-            case audioControlActions.pause: //html
-            case audioControlActions.pause + (1<<4): //audctx
-                audio.pause();
-                break;
-            case audioControlActions.play: //html
-            case audioControlActions.play + (1<<4): //audctx
-                audioEnded = false;
-                audio.play();
-                break;
-            case audioControlActions.checkPlaybackRate: //html
-            case audioControlActions.checkPlaybackRate + (1<<4): //audctx
-                return audio.playbackRate;
-    
-            //html specific
-            case audioControlActions.checkPaused:
-                return audio.paused;
-            case audioControlActions.checkTime:
-                return audio.currentTime;
-            case audioControlActions.checkDuration:
-                return audio.duration;
-            case audioControlActions.stop:
-                audio.pause();
-                audio.currentTime = 0;
-                break;
-    
-            //audiocontext specific
-            case audioControlActions.checkPaused + (1<<4):
-                return audio.paused();
-            case audioControlActions.checkTime + (1<<4):
-                return audio.currentTime();
-            case audioControlActions.checkDuration + (1<<4):
-                return audio.duration();
-            case audioControlActions.stop + (1<<4):
-                audio.stop();
-                break;
-        }
-    }
-    
-}
-
 class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31653217
     constructor(audbuf, connectTo, playbackrate) {
         if(!audioCtx) {throw 'please start the audioCtx.'}
