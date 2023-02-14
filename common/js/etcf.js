@@ -38,6 +38,10 @@ function randomHexString(len) {
     return s;
 }
 
+function numberClamp(min, max, n) {
+	return Math.max(min, Math.min(max, n));
+}
+
 var createRandomKey = (function(){
 	var tk = [];
 	
