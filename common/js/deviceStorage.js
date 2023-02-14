@@ -8,6 +8,7 @@ deviceStorage = (getb2g().getDeviceStorage && getb2g().getDeviceStorage('sdcard'
 notifyOnError = true;
 
 function formFullgameDirectory(){
+	if(testing) {return '?'}
     return `${deviceStorage.storageName}/${gameDirectory}/${gameSubDirectories.songs}`;
 }
 

@@ -39,7 +39,7 @@
         user+'control',
         user+'tjaParse',
         user+'osuParse',
-        user+'resourceAdder'
+        user+'resourceAdder',
 		
 		//user+'test'
     ].forEach((fn)=>{
