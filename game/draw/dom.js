@@ -24,11 +24,6 @@
         massRemovedObjects = [];
     }
     calculateDrawingOrder = function(file) {
-        setCssVariable(
-            'highest-zindex',
-            file.objects.length + 1
-        );
-    
         drawingOrder = [];
         var balloons = [], drumrolls = [];
         file.objects.forEach((obj)=>{
@@ -258,7 +253,7 @@
                         element.classList.add('big');
                     }
         
-                    element.style.zIndex = gameFile.objects.length - obj.id;
+                    element.style.zIndex = Math.floor(obj.id) * -1;
     
                     var xp = 0;
                     if(currentlyPrinting !== 0) {

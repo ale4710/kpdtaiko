@@ -17,6 +17,7 @@ function pause() {
     gameAnim(false);
 
     document.body.classList.remove('hide-navbar');
+    document.body.classList.add('paused');
     if(!pauseMenuVisible) {
         pauseMenuVisible = true;
         pauseMenu.menuViewToggle(true,true);
@@ -30,6 +31,7 @@ function unpause(immediate) {
     gameAnim();
 
     document.body.classList.add('hide-navbar');
+    document.body.classList.remove('paused');
     pauseMenu.menuViewToggle(false);
     pauseMenuVisible = false;
 

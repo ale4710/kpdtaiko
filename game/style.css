@@ -1,11 +1,8 @@
-:root {
-    --highest-zindex: 100;
-}
-
 .bottom-sub-info {
 	bottom: 0;
 	font-size: 10px;
 	position: absolute;
+	z-index: 2;
 }
 .bottom-sub-info.show-during-gameplay-only {
 	display: none;
@@ -18,10 +15,9 @@ body.ready:not(.ended) .bottom-sub-info.show-during-gameplay-only {
 .bottom-sub-info-right {right: 0; text-align: right;}
 
 .screen {
-    z-index: var(--highest-zindex);
+    z-index: 1;
 }
 
-/*specific*/
-#offset-display {
-	z-index: calc(var(--highest-zindex) + 10);
+body.paused .hidden-on-paused {
+	display: none;
 }
