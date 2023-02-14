@@ -180,7 +180,7 @@ function barlineInitialize(drawingManager){
 
 //time progress
 function updateTimeProgessBar() {
-    var playbackRateScaler = 1 / audioControl(audioControlActions.checkPlaybackRate),
+    var playbackRateScaler = 1 / audioControl.checkPlaybackRate(),
     firstObjTime = gameFile.objects[0].time,
     lastObjTime = gameFile.objects[gameFile.objects.length - 1].time,
     timePastFirstObject = curTime() - firstObjTime;

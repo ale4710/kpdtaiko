@@ -7,15 +7,47 @@ sounds = {},
 mediaPlayMode = getSettingValue('media-play-mode') //0 = html media element, 1 = audiocontext
 ;
 
-var audioControlActions = {
-    pause: 0,
-    play: 1,
-    checkPaused: 2,
-    checkTime: 3,
-    checkDuration: 4,
-    checkPlaybackRate: 5,
-    stop: 6
-};
+var audioControl = (function(){
+	let ctrls = {};
+	
+	ctrls.play = function(){
+		audioEnded = false;
+		audio.play();
+	};
+	
+	ctrls.pause = function(){
+		audio.pause();
+	}
+	
+	ctrls.checkPlaybackRate = function(){
+		return audio.playbackRate;
+	};
+	
+	switch(mediaPlayMode) {
+		case 0: //html
+			ctrls.checkPaused = function(){return audio.paused;};
+			ctrls.checkTime = function(){return audio.currentTime};
+			ctrls.checkDuration = function(){return audio.duration};
+			ctrls.stop = function(){
+				audio.pause();
+				audio.currentTime = 0;
+			};
+			ctrls.seekAbsolute = function(tt){audio.currentTime = tt}
+			ctrls.seekRelative = function(os){audio.currentTime += os}
+			break;
+		case 1: //actx
+			ctrls.checkPaused = function(){return audio.paused()};
+			ctrls.checkTime = function(){return audio.currentTime()};
+			ctrls.checkDuration = function(){return audio.duration()};
+			ctrls.stop = function(){audio.stop()};
+			ctrls.seekAbsolute = function(tt){audio.seekAbsolute(tt)};
+			ctrls.seekRelative = function(os){audio.seekRelative(os)};
+            break;
+	}
+	
+	return ctrls;
+})();
+
 function audioControl(action) {
 	//console.log(action);
 	
@@ -95,26 +127,26 @@ class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31
             audioEnded = true;
         }
     }
-
+    
     play() {
 		//console.log('audio ctxstyle play');
         if(this.paused()) {
-			var po = this.pausedOffset;
-			if(po === null) {po = 0;}
+			let po = this.pausedOffset || 0;
+			this.startedTime = audioCtx.currentTime - po;
+            
+            this.pausedOffset = null;
 			
             this.sourceNode = audioCtx.createBufferSource();
             this.sourceNode.buffer = this.audioBuffer;
             this.sourceNode.playbackRate.value = this.playbackRate;
             this.sourceNode.connect(this.destination);
+            
             this.sourceNode.start(0, po * this.playbackRate);
-			
-            this.startedTime = audioCtx.currentTime - po;
-            this.pausedOffset = null;
 
             this.sourceNodeEndCallback = ()=>{this.sourceNodeCheckEnded(this)};
             this.sourceNode.addEventListener('ended', this.sourceNodeEndCallback);
         }
-    }
+	}
 
     pause() {
 		//console.log('audio ctxstyle paused');
@@ -137,6 +169,17 @@ class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31
         this.startedTime = null;
         this.pausedOffset = null;
     }
+    
+    seekAbsolute(targetTime = 0) {
+		let restartAudio = !this.paused();
+		this.stop();
+		this.pausedOffset = numberClamp(0, this.duration(), targetTime) / this.playbackRate;
+		if(restartAudio) {this.play();}
+	}
+	
+	seekRelative(seek = 0) {
+		this.seekAbsolute(this.currentTime() + seek);
+	}
 }
 
 function updateAudioVolume() {

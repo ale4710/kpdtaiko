@@ -83,7 +83,7 @@ var metronome = (function(){
     function getBpm() {
 		var b = (60000 / gameFile.bpmTimes[curTimingPoint].beatLength);
         return {
-			bpm: b * audioControl(audioControlActions.checkPlaybackRate),
+			bpm: b * audioControl.checkPlaybackRate(),
 			bpmActual: b
 		};
     }
@@ -110,7 +110,7 @@ var metronome = (function(){
         }
 
         if(lastBpm !== curTimingPoint) {
-			var scale = audioControl(audioControlActions.checkPlaybackRate),
+			var scale = audioControl.checkPlaybackRate(),
 			ob, nb, oba, nba;
 			
 			oba = (60000 / bpmTimes[lastBpm].beatLength);
