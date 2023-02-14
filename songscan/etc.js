@@ -33,6 +33,8 @@ var errhandle = (function(){
 			msg = err.message || err.name || msg;
 		}
 		
+		msg = errMsg[msg] || msg;
+		
 		messageBox.create(
 			'Error occured',
 			msg + '\n\nPlease close the program and resolve the issue or try again.',
