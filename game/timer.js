@@ -23,6 +23,7 @@ var prerollPlayed = false;
 var timerPaused = false;
 
 var timerMode = getSettingValue('timer-mode'); //0 = linked to audio, 1 = independent
+var originalTimerMode = timerMode;
 var timerMode1 = {
     time: 0,
     last: 0
@@ -39,8 +40,6 @@ if(modsList.mods.swTimingWindow.check()) {
     hitWindow.good = 1500;
     hitWindow.okay = 3000;
     hitWindow.miss = 3000;
-
-    /* eid('indicator-super-wide-hit-windows').classList.remove('hidden'); */
 }
 
 function curTime() {
@@ -64,6 +63,7 @@ function timerFullReset() {
     prerollLastTime = null;
     prerollPlayed = false;
     timerMode1.last = 0;
+    timerMode = originalTimerMode;
 }
 function timerUpdate() {
     if(timerPaused) {return}
