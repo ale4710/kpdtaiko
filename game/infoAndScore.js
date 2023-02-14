@@ -89,6 +89,14 @@ function outputGameplayInfoFinal() {
 	eid('game-stats-average').textContent = td.average.toFixed(2);
 }
 
+function getAverageError() {
+	let tms = 0;
+	hitDataMs.forEach((ms)=>{
+		tms += ms;
+	});
+	return tms / hitDataMs.length;
+}
+
 function analyzeTimeData(histogramScale) {
 	if(!histogramScale) {histogramScale = 2}
 	var histogram = {

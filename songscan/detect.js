@@ -123,9 +123,20 @@
 			}));
 		}).then(function(){
 			console.log('finishing up!!!!');
+			//remove from offsets storage
+			unseenSongs.forEach((songId)=>{
+				localStorage.removeItem('offset-' + songId);
+			});
+			//remove from database
 			let songsToRemove = database.songsDb({id: unseenSongs});
 			console.log('remove', songsToRemove.count(), 'total songs');
 			songsToRemove.remove();
+			
+			for (let i = 0; i < localStorage.length; i++) {
+				localStorage.removeItem();
+				console.log(localStorage.getItem(localStorage.key(i)));
+			}
+
 			
 			finish();
 		}).catch(errhandle);

@@ -116,9 +116,18 @@
 			<div class="note">*early/late counts include goods</div>
 		</div>
 
-        <div id="bl" class="text-outline">
-            <span id="fps"></span> fps
-            <span id="ups"></span> ups
+		<!--bottom sub info-->
+        <div class="text-outline bottom-sub-info bottom-sub-info-left show-during-gameplay-only">
+            <span id="fps"></span> fps / <span id="ups"></span> ups
+        </div>
+        
+        <div class="text-outline bottom-sub-info bottom-sub-info-right">
+			<div id="offset-display" class="hidden">
+				timing info:
+				<br>local offset <span id="local-offset"></span>ms
+				<br>global offset <span id="global-offset"></span>ms
+				<br>current error <span id="error-offset"></span>ms
+			</div>
         </div>
     </div>
 </body></html>

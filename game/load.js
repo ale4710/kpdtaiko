@@ -15,9 +15,12 @@ function postError(msg) {
 function firstLoad(loaderFn) {
 	firstLoad = null;
 	
-	var chartFolder = urlParams.get('folder'),
-    chartFileName = urlParams.get('fileName'),
-    chartFileType = urlParams.get('fileType');
+	let chartFolder = urlParams.get('folder');
+    let chartFileName = urlParams.get('fileName');
+    let chartFileType = urlParams.get('fileType');
+    let chartId = urlParams.get('songId');
+    
+    initializeLocalTimeOffset(chartId);
 	
 	loaderFn(`${chartFolder}/${chartFileName}`).then((blob)=>{
         fileReaderA(blob,'arraybuffer').then((arrayBuf)=>{

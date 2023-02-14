@@ -23,7 +23,6 @@ prerollAmount,
 prerollLastTime,
 prerollPlayed = false,
 
-timeOffset = getSettingValue('offset') * (-1 + (2 * getSettingValue('offset-mode'))),
 timerPaused = false,
 
 timerMode = getSettingValue('timer-mode'), //0 = linked to audio, 1 = independent
@@ -32,6 +31,13 @@ timerMode1 = {
     last: 0
 }
 ;
+
+let timeOffset = 0;
+let globalTimeOffset = getSettingValue('offset') * (-1 + (2 * getSettingValue('offset-mode')));
+let localTimeOffset = 0;
+function recalculateOffset() {
+	timeOffset = globalTimeOffset + localTimeOffset;
+}
 
 if(modsList.mods.swTimingWindow.check()) {
     hitWindow.good = 1500;
@@ -161,32 +167,32 @@ function start() {
 	bottomStage.dataUpdated();
 
     createAudioContext().then(()=>{
-		function startForReal() {
-			document.body.classList.add('ready');
-
-			ready = true;
-			reset();
-			
-			bottomStage.init();
-
-			gameLoopStop();
-			gameLoop();
-			gameAnim();
-		}
-
 		if(audioCtx.state === 'running') {
-			startForReal();
+			return Promise.resolve();
 		} else {
 			eid('loading-display-in').textContent = 'Press Enter.';
-			window.addEventListener('keydown', function sac(k){
-				if(k.key === 'Enter') {
-					audioCtx.resume();
-					startForReal();
-					window.removeEventListener('keydown', sac);	
-				}
+			return new Promise((proceed)=>{
+				window.addEventListener('keydown', function sac(k){
+					if(k.key === 'Enter') {
+						window.removeEventListener('keydown', sac);
+						audioCtx.resume();
+						proceed();
+					}
+				});
 			});
 		}
-    });
+    }).then(()=>{
+		document.body.classList.add('ready');
+
+		ready = true;
+		reset();
+		
+		bottomStage.init();
+
+		gameLoopStop();
+		gameLoop();
+		gameAnim();
+	});
 }
 
 function reset() {

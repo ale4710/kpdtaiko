@@ -432,6 +432,7 @@ function selectSong() {
 
 			diffEl.dataset.filePath = diff.filePath;
 			diffEl.dataset.target = diff.difficulty;
+			diffEl.dataset.id = diff.id;
 		});
 		
 		curpage = 1;
@@ -456,10 +457,13 @@ function selectDifficulty() {
 	var urlprms = (new URLSearchParams()),
 	songToPlay = songList[lastSongSelected],
 	stpPathParts = parseFilePath(actEl().dataset.filePath);
+	
 	urlprms.append('fileName', stpPathParts.filename);
 	urlprms.append('folder', stpPathParts.directory);
 	urlprms.append('fileType', songToPlay.fileType);
 	urlprms.append('songSource', songToPlay.source);
+	urlprms.append('songId', actEl().dataset.id);
+	
 	switch(songToPlay.fileType) {
 		case 'tja':
 			urlprms.append(

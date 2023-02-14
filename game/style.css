@@ -2,19 +2,26 @@
     --highest-zindex: 100;
 }
 
-#bl {
-    bottom: 0;
-    left: 0;
-    font-size: 10px;
-    position: absolute;
-    display: none;
+.bottom-sub-info {
+	bottom: 0;
+	font-size: 10px;
+	position: absolute;
 }
-#bl > span:nth-child(n+2)::before {
-	content: ' / ';
+.bottom-sub-info.show-during-gameplay-only {
+	display: none;
 }
-body.ready:not(.ended) #bl {
+body.ready:not(.ended) .bottom-sub-info.show-during-gameplay-only {
     display: unset;
 }
+
+.bottom-sub-info-left {left: 0}
+.bottom-sub-info-right {right: 0; text-align: right;}
+
 .screen {
     z-index: var(--highest-zindex);
+}
+
+/*specific*/
+#offset-display {
+	z-index: calc(var(--highest-zindex) + 10);
 }

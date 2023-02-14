@@ -19,15 +19,13 @@
 		'bottomStage',
         'draw',
         'drawNoteTools',
-        /* 'drawDOM',
-        'drawCanvas',
-        'drawWebGL', */
         'drawSelect',
         'infoAndScore',
         'autoplay',
         'pause',
         'end',
         'game',
+        'timeAdjust',
         'load'
     ].forEach((fn)=>{
         addGlobalReference(0, fn);
