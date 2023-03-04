@@ -221,7 +221,7 @@ var parseTjaFile = (function(){
 							timeElapsedPerNote = 0;
 
 							function calculateLookAhead() {
-								var vel = (100 * scrollInitMultiplier * currentScrollSpeed * globalScrollMultiplier), 
+								var vel = (125 * scrollInitMultiplier * currentScrollSpeed * globalScrollMultiplier), 
 								dist = 480;
 								lookAhead = beatLength * (dist / vel);
 							}
