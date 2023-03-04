@@ -60,6 +60,8 @@ class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31
         this.destination = connectTo || audioCtx.destination;
 
         this.playbackRate = playbackrate || 1;
+		
+		this.stop();
     }
 
     currentTime() {
@@ -90,15 +92,9 @@ class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31
             
             this.pausedOffset = null;
 			
-            this.sourceNode = audioCtx.createBufferSource();
-            this.sourceNode.buffer = this.audioBuffer;
-            this.sourceNode.playbackRate.value = this.playbackRate;
-            this.sourceNode.connect(this.destination);
-            
+            this.sourceNode = this.preSourceNode;
+			this.preSourceNode = null;
             this.sourceNode.start(0, po * this.playbackRate);
-
-            this.sourceNodeEndCallback = ()=>{this.sourceNodeCheckEnded(this)};
-            this.sourceNode.addEventListener('ended', this.sourceNodeEndCallback);
         }
 	}
 
@@ -115,13 +111,22 @@ class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31
     stop() {
         if(!this.paused()) {
             this.sourceNode.removeEventListener('ended', this.sourceNodeEndCallback);
-            this.sourceNodeEndCallback = null;
             this.sourceNode.disconnect();
             this.sourceNode.stop();
             this.sourceNode = null;
         }
+		
         this.startedTime = null;
         this.pausedOffset = null;
+		
+		//pre-create the source node
+		this.preSourceNode = audioCtx.createBufferSource();
+		this.preSourceNode.buffer = this.audioBuffer;
+		this.preSourceNode.playbackRate.value = this.playbackRate;
+		this.preSourceNode.connect(this.destination);
+		
+		this.sourceNodeEndCallback = ()=>{this.sourceNodeCheckEnded(this)};
+		this.preSourceNode.addEventListener('ended', this.sourceNodeEndCallback);
     }
     
     seekAbsolute(targetTime = 0) {
