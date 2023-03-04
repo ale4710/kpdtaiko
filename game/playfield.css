@@ -12,6 +12,7 @@
 #playfield > div {
     top: 0;
     height: 100%;
+	z-index: 0;
 }
 #playfield #notes-display > .group {
     width: 100%;
@@ -21,6 +22,7 @@
 #playfield #notes-display {
     left: 0;
     width: 100%;
+	z-index: -1;
     /* width: calc((1 - var(--drum-display-width)) * var(--width)); */
 }
 #playfield #notes-display .note {
