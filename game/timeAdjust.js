@@ -8,8 +8,8 @@ function initializeLocalTimeOffset(id) {
 }
 
 (function(){
-	let timingAdjustKey = 'SoftRight';
-	let timingResetKey = 'SoftLeft';
+	let timingAdjustKey = '#';
+	let timingResetKey = '1';
 	let adjustEnabled = false;
 	let keyAdjustAmount = {
 		'ArrowUp': 10,
