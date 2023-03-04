@@ -126,16 +126,6 @@ settingsList = {
         }
     },
 
-    'super-wide-hit-windows': { 
-        label: 'Super Wide Hit Windows',
-        type: 0,
-        values: [
-            'Disabled',
-            'Enabled'
-        ],
-        default: 0
-    },
-
     'show-lyrics': { //show-lyrics
         label: 'Show Lyrics',
         type: 0,
@@ -227,6 +217,36 @@ settingsList = {
         ],
         default: 0
     },
+	
+	'hit-windows': {
+		label: 'Hit Window Size',
+		type: 0,
+		values: [
+			'Custom',
+			'Wide',
+			'Normal',
+			'Tight'
+		],
+		default: 2
+	},
+	
+	'custom-hit-window-good': {
+        label: 'Good Hit Window (ms)',
+        type: 2,
+        default: 35
+    },
+	
+	'custom-hit-window-okay': {
+        label: 'Okay Hit Window (ms)',
+        type: 2,
+        default: 80
+    },
+	
+	'custom-hit-window-miss': {
+        label: 'Miss Hit Window (ms)',
+        type: 2,
+        default: 95
+    },
 
     'category-default': {
         action: 'default',
@@ -256,6 +276,11 @@ settingsList = {
 	'category-game': {
         action: 'game',
         label: 'Game Settings',
+        type: 5
+    },
+	'category-hit-windows': {
+        action: 'hit-windows',
+        label: 'Hit Windows',
         type: 5
     },
 	'category-advanced': {
@@ -321,7 +346,17 @@ settingsListCategories = {
 	'game': {
 		label: 'Game Settings',
 		settings: [
-            'super-wide-hit-windows',
+			'category-hit-windows'
+		]
+	},
+	
+	'hit-windows': {
+		label: 'Hit Windows',
+		settings: [
+			'hit-windows',
+			'custom-hit-window-good',
+			'custom-hit-window-okay',
+			'custom-hit-window-miss'
 		]
 	},
 	

@@ -38,10 +38,19 @@ var modsList = (function(){
             check: ()=>{return (getSettingValue('show-notes') === 0)},
             mode: 0
         },
-        swTimingWindow: {
-            img: 'super-wide-timing-window',
-            check: ()=>{return (getSettingValue('super-wide-hit-windows') === 1)},
-            mode: 0
+        timingWindow: {
+            img: 'timing-window-adjust',
+            check: ()=>{return getSettingValue('hit-windows')},
+            mode: 1,
+			defaultValue: 2,
+			formatLabel: (function(){
+				return [
+					'C',
+					'W',
+					null,
+					'T'
+				][getSettingValue('hit-windows')];
+			})
         },
         scrollSpeed: {
             img: 'scroll-speed-modify',
@@ -65,7 +74,7 @@ var modsList = (function(){
         'auto',
         'metronome',
         'notesHidden',
-        'swTimingWindow',
+        'timingWindow',
         'scrollSpeed',
         'audioSpeed'
     ];

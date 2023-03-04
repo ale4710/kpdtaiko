@@ -1,8 +1,25 @@
-var hitWindow = {
-    good: 35,
-    okay: 80,
-    miss: 95
-};
+var hitWindow = [
+	{ //custom
+		good: getSettingValue('custom-hit-window-good'),
+		okay: getSettingValue('custom-hit-window-okay'),
+		miss: getSettingValue('custom-hit-window-miss')
+	},
+	{ //wide
+		good: 46,
+		okay: 104,
+		miss: 124
+	},
+	{ //normal
+		good: 35,
+		okay: 80,
+		miss: 95
+	},
+	{ //tight
+		good: 24,
+		okay: 56,
+		miss: 67
+	}
+][getSettingValue('hit-windows')];
     /*               the timing window
         [------[------[------|------]------]------]
         |MISS  |OKAY  |GOOD     GOOD|  OKAY|  MISS|
@@ -34,12 +51,6 @@ var globalTimeOffset = getSettingValue('offset') * (-1 + (2 * getSettingValue('o
 var localTimeOffset = 0;
 function recalculateOffset() {
 	timeOffset = globalTimeOffset + localTimeOffset;
-}
-
-if(modsList.mods.swTimingWindow.check()) {
-    hitWindow.good = 1500;
-    hitWindow.okay = 3000;
-    hitWindow.miss = 3000;
 }
 
 function curTime() {
