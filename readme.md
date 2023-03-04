@@ -7,7 +7,7 @@ it's called DOMtaiko because, originally, it was only going to use the DOM for g
 [demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen.
 
 ## links
-on [gitlab](https://gitlab.com/ale4710/domtaiko)
+on [gitlab](https://gitlab.com/ale4710/domtaiko)  
 on [github](https://github.com/ale4710/domtaiko)
 
 ## warning
