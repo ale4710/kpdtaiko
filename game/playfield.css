@@ -7,6 +7,7 @@
     top: calc(var(--playfield-top) * var(--height));
     height: calc(var(--playfield-height) * var(--height));
     background: #333;
+	z-index: 1;
 }
 #playfield > div {
     top: 0;

@@ -253,7 +253,8 @@
                         element.classList.add('big');
                     }
         
-                    element.style.zIndex = Math.floor(obj.id) * -1;
+                    //element.style.zIndex = Math.floor(obj.id) * -1;
+					element.style.zIndex = Math.floor(gameFile.objects.length - obj.id);
     
                     var xp = 0;
                     if(currentlyPrinting !== 0) {
