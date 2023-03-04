@@ -333,6 +333,50 @@ function playSound(soundId) {
     }
 }
 
+function checkHTMLaudioAutoPlay() {
+	return new Promise(function(resolve, reject){
+		if(mediaPlayMode === 0) {
+			xmlhttprqsc(
+				'sounds/blank.mp3',
+				'blob',
+				function(e) {
+					let url = URL.createObjectURL(e.target.response);
+					e = undefined;
+					let audio = new Audio(url);
+					audio.oncanplay = (function(){
+						let ppr = audio.play();
+						if(ppr) {
+							function finish(){
+								URL.revokeObjectURL(url);
+							}
+							
+							ppr
+							.then(function(){
+								finish();
+								resolve();
+							})
+							.catch(function(){
+								reject(function(){
+									//try again
+									audio.play();
+									finish();
+								});
+							});
+						} else {
+							//cant determine :P
+							resolve();
+						}
+					});
+					
+					audio.onerror = e=>console.log(e)
+				}
+			);
+		} else {
+			resolve();
+		}
+	});
+}
+
 //audio context suspending
 document.addEventListener('visibilitychange',()=>{
     if(audioCtx) {

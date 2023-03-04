@@ -15,17 +15,31 @@ function start() {
     );
 	
 	bottomStage.dataUpdated();
-
-    createAudioContext().then(()=>{
-		if(audioCtx.state === 'running') {
+	
+	Promise.allSettled([
+		createAudioContext(),
+		checkHTMLaudioAutoPlay()
+	]).then((results)=>{
+		console.log(results);
+		
+		if(
+			(audioCtx.state === 'running') &&
+			(results[1].status === 'fulfilled')
+		) {
 			return Promise.resolve();
 		} else {
-			eid('loading-display-in').textContent = 'Press Enter.';
+			eid('loading-display-in').textContent = 'Press OK.';
 			return new Promise((proceed)=>{
 				window.addEventListener('keydown', function sac(k){
 					if(k.key === 'Enter') {
 						window.removeEventListener('keydown', sac);
+						
 						audioCtx.resume();
+						
+						if(results[1].status === 'rejected') {
+							results[1].reason();
+						}
+						
 						proceed();
 					}
 				});
