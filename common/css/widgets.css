@@ -237,18 +237,23 @@ input[type=range].options-menu-range {
 }
 
 input[type=range].options-menu-range::-moz-range-thumb,
-input[type=range].options-menu-range::-moz-range-progress {
-    background: #fff;
+input[type=range].options-menu-range::-moz-range-progress,
+input[type=range].options-menu-range::-moz-range-track {
+    background: var(--text-color);
+	border: none;
+	outline: none;
 }
 
-input[type=range].options-menu-range::-moz-range-track {
-    border-radius: 0;
-    background-color: rgba(255,255,255,0.5);
-}
-input[type=range].options-menu-range::-moz-range-progress {
-    border: none;
+input[type=range].options-menu-range::-moz-range-thumb {
+	border-color: var(--background-color);
+	border-width: 2px;
+	border-style: solid;
     border-radius: 50%;
 }
+:focus input[type=range].options-menu-range::-moz-range-thumb {
+	border-color: var(--accent-color-1);
+}
+
 
 /* animations and little icons */
 .throbber {
