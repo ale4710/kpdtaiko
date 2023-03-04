@@ -38,13 +38,17 @@ addGlobalReference(0, 'test').catch(emptyfn);
 	});
 	
 	//key intercept
-	window.addEventListener('keydown', (k)=>{
-		if(k.isTrusted) {
-			if(k.key in keys) {
-				var fk = new CustomEvent('keydown');
-				fk.key = keys[k.key];
+	function commonHandler(kev){
+		if(kev.isTrusted) {
+			if(kev.key in keys) {
+				var fk = new CustomEvent(kev.type);
+				fk.key = keys[kev.key];
 				window.dispatchEvent(fk);
 			}
 		}
-	});
+	}
+	window.addEventListener('keydown', commonHandler);
+	window.addEventListener('keyup', commonHandler);
+	
+	
 })();
