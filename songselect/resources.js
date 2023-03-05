@@ -18,6 +18,7 @@
         'options',
         'intro',
 		'media',
+		'updateSongInfoDisplay',
         'script'
     ].forEach((fn)=>{
         addGlobalReference(0, fn);
