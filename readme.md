@@ -14,7 +14,7 @@ on [github](https://github.com/ale4710/domtaiko)
 there will be bugs, because i did not test it a lot.
 
 ## controls
-i made like a taiko drum thingy.
+i made it like a taiko drum thingy.
 
 `4` and `6` are don. `1` and `3` are kat.
 
@@ -27,7 +27,7 @@ place songs in your default media location. the location is
 
 supported formats are `osu` and `tja`.
 
-each song should be in it's own folder. e.g.
+each song should be in its own folder. e.g.
 
 	# one song
 	.domtaiko/songs/mani_mani/chart.tja
