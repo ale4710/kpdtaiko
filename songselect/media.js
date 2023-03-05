@@ -1,4 +1,4 @@
-var loadMedia = (function(){
+var mediaLoader = (function(){
 	var lastPathsLoaded = [],
 	loadedMedia = {},
 	
@@ -14,7 +14,7 @@ var loadMedia = (function(){
 		);
 	}
 	
-	var maxAllowedLoaded = 16;
+	var maxAllowedLoaded = 10;
 	function loadMediaSuccess(path, blob) {
 		loadedMedia[path] = blob;
 		rmFromLoading(path);
@@ -35,16 +35,23 @@ var loadMedia = (function(){
 		rmFromLoading(path);
 	}
 	
-	return function(path, source) {
+	function returnIfLoaded(path, source) {
+		if(path in loadedMedia) {
+			arraySearchAndRemove(
+				lastPathsLoaded,
+				path
+			);
+			lastPathsLoaded.push(path);
+			return loadedMedia[path];
+		}
+	}
+	
+	function getResource(path, source) {
 		//console.log(path,source,loading,failed);
 		if(failed.indexOf(path) === -1) {
-			if(path in loadedMedia) {
-				arraySearchAndRemove(
-					lastPathsLoaded,
-					path
-				);
-				lastPathsLoaded.push(path);
-				return loadedMedia[path];
+			let existingResource = returnIfLoaded(path, source);
+			if(existingResource) {
+				return existingResource;
 			} else {
 				if(loading.indexOf(path) === -1) {
 					loading.push(path);
@@ -84,5 +91,10 @@ var loadMedia = (function(){
 		} else {
 			return false;
 		}
+	}
+	
+	return {
+		getOnly: returnIfLoaded,
+		getAndLoad: getResource
 	}
 })();
