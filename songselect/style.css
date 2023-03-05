@@ -3,13 +3,33 @@
 	--not-song-list-background: var(--background-color-o50);
 }
 /* background */
-#song-background {
+#song-background-container {
+	z-index: -6;
+}
+#song-background-overlay {
 	z-index: -1;
+	background: #000;
+	opacity: 0.6;
+}
+#song-background {
+	z-index: -2;
+}
+.song-background {
+	z-index: -3;
 	object-fit: cover;
 	filter: blur(10px);
-	opacity: 0.4;
 	width: 110%;
 	height: 110%;
+}
+@keyframes song-background-fade-out-animation {
+	from {opacity: 1}
+	to {opacity: 0}
+}
+.song-background-fade-out {
+	animation-name: song-background-fade-out-animation;
+	animation-timing-function: ease-out;
+	animation-duration: 0.75s;
+	animation-direction: forwards;
 }
 
 #screen:not(.optionsMenuShowing) #navbar,
@@ -198,6 +218,9 @@
 	background: #000;
 	opacity: 0;
 	z-index: 3;
+}
+body.intro-first-played #intro-overlay {
+	/* to prevent the box from appearing when the page first loads */
 	transition: opacity var(--intro-animation-duration) var(--intro-animation-timingfn);
 }
 body.intro #intro-overlay {

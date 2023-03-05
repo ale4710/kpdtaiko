@@ -7,7 +7,7 @@ function playIntro(url) {
 	introElFocused = actEl();
 	introOrigPage = curpage;
 	
-    document.body.classList.add('intro');
+    document.body.classList.add('intro', 'intro-first-played');
     curpage = 2;
 	introTO = setTimeout(function(){
 		location = url;
