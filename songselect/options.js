@@ -1,5 +1,7 @@
 var gameMenu = (function() {
-    var curMenu = 0;
+    var thisPage;
+	
+	var curMenu = 0;
 
     //main menu
     var gameMenuMenu = new OptionsMenu('Game Menu');
@@ -65,7 +67,7 @@ var gameMenu = (function() {
     var fochandler = (new PreviousFocusHandler());
     function show() {
         fochandler.save();
-        curpage = 3;
+        curpage = thisPage;
         curMenu = 0;
         gameMenuMenu.menuViewToggle(true,true);
     }
@@ -75,12 +77,15 @@ var gameMenu = (function() {
         fochandler.refocus();
         fochandler.loadpage();
     }
+	
+	thisPage = addPage(
+		keyhandle,
+		(function(){return ['back','select']})
+	);
 
     return {
         menu: gameMenuMenu,
-        navbar: ['back','select'],
         show: show,
-        hide: hide,
-        keyhandle: keyhandle
+        hide: hide
     }
 })();

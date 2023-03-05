@@ -1,5 +1,6 @@
 var volumeControl = (function(){
-    var thisPage = 92, volmax = 20;
+    var thisPage;
+	var volmax = 20;
 
     var fh = new PreviousFocusHandler();
     function formlsname(af){return `volume-${af}`;}
@@ -96,13 +97,16 @@ var volumeControl = (function(){
         curpage = thisPage;
         volmenu.menuViewToggle(true,true);
     }
+	
+	thisPage = addPage(
+		keyhandle,
+		(function(){return ['back','','system']})
+	);
 
     return {
         menu: volmenu,
-        navbar: ['back','','system'],
         page: thisPage,
         getVolume: getVolume,
-        keyHandle: keyhandle,
         show: show,
         hide: hide
     };

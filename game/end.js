@@ -1,6 +1,7 @@
-var ended = false,
-endedAllowContinue = false,
-modsDisplayEnd = (new ModsView(
+var endedPageN;
+var ended = false;
+var endedAllowContinue = false;
+var modsDisplayEnd = (new ModsView(
 	1,
 	eid('game-stats-extra-info')
 ));
@@ -55,7 +56,7 @@ function end() {
         gameLoopStop();
 
         setTimeout(()=>{
-			curpage = 3;
+			curpage = endedPageN;
 			updatenavbar();
 			showNavbar(true);
 			transparentNavbar(true);
@@ -66,20 +67,29 @@ function end() {
 function exitToSongSelect() {location = '/songselect/index.html';}
 
 var showDetailedStatsClassList = 'show-stats-detailed';
-function endedK(k) {
-	switch(k.key) {
-		case 'Enter':
-		case 'Backspace':
-			exitToSongSelect();
-			break;
-		case 'SoftLeft':
-			document.body.classList.toggle(showDetailedStatsClassList);
-			break;
+
+endedPageN = (function(){
+	function endedK(k) {
+		switch(k.key) {
+			case 'Enter':
+			case 'Backspace':
+				exitToSongSelect();
+				break;
+			case 'SoftLeft':
+				document.body.classList.toggle(showDetailedStatsClassList);
+				break;
+		}
 	}
-}
-function endedNavbar() {
-	outputNavbar(
-		document.body.classList.contains(showDetailedStatsClassList)? 'hide' : 'details',
-		'continue'
+	
+	function endedNavbar() {
+		return [
+			document.body.classList.contains(showDetailedStatsClassList)? 'hide' : 'details',
+			'continue'
+		]
+	}
+	
+	return addPage(
+		endedK,
+		endedNavbar
 	);
-}
+})();

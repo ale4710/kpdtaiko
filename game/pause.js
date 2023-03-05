@@ -6,6 +6,9 @@ pauseMenu.addOption('Exit');
 
 var pauseMenuVisible = false;
 
+var pauseMenuPageN;
+var unpausingMenuPageN;
+
 function pause() {
     if(ended || !ready) {return}
     if(!timerPaused) {timerTogglePause();}
@@ -22,7 +25,7 @@ function pause() {
         pauseMenuVisible = true;
         pauseMenu.menuViewToggle(true,true);
     }
-    curpage = 1;
+    curpage = pauseMenuPageN;
 }
 
 var unpauseINT, unpauseCountdown = 0;
@@ -38,7 +41,7 @@ function unpause(immediate) {
     if(immediate) {
         unpauseReal();
     } else {
-        curpage = 2;
+        curpage = unpausingMenuPageN;
         postJudge({
             text: 'Ready!',
             className: 'judge-white'
@@ -59,43 +62,49 @@ function unpause(immediate) {
     }
 }
 function unpauseReal() {
-    curpage = 0;
+    curpage = gamePageN;
     timerTogglePause();
 }
 
-function unpausingK(k) { //page = 2
-    if(keybinds[k.key] === 'pause') {
-        pause();
-    }
-}
+unpausingMenuPageN = addPage(
+	(function unpausingK(k) {
+		if(keybinds[k.key] === 'pause') {
+			pause();
+		}
+	}),
+	emptyfn //navbar
+);
 
-function pauseK(k) { //page = 1
-    switch(k.key) {
-        case 'ArrowUp':
-            var u = -1;
-        case 'ArrowDown':
-            pauseMenu.navigate(u || 1);
-            break;
-        case 'Enter':
-            switch(actEl().tabIndex) {
-                case 0: //continue
-                    unpause();
-                    break;
-                case 1: //volume adjustment
-                    pauseMenu.menuViewToggle(false);
-                    volumeControl.show(()=>{pauseMenu.menuViewToggle(true);});
-                    break;
-                case 2: //restart
-                    reset();
-                    unpause(true);
-                    break;
-                case 3:
-                    exitToSongSelect();
-                    break;
-            }
-            break;
-    }
-}
+pauseMenuPageN = addPage(
+	(function pauseK(k) {
+		switch(k.key) {
+			case 'ArrowUp':
+				var u = -1;
+			case 'ArrowDown':
+				pauseMenu.navigate(u || 1);
+				break;
+			case 'Enter':
+				switch(actEl().tabIndex) {
+					case 0: //continue
+						unpause();
+						break;
+					case 1: //volume adjustment
+						pauseMenu.menuViewToggle(false);
+						volumeControl.show(()=>{pauseMenu.menuViewToggle(true);});
+						break;
+					case 2: //restart
+						reset();
+						unpause(true);
+						break;
+					case 3:
+						exitToSongSelect();
+						break;
+				}
+				break;
+		}
+	}),
+	(function pauseNavbar(){return ['','select']})
+)
 
 //handlers
 if('mozAudioChannelManager' in navigator) {

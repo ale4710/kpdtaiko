@@ -1,8 +1,10 @@
-var
-currentSetting = {index: 0, name: ''},
-currentCategory = 'default',
-settingNavigationHistory = [],
-curpage = 0;
+var currentSetting = {index: 0, name: ''};
+var currentCategory = 'default';
+var settingNavigationHistory = [];
+
+//page numbers (defined at the bottom)
+var mainScreenPageN;
+var settingChangePageN;
 
 window.addEventListener('load',function(){
 	console.log('loaded');
@@ -121,7 +123,7 @@ function getFormattedSettingValue(setNm) {
 
 var settingChangeDialog = new OptionsMenuSelectable('', 'text');
 function showSettingChangeDialog() {
-    curpage = 1;
+    curpage = settingChangePageN;
     //allowBack = false;
 
     settingChangeDialog.updateHeader(getSettingLabel(currentSetting.name));
@@ -160,7 +162,7 @@ function showSettingChangeDialog() {
 }
 
 function hideSettingChangeDialog() {
-    curpage = 0;
+    curpage = mainScreenPageN;
     ecls('setting')[currentSetting.index].focus();
     settingChangeDialog.menuViewToggle(false);
     //allowBack = settingNavigationHistory.length === 0;
@@ -193,23 +195,46 @@ function getSettingValueLabel(sn,i) {return settingsList[sn].values[i]}
 
 function updateHeader() {eid('header').textContent = getSettingLabel('category-' + currentCategory);}
 
-function localupdatenavbar() {
-    switch(curpage) {
-        case 0:
-            outputNavbar(
-                'back',
-                'select'
-            );
-            break;
-        case 1:
-            outputNavbar(
-                'done',
-                settingsList[currentSetting.name].type < 2? 'select' : 'save'
-            );
-            break;
-    }
-}
+//keys and navbar
+//main screen
+mainScreenPageN = addPage(
+	(function mainScreenK(k) {
+		switch(k.key) {
+			case 'ArrowUp':
+				var u = -1;
+			case 'ArrowDown': 
+				navigateSettings(u || 1); 
+				k.preventDefault();
+				break;
+			case 'Enter': 
+				var cs = settingsList[currentSetting.name];
+				switch(cs.type) {
+					case 4: cs.action(); break;
+					case 5:
+						manageSettingsPageHistory.append(
+							currentCategory,
+							currentSetting.index
+						);
+						currentCategory = cs.action;
+						updateHeader();
+						initSettings(0);
+						break;
+					default: showSettingChangeDialog(); break;
+				}
+				break;
+			case 'SoftLeft':
+			case 'Backspace':
+				manageSettingsPageHistory.back();
+				break;
+		}
+	}),
+	//navbar
+	function mainScreenN(){
+		return ['back', 'select'];
+	}
+);
 
+//setting change page (and co.)
 function navigateSettings(dir) {
     currentSetting.index = navigatelist(
         actEl().tabIndex,
@@ -220,106 +245,81 @@ function navigateSettings(dir) {
     currentSetting.name = actEl().dataset.setting;
     currentSetting.index = actEl().tabIndex;
 }
+settingChangePageN = addPage(
+	(function settingChangeK(k) {
+		switch(k.key) {
+			case 'ArrowUp': 
+				var u = -1;
+			case 'ArrowDown': 
+				settingChangeDialog.navigate(u || 1);
+				k.preventDefault();
+				break;
+			case 'SoftLeft':
+				hideSettingChangeDialog();
+				break;
+			case 'Enter': 
+				switch(settingsList[currentSetting.name].type) {
+					case 0: //radio
+						updateSetting(currentSetting.name, actEl().tabIndex);
+						hideSettingChangeDialog();
+						break;
+					case 1: //checkbox
+						settingChangeDialog.selectItem(actEl().tabIndex);
+						updateSetting(
+							currentSetting.name, 
+							settingChangeDialog.getValue().value
+						);
+						break;
+					case 2:
+					case 3:
+						if(actEl().value === '') {
+							alertMessage('Please enter a value.', 5000, 3);
+							break;
+						}
+						if('check' in settingsList[currentSetting.name]) {
+							if(!settingsList[currentSetting.name].check(actEl().value)) {
+								alertMessage('Invalid input. Please double check what you typed.', 5000, 3);
+								break;
+							}
+						}
+						updateSetting(
+							currentSetting.name,
 
-function keyHandler(k) {
-    switch(curpage) {
-        case 0: mainScreenK(k); break;
-        case 1: settingChangeK(k); break;
-    }
-}
+							//both of the below work fine
+							settingChangeDialog.getValue().value
+							//actEl().value
+						);
+						hideSettingChangeDialog();
+						break;
+				}
 
-function mainScreenK(k) {
-    switch(k.key) {
-        case 'ArrowUp':
-            var u = -1;
-        case 'ArrowDown': 
-            navigateSettings(u || 1); 
-            k.preventDefault();
-            break;
-        case 'Enter': 
-            var cs = settingsList[currentSetting.name];
-            switch(cs.type) {
-                case 4: cs.action(); break;
-                case 5:
-                    manageSettingsPageHistory.append(
-                        currentCategory,
-                        currentSetting.index
-                    );
-                    currentCategory = cs.action;
-                    updateHeader();
-                    initSettings(0);
-                    break;
-                default: showSettingChangeDialog(); break;
-            }
-            break;
-        case 'SoftLeft':
-        case 'Backspace':
-            manageSettingsPageHistory.back();
-            break;
-    }
-}
+				if('action' in settingsList[currentSetting.name]) {
+					settingsList[currentSetting.name].action();
+				}
 
-function settingChangeK(k) {
-    switch(k.key) {
-        case 'ArrowUp': 
-            var u = -1;
-        case 'ArrowDown': 
-            settingChangeDialog.navigate(u || 1);
-            k.preventDefault();
-            break;
-        case 'SoftLeft':
-            hideSettingChangeDialog();
-            break;
-        case 'Enter': 
-            switch(settingsList[currentSetting.name].type) {
-                case 0: //radio
-                    updateSetting(currentSetting.name, actEl().tabIndex);
-                    hideSettingChangeDialog();
-                    break;
-                case 1: //checkbox
-                    settingChangeDialog.selectItem(actEl().tabIndex);
-                    updateSetting(
-                        currentSetting.name, 
-                        settingChangeDialog.getValue().value
-                    );
-                    break;
-                case 2:
-                case 3:
-                    if(actEl().value === '') {
-                        alertMessage('Please enter a value.', 5000, 3);
-                        break;
-                    }
-                    if('check' in settingsList[currentSetting.name]) {
-                        if(!settingsList[currentSetting.name].check(actEl().value)) {
-                            alertMessage('Invalid input. Please double check what you typed.', 5000, 3);
-                            break;
-                        }
-                    }
-                    updateSetting(
-                        currentSetting.name,
+				updateActiveSettingDisplay();
 
-                        //both of the below work fine
-                        settingChangeDialog.getValue().value
-                        //actEl().value
-                    );
-                    hideSettingChangeDialog();
-                    break;
-            }
+				break;
 
-            if('action' in settingsList[currentSetting.name]) {
-                settingsList[currentSetting.name].action();
-            }
+			case 'Backspace': 
+				hideSettingChangeDialog();
+				if(settingsList[currentSetting.name].type > 1) {
+					alertMessage('Changes discarded.',5000,0);
+				}
+				break;
 
-            updateActiveSettingDisplay();
+		}
+	}),
+	
+	//navbar
+	function settingChangeN(){
+		return [
+			'done', 
+			settingsList[currentSetting.name].type < 2? 'select' : 'save'
+		];
+	}
+);
 
-            break;
 
-        case 'Backspace': 
-            hideSettingChangeDialog();
-            if(settingsList[currentSetting.name].type > 1) {
-                alertMessage('Changes discarded.',5000,0);
-            }
-            break;
-
-    }
-}
+curpage = mainScreenPageN;
+updatenavbar();

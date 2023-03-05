@@ -1,25 +1,33 @@
-//intro sequence
-var introTO = null;
-var introElFocused = null;
-var introOrigPage = null;
-
-function playIntro(url) {
-	introElFocused = actEl();
-	introOrigPage = curpage;
+var playIntro = (function(){
+	var fhandler = new PreviousFocusHandler();
+	var introTO;
 	
-    document.body.classList.add('intro', 'intro-first-played');
-    curpage = 2;
-	introTO = setTimeout(function(){
-		location = url;
-	}, 1500);
-}
-function introCancel() {
-    clearTimeout(introTO);
-    document.body.classList.remove('intro');
+	var thisPage = addPage(
+		(function(k){ //keyhandler
+			switch(k.key) {
+				case 'Backspace':
+					introCancel();
+					break;
+			}
+		}),
+		emptyfn
+	);
 	
-	introElFocused.focus();
-	introElFocused = null;
+	function introCancel() {
+		clearTimeout(introTO);
+		document.body.classList.remove('intro');
+		
+		fhandler.refocus();
+		fhandler.loadpage();
+		fhandler.clear();
+	}
 	
-	curpage = introOrigPage;
-	introOrigPage = null;
-}
+	return function playIntro(url) {
+		fhandler.save();
+		document.body.classList.add('intro', 'intro-first-played');
+		curpage = thisPage;
+		introTO = setTimeout(function(){
+			location = url;
+		}, 1500);
+	}
+})();

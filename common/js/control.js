@@ -1,8 +1,20 @@
-var allowBack = false,
-disableControls = true, 
-preventNavDefault = true, 
-curpage = 0;
+var allowBack = false;
+var disableControls = true;
+var preventNavDefault = true;
+var curpage;
 window.addEventListener('keydown', globalKeyHandler); 
+
+var keyFns = [];
+var navbarFns = [];
+function addPage(
+	keyFn = emptyfn,
+	navbarFn = emptyfn
+) {
+	let n = keyFns.length;
+	keyFns.push(keyFn);
+	navbarFns.push(navbarFn);
+	return n;
+}
 
 function globalKeyHandler(k) {
     if(
@@ -13,20 +25,12 @@ function globalKeyHandler(k) {
     }
 
     if(disableControls) {return;}
-    switch(curpage) {
-        case volumeControl.page: volumeControl.keyHandle(k); break;
-        case 95: messageBox.keyHandler(k); break;
-        default: keyHandler(k); break;
-    }
+	(keyFns[curpage] || emptyfn)(k);
     updatenavbar();
 }
 
 function updatenavbar() {
-    switch(curpage) {
-        case volumeControl.page: outputNavbar(volumeControl.navbar); break;
-        case 95: messageBox.updateNavbar(); break;
-        default: localupdatenavbar(); break;
-    }
-    //console.log(`updatenavbar: curpage was ${curpage} at this time.`);
-    //console.log(updatenavbar.caller);
+	outputNavbar(
+		(navbarFns[curpage] || emptyfn)()
+	);
 }

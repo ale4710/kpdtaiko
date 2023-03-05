@@ -1,5 +1,6 @@
 var speedsControl = (function(){
-    var fh = new PreviousFocusHandler();
+    let thisPage;
+	let fh = new PreviousFocusHandler();
     function formlsname(bf){return `${bf}-speed`;}
     function formModDispName(n){return `${n}Speed`;}
 
@@ -90,14 +91,17 @@ var speedsControl = (function(){
 
     function show(backcb) {
         fh.save(backcb);
-        curpage = 4;
+        curpage = thisPage;
         smenu.menuViewToggle(true,true);
     }
+	
+	thisPage = addPage(
+		keyhandle,
+		(function(){return ['back','reset']})
+	);
 
     return {
         menu: smenu,
-        keyhandle: keyhandle,
-        navbar: ['back','reset'],
         show: show,
         hide: hide
     };

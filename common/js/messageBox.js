@@ -1,5 +1,5 @@
 var messageBox = (function(){
-    var thispage = 95;
+    var thispage;
 
     var elements = {
         screen: null,
@@ -118,8 +118,13 @@ var messageBox = (function(){
                 }
             }
         }
-        outputNavbar(a);
+        return a;
     }
+	
+	thispage = addPage(
+		keyhandler,
+		lupdatenavbar
+	);
 
     return {
         elements: elements,

@@ -21,8 +21,9 @@ gameActionId = {
 
 disableControls = false;
 window.removeEventListener('keydown', globalKeyHandler);
+var gamePageN = 'gameplay';
 function gameKeyHandler(k) {
-	if(curpage === 0) {
+	if(curpage === gamePageN) {
 		if(k.key === 'Backspace') {k.preventDefault()}
 		if(!k.repeat) {
 			if(!ended) {
@@ -55,18 +56,3 @@ function gameKeyHandler(k) {
 	}
 }
 window.addEventListener('keydown', gameKeyHandler);
-
-function keyHandler(k) {
-    switch(curpage) {
-        case 1: /* pausemenu */ pauseK(k); break;
-        case 2: /* unpausing */ unpausingK(k); break;
-		case 3: /* ended */ endedK(k); break;
-    }
-}
-
-function localupdatenavbar() {
-    switch(curpage) {
-        case 1: outputNavbar('','select'); break;
-		case 3: endedNavbar(); break;
-    }
-}

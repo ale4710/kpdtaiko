@@ -19,7 +19,9 @@
         'intro',
 		'media',
 		'updateSongInfoDisplay',
-        'script'
+        'script',
+		'listSong',
+		'listDifficulty'
     ].forEach((fn)=>{
         addGlobalReference(0, fn);
     });

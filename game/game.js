@@ -56,6 +56,8 @@ function start() {
 		gameLoopStop();
 		gameLoop();
 		gameAnim();
+		
+		curpage = gamePageN;
 	});
 }
 

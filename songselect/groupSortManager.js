@@ -1,8 +1,8 @@
 var groupSortManager = (function(){
-	var fhandler = new PreviousFocusHandler(),
-	thisPage = 5,
+	let fhandler = new PreviousFocusHandler();
+	let thisPage;
 	
-	currentGsm;
+	let currentGsm;
 	
 	function getGsmValue(gsm) {return localStorage.getItem(getLsKey(gsm));}
 	function setGsmValue(gsm, set) {return localStorage.setItem(getLsKey(gsm), set);}
@@ -107,8 +107,12 @@ var groupSortManager = (function(){
 		}
 	}
 	
+	thisPage = addPage(
+		keyhandle,
+		(function(){return ['back','select']})
+	);
+	
 	return {
-		keyhandle: keyhandle,
 		showMenu: showMenu,
 		hideMenu: hideMenu,
 		getGSmethod: function(m){

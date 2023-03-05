@@ -29,6 +29,7 @@
         user+'gameFn',
         user+'textEncoding',
         user+'classes',
+		user+'control',
         user+'mods',
         user+'volumeControl',
         user+'deviceStorage',
@@ -36,12 +37,11 @@
         user+'database',
         user+'messageBox',
         user+'elements',
-        user+'control',
         user+'tjaParse',
         user+'osuParse',
         user+'resourceAdder',
 		
-		//user+'test'
+		user+'test'
     ].forEach((fn)=>{
         addGlobalReference(0, 
             bg + fn
