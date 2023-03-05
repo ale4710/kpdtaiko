@@ -260,7 +260,9 @@ function printList(sort, group, sortReverse, refocusId) {
 	}));
 }
 
+var userEnabledSmoothScrolling = (getSettingValue('animate-song-select') === 1);
 function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
+	smooth = (smooth && userEnabledSmoothScrolling)
 	if(abs) {songSelectMenu.navigate(0)}
 	songSelectMenu.navigate(n);
 	
@@ -332,19 +334,18 @@ function updateSongInfoDisplay() {
 			)
 		);
 	});
-
-	//basic data for intro sequence
-	eid('intro-slider-title').textContent = curSong.title;
-	eid('intro-slider-artist').textContent = curSong.artist;
 	
 	var folder = parseFilePath(curSong.filePath).directory;
 
 	//media
 	//  image
-	var img = eid('song-info-img'), imgcont = eid('song-info-img-container');
+	var img = eid('song-info-img'),
+	imgcont = eid('song-info-img-container');
 	if(img) {
 		URL.revokeObjectURL(img.src);
 		img.remove();
+		
+		eid('song-background').remove();
 	}
 	
 	var hideImg = true;
@@ -363,12 +364,20 @@ function updateSongInfoDisplay() {
 			case false: 
 				break;
 			default:
+				var url = URL.createObjectURL(iblob);
+				
 				hideImg = false;
 				var nimg = document.createElement('img');
 				nimg.id = 'song-info-img';
 				nimg.classList.add('fill');
-				nimg.src = URL.createObjectURL(iblob);
+				nimg.src = url;
 				imgcont.appendChild(nimg);
+				
+				var nbgimg = document.createElement('img');
+				nbgimg.src = url;
+				nbgimg.id = 'song-background';
+				nbgimg.classList.add('center');
+				eid('song-background-container').appendChild(nbgimg);
 				break;
 		}
 	}
@@ -432,6 +441,8 @@ function selectSong() {
 
 			diffEl.dataset.filePath = diff.filePath;
 			diffEl.dataset.target = diff.difficulty;
+			diffEl.dataset.difficultyLevel = diff.difficultyLevel;
+			diffEl.dataset.difficultySort = diff.difficultySort;
 			diffEl.dataset.id = diff.id;
 		});
 		
@@ -454,6 +465,7 @@ function selectSong() {
 var difficultyListMenu = (new Menu(eid('difficulty-list'))),
 difficultyScrollers = [];
 function selectDifficulty() {
+	//prepeare data
 	var urlprms = (new URLSearchParams()),
 	songToPlay = songList[lastSongSelected],
 	stpPathParts = parseFilePath(actEl().dataset.filePath);
@@ -472,9 +484,21 @@ function selectDifficulty() {
 			);
 			break;
 	}
-
-	//playIntro();
-	playIntro(()=>{location = '/game/index.html#' + urlprms.toString();});
+	
+	//data for intro sequence
+	if(getSettingValue('show-difficulty-on-intro') === 1) {
+		eid('intro-slider-difficulty').innerHTML = '';
+		eid('intro-slider-difficulty').appendChild(createDifficultyHTMLElement(
+			parseFloat(actEl().dataset.difficultyLevel),
+			parseInt(actEl().dataset.difficultySort)
+		));
+	} else {
+		eid('intro-slider-difficulty-container').classList.add('hidden');
+	}
+	eid('intro-slider-title-text').textContent = songToPlay.title;
+	eid('intro-slider-artist').textContent = songToPlay.artist;
+	
+	playIntro('/game/index.html#' + urlprms.toString());
 }
 
 //keyboard

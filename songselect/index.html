@@ -13,7 +13,7 @@
     <div id="screen">
         <div id="main-screen">
             <div class="header">
-                <span>Song Select</span>
+                <span>♫ Select</span>
                 <div id="mods-display-c" class="vertical-center"></div>
             </div>
             <div id="song-info">
@@ -41,19 +41,27 @@
 						</span>
 					</span>
                 </div>
-				<div class="song-info-text" id="song-info-difficulty-summary-container">
+				<div class="song-info-text song-info-difficulty-summary-container">
 					<span id="song-info-difficulty-summary"></span>
 				</div>
             </div>
             <div class="selection hidden" id="song-select-list">
-                <div id="song-select-list-overlay" class="fill"></div>
-            </div>
+				<div class="select-underlay center"></div>
+			</div>
             <div class="selection hidden" id="difficulty-list"></div>
             <div class="selection" id="selection-list-throbber"><div class="center"><div class="throbber"></div></div></div>
         </div>
+		<div id="song-background-container"></div>
+		<div id="intro-overlay" class="fill center"></div>
         <div id="intro-slider">
             <div id="intro-slider-text" class="vertical-center">
-                <div id="intro-slider-title"></div>
+                <div id="intro-slider-title">
+					<span id="intro-slider-difficulty-container">
+						&nbsp;
+						<span id="intro-slider-difficulty" class="song-info-difficulty-summary-container"></span>
+					</span>
+					<span id="intro-slider-title-text"></span>
+				</div>
                 <div id="intro-slider-artist"></div>
             </div>
         </div>

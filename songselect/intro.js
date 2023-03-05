@@ -1,12 +1,25 @@
 //intro sequence
 var introTO = null;
-function playIntro(fn) {
-    if(typeof(fn) !== 'function') {fn = emptyfn}
+var introElFocused = null;
+var introOrigPage = null;
+
+function playIntro(url) {
+	introElFocused = actEl();
+	introOrigPage = curpage;
+	
     document.body.classList.add('intro');
-    introTO = setTimeout(fn, 1500);
     curpage = 2;
+	introTO = setTimeout(function(){
+		location = url;
+	}, 1500);
 }
 function introCancel() {
     clearTimeout(introTO);
-    location.reload();
+    document.body.classList.remove('intro');
+	
+	introElFocused.focus();
+	introElFocused = null;
+	
+	curpage = introOrigPage;
+	introOrigPage = null;
 }

@@ -1,5 +1,20 @@
 :root {
     --song-info-height: 0.28;
+	--not-song-list-background: var(--background-color-o50);
+}
+/* background */
+#song-background {
+	z-index: -1;
+	object-fit: cover;
+	filter: blur(10px);
+	opacity: 0.4;
+	width: 110%;
+	height: 110%;
+}
+
+#screen:not(.optionsMenuShowing) #navbar,
+#main-screen .header {
+	background-color: var(--not-song-list-background);
 }
 
 /* song info */
@@ -7,6 +22,7 @@
     height: calc((var(--height) - var(--header-height) - var(--navbar-height)) * var(--song-info-height));
     position: relative;
     font-size: 12px;
+	background-color: var(--not-song-list-background);
 }
 #song-info > div {
     white-space: nowrap;
@@ -15,16 +31,6 @@
 .song-info-text {
 	padding: 0 3%;
 	position: relative;
-}
-.song-info-text::before, .song-info-text::after {
-	content: '';
-	display: block;
-	height: 100%;
-	width: 3%;
-	position: absolute;
-	z-index: 1;
-	top: 0;
-	background-image: linear-gradient(var(--bg-rot), #000 0%, transparent 100%);
 }
 .song-info-text::before {
 	left: 0;
@@ -57,23 +63,25 @@
 #song-info-misc > span:not(.last) {margin-right: 5px}
 
 /* song select */
-#song-select-list-overlay {
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%); 
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* z-index: 1; */
+#song-select-list {
+	position: relative;
+	--entry-box-height: 22px;
 }
-/* #song-select-list > .menu {
-	scroll-behavior: smooth;
-} */
 #song-select-list div.menu-entry {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+	height: var(--entry-box-height);
 }
-#song-select-list > .menu > .menu-entry {
-    z-index: -1;
+#song-select-list div.menu-entry:focus {
+	background: unset;
+}
+
+    /* an underlay */
+#song-select-list div.select-underlay {
+	width: 100%;
+	height: var(--entry-box-height);
+	background: linear-gradient(90deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
 }
 
 #song-select-list > .menu > .menu-entry.menu-seperator::before {
@@ -126,18 +134,16 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-	opacity: 0.35;
+	opacity: 0.45;
 }
 .difficulty:focus {background: none;}
-.difficulty:focus::before {
-    background: var(--diff-color);
-}
+.difficulty:focus::before {background: linear-gradient(90deg, var(--diff-color) 0%, rgba(0,0,0,0) 100%);}
 .difficulty-indicator {
     text-align: right;
 }
 
 /* song difficulty summary */
-#song-info-difficulty-summary-container {
+.song-info-difficulty-summary-container {
 	--inner-size: 16px;
 	--border-width: 2px; /* additional to --size */
 	--whole-size: calc(var(--inner-size) + (var(--border-width) * 2));
@@ -184,34 +190,32 @@
 }
 
 /* intro sequence */
-@keyframes fade {
-    from {opacity: 1;}
-    to {opacity: 0;}
-}
 :root {
     --intro-animation-duration: 0.5s;
     --intro-animation-timingfn: ease-out;
 }
-body.intro #main-screen {
-    animation-name: fade;
-    animation-duration: var(--intro-animation-duration);
-    animation-timing-function: var(--intro-animation-timingfn);
-    animation-fill-mode: forwards;
+#intro-overlay {
+	background: #000;
+	opacity: 0;
+	z-index: 3;
+	transition: opacity var(--intro-animation-duration) var(--intro-animation-timingfn);
 }
-@keyframes slide {
-    from {transform: translatex(100%)}
-    to {transform: translatex(0)}
+body.intro #intro-overlay {
+    opacity: 1;
 }
 #intro-slider {
-    display: none;
     top: calc(var(--height) * var(--playfield-top));
     height: calc(var(--height) * var(--playfield-height));
+	left: 100%;
     width: 100%;
     position: absolute;
     background: var(--playfield-cover-color);
     z-index: 5;
     text-align: center;
     overflow: hidden;
+	transform: translatex(0);
+	transition: transform var(--intro-animation-duration) var(--intro-animation-timingfn);
+	
 }
 #intro-slider-text {width: 100%;}
 #intro-slider-text > div {
@@ -223,8 +227,5 @@ body.intro #main-screen {
 
 body.intro #intro-slider {
     display: unset;
-    animation-name: slide;
-    animation-duration: var(--intro-animation-duration);
-    animation-timing-function: var(--intro-animation-timingfn);
-    animation-fill-mode: forwards;
+    transform: translatex(-100%);
 }

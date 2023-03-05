@@ -145,6 +145,26 @@ settingsList = {
         ],
         default: 1
     },
+	
+	'show-difficulty-on-intro': {
+        label: 'Show Difficulty On Intro',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+	
+	'animate-song-select': {
+        label: 'Smooth Scroll List',
+        type: 0,
+        values: [
+            'Disabled',
+            'Enabled'
+        ],
+        default: 1
+    },
 
     'timer-mode': { //timerMode
         label: 'Timer Mode',
@@ -268,6 +288,11 @@ settingsList = {
         label: 'Visual Settings',
         type: 5
     },
+	'category-song-select': {
+        action: 'song-select',
+        label: 'Song Select Settings',
+        type: 5
+    },
 	'category-bottom-stage': {
         action: 'bottom-stage',
         label: 'Bottom Stage',
@@ -287,7 +312,7 @@ settingsList = {
         action: 'advanced',
         label: 'Advanced Settings',
         type: 5
-    },
+    }
 },
 
 settingsListCategories = {
@@ -300,6 +325,7 @@ settingsListCategories = {
         settings: [
 			'category-offset',
 			'category-game',
+			'category-song-select',
 			'category-visual',
 			'category-sounds',
 			'category-advanced'
@@ -347,6 +373,14 @@ settingsListCategories = {
 		label: 'Game Settings',
 		settings: [
 			'category-hit-windows'
+		]
+	},
+	
+	'song-select': {
+		label: "Song Select",
+		settings: [
+			'animate-song-select',
+			'show-difficulty-on-intro'
 		]
 	},
 	
