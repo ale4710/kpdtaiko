@@ -194,6 +194,15 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 	//console.log(actEl());
 }
 
+function selectRandomSongInSongList() {
+	navigateSongList(
+		Math.floor(songSelectMenu.getChildren().length * Math.random()),
+		false,
+		false,
+		true
+	);
+}
+
 function selectSong() {
 	eid('song-select-list').classList.add('hidden');
 	toggleThrobber(true);
