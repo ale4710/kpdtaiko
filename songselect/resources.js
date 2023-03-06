@@ -18,6 +18,7 @@
         'options',
         'intro',
 		'media',
+		'hintsDisplay',
 		'updateSongInfoDisplay',
         'script',
 		'listSong',

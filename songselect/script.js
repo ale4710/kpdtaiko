@@ -104,9 +104,6 @@ function songSelectListCommonK(k) {
 		case '1':
 			toggleAuto();
 			break;
-		case '3':
-			selectRandomSongInSongList();
-			break;
 	}
 }
 

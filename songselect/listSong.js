@@ -197,9 +197,9 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 function selectRandomSongInSongList() {
 	navigateSongList(
 		Math.floor(songSelectMenu.getChildren().length * Math.random()),
+		true,
 		false,
-		false,
-		true
+		false
 	);
 }
 
@@ -273,6 +273,9 @@ songListPageN = (function(){
 				break;
 			case 'Enter':
 				selectSong();
+				break;
+			case '3':
+				selectRandomSongInSongList();
 				break;
 			default:
 				songSelectListCommonK(k);

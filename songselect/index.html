@@ -12,10 +12,13 @@
 <body>
     <div id="screen">
         <div id="main-screen">
+			<!-- header -->
             <div class="header">
                 <span>♪ Select</span>
                 <div id="mods-display-c" class="vertical-center"></div>
             </div>
+			
+			<!-- top song info -->
             <div id="song-info">
                 <div id="song-info-img-container">
                     <div id="song-info-img-throbber" class="center"><div class="throbber"></div></div>
@@ -45,10 +48,35 @@
 					<span id="song-info-difficulty-summary"></span>
 				</div>
             </div>
+			
+			<!-- main song select -->
             <div class="selection hidden" id="song-select-list">
 				<div class="select-underlay center"></div>
+				<div id="song-list-button-hints">
+					<div>
+						<div class="button">1</div>
+						Toggle autoplay
+					</div>
+					<div>
+						<div class="button">3</div>
+						Select a random song
+					</div>
+					
+					<div>
+						<div class="button">▲</div>
+						<div class="button">▼</div>
+						Navigate the song list
+					</div>
+				</div>
+				<!-- menu will be added -->
 			</div>
-            <div class="selection hidden" id="difficulty-list"></div>
+			
+			<!-- difficulty list -->
+            <div class="selection hidden" id="difficulty-list">
+				<!-- menu will be added -->
+			</div>
+			
+			<!-- just a throbber -->
             <div class="selection" id="selection-list-throbber"><div class="center"><div class="throbber"></div></div></div>
         </div>
 		<div id="song-background-container" class="fill center">

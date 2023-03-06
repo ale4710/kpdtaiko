@@ -238,6 +238,16 @@ settingsList = {
         default: 0
     },
 	
+	'show-song-list-hints': {
+        label: 'Show Hints',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+	
 	'hit-windows': {
 		label: 'Hit Window Size',
 		type: 0,
@@ -379,6 +389,7 @@ settingsListCategories = {
 	'song-select': {
 		label: "Song Select",
 		settings: [
+			'show-song-list-hints',
 			'animate-song-select',
 			'show-difficulty-on-intro'
 		]
