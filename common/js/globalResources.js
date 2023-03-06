@@ -41,7 +41,7 @@
         user+'osuParse',
         user+'resourceAdder',
 		
-		user+'test'
+		//user+'test'
     ].forEach((fn)=>{
         addGlobalReference(0, 
             bg + fn
