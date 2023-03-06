@@ -1,8 +1,8 @@
 (function(){
-	let hints = eid('song-list-button-hints').children;
 	if(getSettingValue('show-song-list-hints') === 1) {
 		let initialPlayed = false;
-	
+		
+		let hints = eid('song-list-button-hints').children;
 		let currentHint = Math.floor(hints.length * Math.random());
 		
 		let slideInCLN = 'hint-slide-in-animation';
@@ -50,7 +50,6 @@
 		
 		next();
 	} else {
-		hints = undefined;
 		eid('song-list-button-hints').classList.add('hidden');
 	}
 })();
