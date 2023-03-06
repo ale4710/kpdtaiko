@@ -69,6 +69,9 @@ function reset() {
     drawReset();
     calculateDrawingOrder(gameFile);
     barlineManager.calculateOrder();
+	
+	balloonReset();
+	drumrollReset();
 
 	bottomStage.reset();
     checkingReset();
