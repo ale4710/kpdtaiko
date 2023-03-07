@@ -44,7 +44,6 @@ var titleScreen = (function() {
                 }
                 break;
             case 'Backspace':
-            case 'SoftLeft':
                 exitgame();
                 break;
         }

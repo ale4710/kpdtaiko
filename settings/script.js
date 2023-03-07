@@ -18,7 +18,7 @@ window.addEventListener('load',function(){
 			if(rescan) {
 				location = '/songscan/index.html';
 			} else {
-				location = '/songselect/index.html';
+				location = '/songselect/index.html#titlescreen';
 			}
         }, 10);
         } else {
