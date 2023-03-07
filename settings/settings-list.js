@@ -389,7 +389,6 @@ settingsListCategories = {
 	'song-select': {
 		label: "Song Select",
 		settings: [
-			'show-song-list-hints',
 			'animate-song-select',
 			'show-difficulty-on-intro'
 		]
