@@ -72,12 +72,13 @@ class Menu {
 		while(mc.length !== 0) {mc[0].remove()}
     }
 
-    navigate(d) {
+    navigate(d, abs) {
 		var c = this.getChildren();
-        if(d === 0) {
-            c[0].focus();
+        if(abs) {
+            c[d].focus();
+			return d;
         } else {
-            navigatelist(
+            return navigatelist(
                 actEl().tabIndex,
                 c, d
             );
@@ -415,11 +416,13 @@ class OptionsMenuSelectable extends OptionsMenu {
         super.menuViewToggle(v,ft,n);
     }
 
-    navigate(d) {
+    navigate(d, abs) {
         if(!this.checkTextType(this.inputType)) {
             //is not text type
-            super.navigate(d);
-        }
+            return super.navigate(d, abs);
+        } else {
+			return 0;
+		}
     }
 
     addOption(label, selected) {
