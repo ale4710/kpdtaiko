@@ -37,8 +37,15 @@ window.addEventListener('load',()=>{
 		reprintList(ls).then((focus)=>{
 			toggleThrobber(false);
 			eid('song-select-list').classList.remove('hidden');
-			focus();
-			curpage = songListPageN;
+			
+			if(location.hash === '#titlescreen') {
+				selectRandomSongInSongList();
+				titleScreen.show();
+			} else {
+				eid('main-screen').classList.remove('hidden');
+				focus();
+				curpage = songListPageN;
+			}
 			updatenavbar();
 
 			if(getDirectoryChangedStatus()) {

@@ -11,7 +11,11 @@
 </head>
 <body>
     <div id="screen">
-        <div id="main-screen">
+		<!-- header in da background -->
+		<div class="header header-in-the-background"></div>
+
+		<!-- MAIN SCREEN -->
+        <div id="main-screen" class="hidden">
 			<!-- header -->
             <div class="header">
                 <span>♪ Select</span>
@@ -63,9 +67,22 @@
 			<!-- just a throbber -->
             <div class="selection" id="selection-list-throbber"><div class="center"><div class="throbber"></div></div></div>
         </div>
+		
+		<div id="title-screen-container" class="fill center hidden">
+			<div id="title-screen" class="vertical-center">
+				<div id="title-screen-title-space">
+					<div id="title-screen-title">domtaiko</div>
+					<div id="title-screen-subtitle">a rhythm game for kaios</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- song background -->
 		<div id="song-background-container" class="fill center">
 			<div id="song-background-overlay" class="fill center"></div>
 		</div>
+		
+		<!-- intro overlay -->
 		<div id="intro-overlay" class="fill center"></div>
         <div id="intro-slider">
             <div id="intro-slider-text" class="vertical-center">

@@ -20,6 +20,7 @@
 		'media',
 		'randomSelectAnimation',
 		'updateSongInfoDisplay',
+		'titleScreen',
         'script',
 		'listSong',
 		'listDifficulty'

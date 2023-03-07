@@ -33,8 +33,17 @@
 }
 
 #screen:not(.optionsMenuShowing) #navbar,
-#main-screen .header {
+.header.header-in-the-background {
 	background-color: var(--not-song-list-background);
+}
+.header-in-the-background {
+	position: absolute;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+.header:not(.header-in-the-background) {
+	background-color: unset;
 }
 
 /* song info */
@@ -189,6 +198,20 @@
 	margin-right: 2px;
 	display: inline-block;
 }
+
+/* the title screen */
+#title-screen-container {
+	text-align: center;
+}
+#title-screen {
+	width: 100%;
+}
+#title-screen > .menu > .menu-entry:focus {
+	background-color: rgba(255,255,255,0.35);
+}
+#title-screen-title-space {margin-bottom: 5px;}
+#title-screen-title {font-size: 28px;}
+#title-screen-subtitle {font-style: italic;}
 
 /* list for selecting stuff */
 .selection {

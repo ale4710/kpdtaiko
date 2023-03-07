@@ -10,8 +10,7 @@ var gameMenu = (function() {
         {l: 'Volume Adjustment', id: 'volume'},
 		{l: 'Sort By...', id: 'sortmenu'},
 		{l: 'Group By...', id: 'groupmenu'},
-        {l: 'Rescan Library', id: 'librescan'},
-        {l: 'Settings', id: 'settings'}
+        {l: 'Rescan Library', id: 'librescan'}
     ].forEach((opt)=>{gameMenuMenu.addOption(opt.l,opt.id);});
     //key handler is generic.
 
@@ -35,9 +34,6 @@ var gameMenu = (function() {
                     case 'librescan':
                         location = '/songscan/index.html';
                         disableControls = true;
-                        break;
-                    case 'settings':
-                        location = '/settings/index.html';
                         break;
 					case 'sortmenu':
 						hide();

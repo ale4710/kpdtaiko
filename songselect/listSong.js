@@ -168,12 +168,12 @@ function printList(sort, group, sortReverse, refocusId) {
 
 var userEnabledSmoothScrolling = (getSettingValue('animate-song-select') === 1);
 function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
-	smooth = (smooth && userEnabledSmoothScrolling)
-	if(abs) {songSelectMenu.navigate(0)}
-	songSelectMenu.navigate(n);
-	
-	lastSongListSelected = actEl().tabIndex;
-	lastSongSelected = parseInt(actEl().dataset.id || 0);
+	smooth = (smooth && userEnabledSmoothScrolling);
+	lastSongListSelected = songSelectMenu.navigate(n, abs);
+	lastSongSelected = parseInt(
+		songSelectMenu.getChildren()[lastSongListSelected].dataset.id || 
+		0
+	);
 	sessionStorage.setItem('songSelectLastSelected', lastSongSelected);
 
 	if(!noUpdateSongDisplay) {
@@ -195,8 +195,15 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 }
 
 function selectRandomSongInSongList() {
+	let songListLength = songSelectMenu.getChildren().length;
+	
+	let randomSelected = lastSongListSelected + 1 + Math.floor((songListLength - 2) * Math.random());
+	if(randomSelected >= songListLength) {
+		randomSelected -= songListLength;
+	}
+	
 	navigateSongList(
-		Math.floor(songSelectMenu.getChildren().length * Math.random()),
+		randomSelected,
 		true,
 		false,
 		false
@@ -247,7 +254,7 @@ function selectSong() {
 		toggleThrobber(false);
 		updatenavbar();
 		eid('difficulty-list').classList.remove('hidden');
-		difficultyListMenu.navigate(0);
+		difficultyListMenu.navigate(0, true);
 
 		var ce = actEl().parentElement,
 		scrollTop = Math.min(
@@ -276,6 +283,9 @@ songListPageN = (function(){
 				break;
 			case '3':
 				playRandomSelectSongAnimation();
+				break;
+			case 'Backspace':
+				titleScreen.show();
 				break;
 			default:
 				songSelectListCommonK(k);
