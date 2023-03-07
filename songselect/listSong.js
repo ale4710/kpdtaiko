@@ -275,7 +275,7 @@ songListPageN = (function(){
 				selectSong();
 				break;
 			case '3':
-				selectRandomSongInSongList();
+				playRandomSelectSongAnimation();
 				break;
 			default:
 				songSelectListCommonK(k);

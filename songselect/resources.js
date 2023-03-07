@@ -19,6 +19,7 @@
         'intro',
 		'media',
 		'hintsDisplay',
+		'randomSelectAnimation',
 		'updateSongInfoDisplay',
         'script',
 		'listSong',

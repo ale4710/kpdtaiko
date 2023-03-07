@@ -88,21 +88,27 @@
 	z-index: 0;
 	--entry-box-height: 24px;
 }
-#song-select-list div.menu-entry {
+#song-select-list > .menu > div.menu-entry {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 	height: var(--entry-box-height);
 }
-#song-select-list div.menu-entry:focus {
+#song-select-list > .menu > div.menu-entry:focus {
 	background: unset;
+}
+.random-select-animation-playing #song-select-list div.menu-entry:focus {
+	opacity: 0;
 }
 
     /* an underlay */
-#song-select-list div.select-underlay {
+#song-select-list > div.select-underlay {
 	width: 100%;
 	height: var(--entry-box-height);
 	background: linear-gradient(90deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
+	margin: unset;
+	position: absolute;
+	width: calc(100% - (var(--mePadding) * 2));
 }
 
 #song-select-list > .menu > .menu-entry.menu-seperator::before {
@@ -273,6 +279,7 @@
 	font-size: 12px;
 	display: inline-block;
 	vertical-align: bottom;
+	line-height: 1.2;
 }
 
 /* intro sequence */
