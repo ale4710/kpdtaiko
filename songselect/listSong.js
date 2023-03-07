@@ -265,6 +265,15 @@ function selectSong() {
 	});
 }
 
+var songSelectSelectRandomAction;
+if(getSettingValue('song-list-animate-random') === 1) {
+	addGlobalReference(0, 'randomSelectAnimation').then(function(){
+		songSelectSelectRandomAction = playRandomSelectSongAnimation;
+	});
+} else {
+	songSelectSelectRandomAction = selectRandomSongInSongList;
+}
+
 songListPageN = (function(){
 	function keyhandle(k) {
 		switch(k.key) {
@@ -282,7 +291,8 @@ songListPageN = (function(){
 				selectSong();
 				break;
 			case '3':
-				playRandomSelectSongAnimation();
+				(songSelectSelectRandomAction || emptyfn)();
+				//it only works when the script is loaded
 				break;
 			case 'Backspace':
 				titleScreen.show();

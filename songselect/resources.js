@@ -18,7 +18,6 @@
         'options',
         'intro',
 		'media',
-		'randomSelectAnimation',
 		'updateSongInfoDisplay',
 		'titleScreen',
         'script',

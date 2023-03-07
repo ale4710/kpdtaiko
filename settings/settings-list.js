@@ -238,12 +238,12 @@ settingsList = {
         default: 0
     },
 	
-	'show-song-list-hints': {
-        label: 'Show Hints',
+	'song-list-animate-random': {
+        label: 'Play Random Animation',
         type: 0,
         values: [
-            'Hide',
-            'Show'
+            'Do Not Play',
+            'Play'
         ],
         default: 1
     },
@@ -390,7 +390,8 @@ settingsListCategories = {
 		label: "Song Select",
 		settings: [
 			'animate-song-select',
-			'show-difficulty-on-intro'
+			'show-difficulty-on-intro',
+			'song-list-animate-random'
 		]
 	},
 	
