@@ -79,10 +79,10 @@ function outputGameplayInfoFinal() {
 	//drumroll
     eid('game-stats-drumroll').textContent = statistics.drumrollTotal;
 	
+	//img
+	eid('game-stats-histogram').src = createTimeGraph(2);
 	//timedata
 	var td = analyzeTimeData();
-	//  img
-	eid('game-stats-histogram').src = createTimeGraph(td.histogram);
 	//  misc data
 	eid('game-stats-late').textContent = td.late;
 	eid('game-stats-early').textContent = td.early;
@@ -97,28 +97,10 @@ function getAverageError() {
 	return tms / hitDataMs.length;
 }
 
-function analyzeTimeData(histogramScale) {
-	if(!histogramScale) {histogramScale = 2}
-	var histogram = {
-		max: 0,
-		scale: histogramScale
-	};
+function analyzeTimeData() {
 	var late = 0, early = 0, allMs = 0;
 
 	hitDataMs.forEach((ms)=>{
-		//histogram
-		var ths = Math.floor(ms / histogramScale),
-		thsa = histogram[ths];
-		if(ths in histogram) {
-			histogram[ths]++;
-		} else {
-			histogram[ths] = 1;
-		}
-		histogram.max = Math.max(
-			histogram.max,
-			histogram[ths]
-		);
-		
 		//late/early
 		if(ms > 0) {
 			late++;
@@ -131,29 +113,24 @@ function analyzeTimeData(histogramScale) {
 	});
 	
 	return {
-		histogram: histogram,
 		late: late,
 		early: early,
 		average: (allMs / hitDataMs.length)
 	};
 }
 var createTimeGraph = (function(){
-	var cv,
-	ctx;
+	var cv;
+	var ctx;
 	
 	return function(
-		histogram,
-		mainColor,
-		targetColor,
-		w,h
+		barWidth = 1,
+		barSpacing = 0,
+		w = 200,
+		h = 70,
+		color = '#fff',
+		timeData = hitDataMs
 	) {
-		if(!histogram) {throw 'please pass a histogram';}
-
-		if(!w) {w = 200}
-		if(!h) {h = 70}
-		if(!mainColor) {mainColor = '#fff'}
-		if(!targetColor) {targetColor = null}
-		
+		//initialize canvas
 		if(!cv) {
 			cv = document.createElement('canvas'),
 			ctx = cv.getContext('2d');
@@ -167,44 +144,45 @@ var createTimeGraph = (function(){
 			w, h
 		);
 		
-		var histogramScale = histogram.scale,
-		histogramMax = histogram.max;
-		delete histogram.scale;
-		delete histogram.max;
-		var histogramScaledEdge = Math.ceil(hitWindow.miss / histogramScale);
+		//collect data
+		//get the number of "bins"
+		let binCount = Math.floor(w / (barWidth + barSpacing));
+		if(binCount === 0) {throw Error('something went wrong when calculating the binCount');}
+		//amount of time to be sampled
+		let timingSampleSize = (hitWindow.miss * 2) / binCount;
+		//fill histogram array with 0
+		let histogram = [];
+		while(histogram.length !== binCount) {histogram.push(0);}
+		//now count
+		let max = 0;
+		hitDataMs.forEach((ms)=>{
+			//determine bin
+			let bin = Math.floor((ms + hitWindow.miss) / timingSampleSize);
+			//put it in
+			if(bin in histogram) {
+				histogram[bin]++;
+				max = Math.max(max, histogram[bin]);
+			}
+		});
 		
-		var recW = Math.floor((1 / (histogramScaledEdge * 2)) * w);
-
-		ctx.fillStyle = mainColor;
-		var hsk = Object.keys(histogram);
-		hsk.forEach((hb)=>{
-			var count = histogram[hb];
-			hb = parseInt(hb);
-			
-			var recH = Math.ceil((count / histogramMax) * h);
-			
+		//draw
+		ctx.fillStyle = color;
+		histogram.forEach((count, index)=>{
+			let barHeight = (count / max) * h;
 			ctx.fillRect(
-				(hb + histogramScaledEdge) * recW,
-				h - recH,
-				recW,
-				recH
+				(barWidth + barSpacing) * index,
+				h - barHeight,
+				barWidth,
+				barHeight
 			);
 		});
 		
-		if(targetColor !== null) {
-			ctx.fillStyle = targetColor;
-			ctx.fillRect(
-				((recW * histogramScaledEdge) - 1),
-				0, 2, h
-			);
-		}
-		
 		//center the image
-		var i = ctx.getImageData(0,0,w,h);
+		let img = ctx.getImageData(0,0,w,h);
 		ctx.clearRect(0,0,w,h);
 		ctx.putImageData(
-			i,
-			Math.floor(((w - (histogramScaledEdge * 2)) / 2) - histogramScaledEdge),
+			img,
+			Math.floor((w - ((barWidth + barSpacing) * binCount)) / 2),
 			0
 		);
 		
