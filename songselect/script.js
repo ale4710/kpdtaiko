@@ -34,8 +34,8 @@ document.addEventListener('visibilitychange',()=>{
 window.addEventListener('load',()=>{
 	let fp;
 	//we request the song list, and then,..
-	var cachedSongList = sessionStorage.getItem('songlist');
-	//var cachedSongList = null;
+	let cachedSongList = sessionStorage.getItem('songlist');
+	//let cachedSongList = null;
 	if(cachedSongList) {
 		songList = JSON.parse(cachedSongList);
 		fp = Promise.resolve();
