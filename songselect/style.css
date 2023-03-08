@@ -118,6 +118,8 @@
 	margin: unset;
 	position: absolute;
 	width: calc(100% - (var(--mePadding) * 2));
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #song-select-list > .menu > .menu-entry.menu-seperator::before {
