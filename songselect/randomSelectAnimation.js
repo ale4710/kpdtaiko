@@ -38,6 +38,7 @@ var playRandomSelectSongAnimation = (function(){
 			resultSound.play();
 		}
 		
+		updateAudioVolume();
 		audio.pause();
 		
 		selectRandomSongInSongList();
@@ -69,7 +70,7 @@ var playRandomSelectSongAnimation = (function(){
 	
 	return function(){
 		animationStartedTime = performance.now();
-		audio.volume = 0;
+		audio.volume *= 0.1;
 		curpage = thisPage;
 		document.body.classList.add(HTML_CLASSNAME);
 		

@@ -133,7 +133,6 @@ function updateSongInfoDisplay() {
 		//this is just incase it takes a long time for the list to load,
 		//and the user minimizes the application or turns off their device
 		if(document.visibilityState === 'visible') {
-			updateAudioVolume();
 			audio.play();
 		}
 	}
