@@ -15,11 +15,12 @@
 	z-index: -2;
 }
 .song-background {
+	--blur: 4px;
 	z-index: -3;
 	object-fit: cover;
-	filter: blur(10px);
-	width: 110%;
-	height: 110%;
+	filter: blur(var(--blur));
+	width: calc(100% + (var(--blur) * 2));
+	height: calc(100% + (var(--blur) * 2));
 }
 @keyframes song-background-fade-out-animation {
 	from {opacity: 1}
