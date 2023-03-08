@@ -284,6 +284,15 @@ settingsList = {
 		action: (function(){gotoControlsChanger()}),
 		type: 4
 	},
+	
+	'rescan-library': {
+		label: 'Rescan Library',
+		action: (function(){
+			location = '/songscan/index.html';
+			disableControls = true;
+		}),
+		type: 4
+	},
 
     'category-default': {
         action: 'default',
@@ -399,7 +408,8 @@ settingsListCategories = {
 		settings: [
 			'animate-song-select',
 			'show-difficulty-on-intro',
-			'song-list-animate-random'
+			'song-list-animate-random',
+			'rescan-library'
 		]
 	},
 	
