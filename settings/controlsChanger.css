@@ -20,10 +20,6 @@
 	width: 100%;
 }
 
-#controls-changer-buttons-table-container-container,
-#controls-changer-assign-button-label-container {
-	text-align: center;
-}
 #controls-changer-buttons-table {
 	display: inline-block;
 	margin: 5px 0;
