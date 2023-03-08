@@ -27,8 +27,11 @@ var titleScreen = (function() {
                     case 'play':
 						CONTAINER.classList.add('hidden');
 						eid('main-screen').classList.remove('hidden');
+						
 						curpage = songListPageN;
-                        navigateSongList(
+                        
+						scrollers.resetAll();
+						navigateSongList(
 							lastSongListSelected, 
 							false, 
 							true
