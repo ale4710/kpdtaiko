@@ -277,6 +277,13 @@ settingsList = {
         type: 2,
         default: 95
     },
+	
+	//actions and such
+	'goto-controls-changer': {
+		label: 'Input Settings',
+		action: (function(){gotoControlsChanger()}),
+		type: 4
+	},
 
     'category-default': {
         action: 'default',
@@ -335,6 +342,7 @@ settingsListCategories = {
         settings: [
 			'category-offset',
 			'category-game',
+			'goto-controls-changer',
 			'category-song-select',
 			'category-visual',
 			'category-sounds',

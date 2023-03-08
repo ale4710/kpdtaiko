@@ -12,11 +12,34 @@
     </head>
     <body>
         <div id="screen">
+			<!-- main screen -->
             <div id="main" class="screen hidden">
                 <div class="header" id="header"></div>
                 <div class="scrollable-screen" id="settings-list"></div>
             </div>
+			
+			<!-- controls changer -->
+			<div id="controls-changer-page-container" class="screen hidden">
+				<div class="header">Input Settings</div>
+				<div id="controls-changer-page">
+					<div id="controls-changer-buttons-table-container-container" class="vertical-center">
+						These are your current keybinds.
+						<div id="controls-changer-buttons-table-container">
+							<!-- table with buttons will be inserted in code -->
+						</div>
+						Press a button on your keypad to reassign it.
+					</div>
+					<div id="controls-changer-assign-button-container" class="vertical-center hidden">
+						<div id="controls-changer-assign-button-label-container">
+							<div id="controls-changer-assign-button-button" class="keypad-button"></div>
+							<div id="controls-changer-assign-button-label">Assign this button to...</div>
+						</div>
+						<!-- menu will be inserted in code -->
+					</div>
+				</div>
+			</div>
             
+			<!-- progress... -->
             <div id="progress" class="screen hidden scrollable-screen"></div>
         </div>
     </body>

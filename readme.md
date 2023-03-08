@@ -16,9 +16,9 @@ there will be bugs, because i did not test it a lot.
 ## controls
 i made it like a taiko drum thingy.
 
-`4` and `6` are don. `1` and `3` are kat.
+the default controls are as follows:
 
-at the moment you can not change them without changing the code.
+`4` and `6` are don. `1` and `3` are kat.
 
 ## setup
 place songs in your default media location. the location is

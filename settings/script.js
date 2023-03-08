@@ -8,26 +8,37 @@ var settingChangePageN;
 
 window.addEventListener('load',function(){
 	console.log('loaded');
-    if(location.hash === '#bootup') {
-        console.log('app has been started.');
-        sessionStorage.setItem('apprunning',true);
-        initSettings(0,true);
-		
-		let rescan = (localStorage.getItem('do-not-rescan') !== '1');
-        setTimeout(()=>{
-			if(rescan) {
-				location = '/songscan/index.html';
-			} else {
-				location = '/songselect/index.html#titlescreen';
-			}
-        }, 10);
-        } else {
-            disableControls = false;
-            eid('main').classList.remove('hidden');
-            initSettings(0);
-            updateHeader();
-            updatenavbar();
-    }
+	//load stuff for init
+	let extraLoad = [
+		'controlsChanger'
+	];
+	extraLoad.forEach((f, i)=>{
+		extraLoad[i] = addGlobalReference(0, f);
+	});
+	
+	Promise.allSettled(extraLoad).then(()=>{
+		extraLoad = undefined;
+		if(location.hash === '#bootup') {
+			console.log('app has been started.');
+			sessionStorage.setItem('apprunning',true);
+			initSettings(0,true);
+			
+			let rescan = (localStorage.getItem('do-not-rescan') !== '1');
+			setTimeout(()=>{
+				if(rescan) {
+					location = '/songscan/index.html';
+				} else {
+					location = '/songselect/index.html#titlescreen';
+				}
+			}, 10);
+		} else {
+			disableControls = false;
+			eid('main').classList.remove('hidden');
+			initSettings(0);
+			updateHeader();
+			updatenavbar();
+		}
+	});
 });
 
 function initSettings(focusIndex, updateAll) {

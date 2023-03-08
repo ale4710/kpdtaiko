@@ -1,0 +1,39 @@
+.keypad-button {
+	width: 33px;
+	height: 23px;
+	padding: 0 5px;
+	border-width: 2.5px;
+	border-style: solid;
+	border-color: #fff;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: left;
+	background-color: #000;
+}
+
+.keypad-button.don {background-color: #f00}
+.keypad-button.kat {background-color: #00f}
+
+#controls-changer-buttons-table-container-container,
+#controls-changer-assign-button-container {
+	position: absolute;
+	width: 100%;
+}
+
+#controls-changer-buttons-table-container-container,
+#controls-changer-assign-button-label-container {
+	text-align: center;
+}
+#controls-changer-buttons-table {
+	display: inline-block;
+	margin: 5px 0;
+}
+
+#controls-changer-assign-button-container {
+	border-color: #fff;
+	border-width: 1px;
+	border-bottom-style: solid;
+	border-top-style: solid;
+	background: var(--background-color-o75);
+	padding: 5px 0;
+}

@@ -1,23 +1,33 @@
-var keybinds = {},
-keybindspre = {
-    don: ['d','f','4','6'],
-    kat: ['j','k','1','3'],
+var keybinds = {};
+var keybindspre = {
+    don: ['d','f'],
+    kat: ['j','k'],
     pause: ['p','0','Backspace'],
     //autoplayToggle: ['o','8'],
-},
-gameActionId = {
+};
+var gameActionId = {
     don: 0,
     kat: 1
 };
 
-(()=>{
-    Object.keys(keybindspre).forEach((bindTo)=>{
-        keybindspre[bindTo].forEach((key)=>{
-            keybinds[key] = bindTo;
-        });
-    });
-    keybindspre = null;
-})();
+{
+	let gameplayKeybinds = JSON.parse(localStorage.getItem('user-controls'));
+	[
+		'don',
+		'kat'
+	].forEach((action)=>{
+		gameplayKeybinds[action].forEach((key)=>{
+			keybindspre[action].push(key);
+		});
+	});
+}
+
+Object.keys(keybindspre).forEach((bindTo)=>{
+	keybindspre[bindTo].forEach((key)=>{
+		keybinds[key] = bindTo;
+	});
+});
+keybindspre = undefined;
 
 disableControls = false;
 window.removeEventListener('keydown', globalKeyHandler);
