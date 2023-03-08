@@ -1,10 +1,12 @@
-var songList,
+var songList;
 
-audio = (new Audio()),
-audioStartPoint = 0,
-audioAvailable = false,
+var audio = (new Audio());
+var audioStartPoint = 0;
+var audioAvailable = false;
 
-lastSongSelected;
+var lastSongSelected;
+
+var songsAvailable = true;
 
 audio.addEventListener('ended',()=>{
 	audio.currentTime = audioStartPoint;
@@ -30,50 +32,26 @@ document.addEventListener('visibilitychange',()=>{
 });
 
 window.addEventListener('load',()=>{
-	function showList() {
-		var ls = sessionStorage.getItem('songSelectLastSelected');
-		if(ls !== null) {ls = parseInt(ls);}
-
-		reprintList(ls).then((focus)=>{
-			toggleThrobber(false);
-			eid('song-select-list').classList.remove('hidden');
-			
-			if(location.hash === '#titlescreen') {
-				selectRandomSongInSongList();
-				titleScreen.show();
-			} else {
-				eid('main-screen').classList.remove('hidden');
-				focus();
-				curpage = songListPageN;
-			}
-			updatenavbar();
-
-			if(getDirectoryChangedStatus()) {
-				showDirectoryChangedMessage();
-			}
-		});
-	}
-
+	let fp;
 	//we request the song list, and then,..
-	//var cachedSongList = sessionStorage.getItem('songlist');
-	var cachedSongList = null;
+	var cachedSongList = sessionStorage.getItem('songlist');
+	//var cachedSongList = null;
 	if(cachedSongList) {
 		songList = JSON.parse(cachedSongList);
-		showList();
+		fp = Promise.resolve();
 	} else {
-		getSongList().then((songListlv)=>{
+		fp = getSongList().then((songListlv)=>{
 			localStorage.setItem('do-not-rescan', '1');
 			songList = songListlv;
 			sessionStorage.setItem('songlist', JSON.stringify(songList));
-			showList();
 		}).catch((err)=>{
-			let title = 'Error Occured';
+			songsAvailable = false;
+			
 			let message = 'An unknown error occured while trying to retrieve the song list.';
 			
 			localStorage.removeItem('do-not-rescan');
 			
 			if(err === 'empty') {
-				title = 'No Songs';
 				message = 'No songs were found in the song directory. ';
 				if(deviceStorage) {
 					message += `The song directory is located at ${formFullgameDirectory()}. Please check the directory.`;
@@ -82,17 +60,38 @@ window.addEventListener('load',()=>{
 				}
 			}
 			
-			let wc = ()=>{window.close()};
-			messageBox.create(
-				title,
-				message + '\n\nThe program will now terminate.',
-				{
-					center: messageBox.makeOpt(wc, 'ok'),
-					back:  messageBox.makeOpt(wc)
-				}
-			);
+			eid('error-screen-text').textContent = message;
 		});
 	}
+	
+	fp.finally(()=>{
+		var ls = sessionStorage.getItem('songSelectLastSelected');
+		if(ls !== null) {ls = parseInt(ls);}
+		
+		let rplPromise = (
+			songsAvailable?
+			reprintList(ls) :
+			Promise.resolve()
+		);
+
+		rplPromise.then((focus)=>{
+			toggleThrobber(false);
+			eid('song-select-list').classList.remove('hidden');
+			
+			if(location.hash === '#titlescreen') {
+				if(songsAvailable) {selectRandomSongInSongList();}
+				titleScreen.show();
+			} else {
+				(focus || emptyfn)();
+				gotoSongList();
+			}
+			updatenavbar();
+
+			if(getDirectoryChangedStatus()) {
+				showDirectoryChangedMessage();
+			}
+		});
+	});
 });
 
 function toggleThrobber(show) {
@@ -114,6 +113,6 @@ function songSelectListCommonK(k) {
 	}
 }
 
-var navbarsm = ['','select','menu'];
+var navbarsm = ['back','select','menu'];
 
 outputNavbar();

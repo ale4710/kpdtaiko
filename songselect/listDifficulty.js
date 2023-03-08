@@ -52,6 +52,7 @@ difficultyListPageN = (function(){
 				selectDifficulty();
 				break;
 			case 'Backspace':
+			case 'SoftLeft':
 				eid('difficulty-list').classList.add('hidden');
 				eid('song-select-list').classList.remove('hidden');
 				navigateSongList(

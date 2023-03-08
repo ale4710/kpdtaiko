@@ -274,37 +274,73 @@ if(getSettingValue('song-list-animate-random') === 1) {
 	songSelectSelectRandomAction = selectRandomSongInSongList;
 }
 
+function gotoSongList() {
+	curpage = songListPageN;
+	if(songsAvailable) {
+		eid('main-screen').classList.remove('hidden');
+		scrollers.resetAll();
+		navigateSongList(
+			lastSongListSelected, 
+			false,
+			true
+		);
+	} else {
+		eid('error-screen').classList.remove('hidden');
+	}
+}
+function exitSongList() {
+	eid('main-screen').classList.add('hidden');
+	eid('error-screen').classList.add('hidden');
+	titleScreen.show();
+}
+
 songListPageN = (function(){
 	function keyhandle(k) {
-		switch(k.key) {
-			case 'ArrowUp':
-				var u = -1;
-			case 'ArrowDown':
-				navigateSongList(
-					u || 1,
-					false,
-					false,
-					true
-				);
-				break;
-			case 'Enter':
-				selectSong();
-				break;
-			case '3':
-				(songSelectSelectRandomAction || emptyfn)();
-				//it only works when the script is loaded
-				break;
-			case 'Backspace':
-				titleScreen.show();
-				break;
-			default:
-				songSelectListCommonK(k);
-				break;
+		if(songsAvailable) {
+			switch(k.key) {
+				case 'ArrowUp':
+					var u = -1;
+				case 'ArrowDown':
+					navigateSongList(
+						u || 1,
+						false,
+						false,
+						true
+					);
+					break;
+				case 'Enter':
+					selectSong();
+					break;
+				case '3':
+					(songSelectSelectRandomAction || emptyfn)();
+					//it only works when the script is loaded
+					break;
+				case 'Backspace':
+				case 'SoftLeft':
+					exitSongList();
+					break;
+				default:
+					songSelectListCommonK(k);
+					break;
+			}
+		} else if(
+			(k.key === 'Backspace') ||
+			(k.key === 'SoftLeft')
+		) {
+			exitSongList();
 		}
-	}
+	};
+	
+	function nb() {
+		if(songsAvailable) {
+			return navbarsm;
+		} else {
+			return ['back'];
+		}
+	};
 	
 	return addPage(
 		keyhandle,
-		(function(){return navbarsm})
+		nb
 	);
 })();

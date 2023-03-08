@@ -26,16 +26,7 @@ var titleScreen = (function() {
                 switch(actEl().dataset.id) {
                     case 'play':
 						CONTAINER.classList.add('hidden');
-						eid('main-screen').classList.remove('hidden');
-						
-						curpage = songListPageN;
-                        
-						scrollers.resetAll();
-						navigateSongList(
-							lastSongListSelected, 
-							false, 
-							true
-						);
+						gotoSongList();
                         break;
                     case 'settings':
                         location = '/settings/index.html';
@@ -61,7 +52,6 @@ var titleScreen = (function() {
         show: function(){
 			curpage = thisPage;
 			CONTAINER.classList.remove('hidden');
-			eid('main-screen').classList.add('hidden');
 			menu.navigate(0, true);
 		}
     }
