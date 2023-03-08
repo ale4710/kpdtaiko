@@ -7,6 +7,7 @@ function outputProgress(text) {
 function finish() {
 	console.log('finish');
 	database.saveDatabase();
+	sessionStorage.removeItem('songlist');
 	location = '/songselect/index.html#titlescreen';
 }
 
