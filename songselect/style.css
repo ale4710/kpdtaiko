@@ -203,9 +203,6 @@
 }
 
 /* the title screen */
-#title-screen-container {
-	text-align: center;
-}
 #title-screen {
 	width: 100%;
 }
@@ -215,6 +212,8 @@
 #title-screen-title-space {margin-bottom: 5px;}
 #title-screen-title {font-size: 28px;}
 #title-screen-subtitle {font-style: italic;}
+
+#title-screen-header {font-size: 10px;}
 
 /* list for selecting stuff */
 .selection {
