@@ -8,7 +8,7 @@ var titleScreen = (function() {
     [
         {l: 'Play', id: 'play'},
         {l: 'Settings', id: 'settings'},
-		{l: 'Manual', id: 'manual'}
+		{l: 'Manual', id: 'manual'},
 		{l: 'Exit', id: 'exit'}
     ].forEach((opt)=>{menu.addOption(opt.l,opt.id);});
 	
