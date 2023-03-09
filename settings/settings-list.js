@@ -239,7 +239,7 @@ settingsList = {
     },
 	
 	'song-list-animate-random': {
-        label: 'Play Random Animation',
+        label: 'Play Randomize Animation',
         type: 0,
         values: [
             'Do Not Play',
