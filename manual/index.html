@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<style>
+		.mod-image {
+			background-color: #000;
+			padding: 2px;
+		}
+		</style>
+
+		<title>manual</title>
+	</head>
+	<body>
+		<h1 id="top">domtaiko manual</h1>
+		<p>this is the manual for domtaiko, a rhythm game for kaios.
+		
+		<hr />
+		<b>table of contents</b>
+		<ul>
+			<li><a href="#note">note</a></li>
+			<li><a href="#setup">setup</a></li>
+			<li><a href="#song-select-screen">song select screen</a></li>
+			<li><a href="#offset-adjustment">offset adjustment</a></li>
+			<li><a href="#custom-hit-sounds">custom hitsounds</a></li>
+			<li><a href="#game-modifiers">game modifiers</a></li>
+		</ul>
+		<hr />
+		
+		
+		<h2 id="note">note</h2>
+		<p>this manual is only listing things that are not obvious. if it is not listed, you can probably figure out how operate it yourself.
+		<p><a href="#top">top</a>
+		
+		
+		
+		<h2 id="setup">setup</h2>
+		<p>in order to play this game, you need charts.
+		<h3>about charts</h3>
+		<p>there are two supported formats: tja and osu.
+		<p>osu charts are the easiest to get, as you simply download them from the official website or a mirror.
+		<p>tja charts are scattered throughout the internet. you'll have to seek them out yourself.
+		<h3>where to put charts</h3>
+		<p>put the charts in <code>.domtaiko/songs/</code>.
+		<p><a href="#top">top</a>
+		
+		
+		
+		<h2 id="song-select-screen">song select screen</h2>
+		<h3>layout</h3>
+		<center>
+			<img src="song-select-screen.png" />
+		</center>
+		<ol>
+			<li>song information</li>
+			<li>available charts</li>
+			<li>song list</li>
+			<li>active game modifiers</li>
+			<li>image representing the song</li>
+		</ol>
+		<h3>keybinds</h3>
+		<p><code>1</code> = toggle autoplay
+		<p><code>3</code> = select random song
+		<p><a href="#top">top</a>
+		
+		
+		
+		<h2 id="offset-adjustment">offset adjustment</h2>
+		<h3>how offset works</h3>
+		<p>basically, positive values will make the notes appear later, and negative values will make the notes appear later.
+		<h3>global offset</h3>
+		<p>global offset can be adjusted from the settings menu.
+		<h3>local offset</h3>
+		<p>during gameplay, you can press <code>#</code> on your keypad to get the following to appear in the corner:
+		<center>
+			<img src="offset-info.png" />
+		</center>
+		<p>this will display the local offset for the chart, the global offset for the entire game, and the current average hit error for the entire current attempt.
+		<p>while holding <code>#</code>, you can also press the directional keys to adjust the local offset, or press <code>1</code> on your keypad to reset the local offset back to zero.
+		<center>
+			<img src="offset-adjust-keybinds.png" />
+		</center>
+		<p><a href="#top">top</a>
+		
+		
+		
+		<h2 id="custom-hit-sounds">custom hitsounds</h2>
+		<p>place custom hitsounds in the directory <code>.domtaiko/custom/</code>.
+		<p>the filenames are <code>don.ogg</code> and <code>kat.ogg</code>, with each filename representing their respective sound effect.
+		<p><a href="#top">top</a>
+		
+		
+		
+		<h2 id="game-modifiers">game modifiers</h2>
+		<p>this section will describe the game modifiers
+		<p><img src="/img/modico/medium/auto.png" class="mod-image" /> autoplay
+		<p>this will have your device play the chart to the best of its ability.
+		<p>enable or disable by pressing <code>1</code> on your keypad on the song select screen.
+		
+		<p><img src="/img/modico/medium/audio-speed-modify.png" class="mod-image" /> audio playback rate modify
+		<p>this will change the playback rate of the audio and chart.
+		<p>modify this on the song select screen.
+		
+		<p><img src="/img/modico/medium/scroll-speed-modify.png" class="mod-image" /> scroll speed modify
+		<p>this will change the scroll speed, that is the speed that notes move from right to left.
+		<p>modify this on the song select screen.
+		
+		<p><img src="/img/modico/medium/metronome.png" class="mod-image" /> metronome
+		<p>this will play a metronome.
+		<p>this can be enabled or disabled by going to <code>settings > sound settings > metronome</code>
+		
+		<p><img src="/img/modico/medium/timing-window-adjust.png" class="mod-image" /> timing window adjust
+		<p>this will adjust the timing window. the accompanying labels are <code>W</code> for wide, <code>T</code> for tight, and <code>C</code> for custom.
+		<p>this can be modified by going to <code>settings > game settings > hit windows</code>
+		
+		<p><img src="/img/modico/medium/notes-hidden.png" class="mod-image" /> hide notes
+		<p>this will make the notes not visible. show off your memorization skills with this game modifier.
+		<p>this can be enabled or disabled by going to <code>settings > visual settings > hide notes</code>
+		
+		<p><a href="#top">top</a>
+	</body>
+</html>
