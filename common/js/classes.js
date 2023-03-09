@@ -551,14 +551,14 @@ class Tabs {
 }
 
 var ScrollHandler = (function(){
-	var lt = 0,
-	running = false,
+	var lt = 0;
+	var running = false;
 	
-	scrollers = [],
+	var scrollers = [];
 	
-	rm = [],
+	var rm = [];
 	
-	pxRegex = /^([0-9]+(?:\.[0-9]+))px$/i;
+	var pxRegex = /^([0-9]+(?:\.[0-9]+))px$/i;
 	
 	function shf() {
 		var now = window.performance.now();
@@ -580,6 +580,8 @@ var ScrollHandler = (function(){
 		}
 		requestAnimationFrame(shf);
 	}
+	
+	
 	
 	return class {
 		constructor(el, options) {
@@ -606,7 +608,9 @@ var ScrollHandler = (function(){
 			
 			this.frozen = true;
 			this.frozenTime = 0;
-			this.frozenTimeTarget = (options.freezeTime || 1);
+			let frozenTimeTarget = options.freezeTime;
+			if(typeof(frozenTimeTarget) !== 'number') {frozenTimeTarget = 1}
+			this.frozenTimeTarget = frozenTimeTarget;
 			this.awaitingFreeze = false;
 			
 			this.computeMargins = !!options.computeMargins;
