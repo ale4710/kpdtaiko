@@ -5,6 +5,7 @@
 /* background */
 #song-background-container {
 	z-index: -6;
+	background-color: #fff;
 }
 #song-background-overlay {
 	z-index: -1;
