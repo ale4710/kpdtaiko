@@ -153,7 +153,7 @@ function printList(sort, group, sortReverse, refocusId) {
 				);
 				
 				if(refocusId === song) {
-					//console.log('okay refocus to',song, gid);
+					console.log('okay refocus to', song, gid);
 					refocusReturnVal = o.tabIndex;
 				} else if(refocusId === undefined) {
 					refocusReturnVal = 0;
@@ -175,6 +175,11 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 		0
 	);
 	sessionStorage.setItem('songSelectLastSelected', lastSongSelected);
+	
+	/* console.log(
+		n,
+		lastSongListSelected
+	); */
 
 	if(!noUpdateSongDisplay) {
 		updateSongInfoDisplay();
@@ -281,7 +286,7 @@ function gotoSongList() {
 		scrollers.resetAll();
 		navigateSongList(
 			lastSongListSelected, 
-			false,
+			true,
 			true
 		);
 	} else {

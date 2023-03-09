@@ -67,6 +67,7 @@ window.addEventListener('load',()=>{
 	fp.finally(()=>{
 		var ls = sessionStorage.getItem('songSelectLastSelected');
 		if(ls !== null) {ls = parseInt(ls);}
+		//console.log(ls);
 		
 		let rplPromise = (
 			songsAvailable?
