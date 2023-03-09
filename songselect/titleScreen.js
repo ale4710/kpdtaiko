@@ -8,6 +8,7 @@ var titleScreen = (function() {
     [
         {l: 'Play', id: 'play'},
         {l: 'Settings', id: 'settings'},
+		{l: 'Manual', id: 'manual'}
 		{l: 'Exit', id: 'exit'}
     ].forEach((opt)=>{menu.addOption(opt.l,opt.id);});
 	
@@ -32,6 +33,9 @@ var titleScreen = (function() {
                         location = '/settings/index.html';
 						disableControls = true;
                         break;
+					case 'manual':
+						window.open('/manual/index.html');
+						break;
                     case 'exit':
                         exitgame();
                         break;
