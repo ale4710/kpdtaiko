@@ -104,6 +104,9 @@ body.ended.show-stats #game-stats {
     text-shadow: #ff0 0 0 5px;
     color: #ff8;
 }
+#game-stats > #game-stats-extra-info > .game-stats-extra-info-small-text {
+	font-size: 12px;
+}
 
 #game-stats-details { /*showing in modal style*/
 	width: 100%;
