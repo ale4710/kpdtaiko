@@ -28,7 +28,10 @@ window.addEventListener('load',function(){
 				if(rescan) {
 					location = '/songscan/index.html';
 				} else {
-					location = '/songselect/index.html#titlescreen';
+					location = '/songselect/index.html#' + (new URLSearchParams({
+						'goto': 'title',
+						'select-random': 1
+					})).toString();
 				}
 			}, 10);
 		} else {
@@ -196,7 +199,10 @@ manageSettingsPageHistory = {
             updateHeader();
             initSettings(li.index);
         } else {
-            location = '/songselect/index.html';
+            location = '/songselect/index.html#' + (new URLSearchParams({
+				'goto': 'title',
+				'select-random': 0
+			})).toString();
         }
     }
 }

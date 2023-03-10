@@ -8,7 +8,10 @@ function finish() {
 	console.log('finish');
 	database.saveDatabase();
 	sessionStorage.removeItem('songlist');
-	location = '/songselect/index.html#titlescreen';
+	location = '/songselect/index.html#' + (new URLSearchParams({
+		'goto': 'title',
+		'select-random': 1
+	})).toString();
 }
 
 var errhandle = (function(){

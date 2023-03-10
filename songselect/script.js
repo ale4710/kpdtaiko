@@ -79,13 +79,25 @@ window.addEventListener('load',()=>{
 			toggleThrobber(false);
 			eid('song-select-list').classList.remove('hidden');
 			
-			if(location.hash === '#titlescreen') {
-				if(songsAvailable) {selectRandomSongInSongList();}
-				titleScreen.show();
+			let params = new URLSearchParams(location.hash.substr(1));
+			if(
+				(params.get('select-random') === '1') &&
+				songsAvailable
+			) {
+				selectRandomSongInSongList();
 			} else {
 				(focus || emptyfn)();
-				gotoSongList();
 			}
+			
+			switch(params.get('goto')) {
+				case 'title': 
+					titleScreen.show();
+					break;
+				case 'songlist':
+					gotoSongList();
+					break;
+			}
+			
 			updatenavbar();
 
 			if(getDirectoryChangedStatus()) {

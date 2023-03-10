@@ -64,7 +64,12 @@ function end() {
     },1500);
 }
 
-function exitToSongSelect() {location = '/songselect/index.html';}
+function exitToSongSelect() {
+	location = '/songselect/index.html#' + (new URLSearchParams({
+		'goto': 'songlist',
+		'select-random': 0
+	})).toString();
+}
 
 var showDetailedStatsClassList = 'show-stats-detailed';
 
