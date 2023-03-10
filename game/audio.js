@@ -1,11 +1,10 @@
-var audio,
-audioEnded = false,
-audioCtx,
-audioCtxSpace = {},
-sounds = {},
+var audio;
+var audioEnded = false;
+var audioCtx;
+var audioCtxSpace = {};
+var sounds = {};
 
-mediaPlayMode = getSettingValue('media-play-mode') //0 = html media element, 1 = audiocontext
-;
+var mediaPlayMode = getSettingValue('media-play-mode'); //0 = html media element, 1 = audiocontext
 
 var audioControl = (function(){
 	let ctrls = {};
@@ -294,7 +293,6 @@ function arrayBufToAudData(ab) {
 };
 
 function loadSoundIntoMemory(path, from, id) {
-
     return (new Promise((resolve, reject)=>{
         function save(ab) {
             sounds[id] = ab;

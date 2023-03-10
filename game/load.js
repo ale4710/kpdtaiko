@@ -114,9 +114,18 @@ function firstLoad(loaderFn) {
 }
 
 (()=>{
-	addGlobalReference(0,
-		'loader/' + urlParams.get('songSource')
-	).then(()=>{
+	let scriptsToLoad = [];
+	
+	//data loader
+	scriptsToLoad.push('loader/' + urlParams.get('songSource'));
+	
+	//risky mod
+	if(modsList.mods.risky.check() !== 0) {
+		scriptsToLoad.push('modRisky');
+	}
+	
+	//load it
+	addGlobalReferenceGroup(0, scriptsToLoad).then(()=>{
 		eid('loading-display-in').textContent = 'Loading...';
 	});
 })();

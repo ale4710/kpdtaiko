@@ -66,6 +66,13 @@ var modsList = (function(){
             formatLabel: numberMultFormat,
             defaultValue: 1
         },
+		risky: {
+			img: 'risky',
+			check: ()=>{return Math.floor(getSettingValue('game-risky'))},
+			mode: 1,
+			//formatLabel: Math.floor,
+			defaultValue: 0
+		}
     },
 
     //modsKeys = Object.keys(mods)
@@ -74,6 +81,7 @@ var modsList = (function(){
         'auto',
         'metronome',
         'notesHidden',
+		'risky',
         'timingWindow',
         'scrollSpeed',
         'audioSpeed'

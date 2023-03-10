@@ -80,6 +80,7 @@ function reset() {
     updateBpm();
 }
 
+var gameLoopAdditional = [];
 function gameLoop(proceed) {
     //draw();
     timerUpdate();
@@ -88,6 +89,8 @@ function gameLoop(proceed) {
     autoplay();
 	
 	bottomStage.check();
+	
+	gameLoopAdditional.forEach((fn)=>{fn();});
 
     if(proceed !== false) {
         eid('ups').textContent = fpsCheck('ups');
@@ -224,14 +227,16 @@ function miss(disappear) {
     } else {
         notesMissed.push(latestObject);
     }
+    
+	nextObject();
+    postJudge(judgeStyles.miss);
+    infoAddHit('miss');
+	
 	window.dispatchEvent(new CustomEvent('gamemissed', {
 		detail: {
 			combo: combo
 		}
 	}));
-    nextObject();
-    postJudge(judgeStyles.miss);
-    infoAddHit('miss');
 }
 
 //balloon stuff

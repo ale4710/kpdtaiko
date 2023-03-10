@@ -278,6 +278,12 @@ settingsList = {
         default: 95
     },
 	
+	'game-risky': {
+        label: 'Risky',
+        type: 2,
+        default: 0
+    },
+	
 	//actions and such
 	'goto-controls-changer': {
 		label: 'Input Settings',
@@ -399,7 +405,8 @@ settingsListCategories = {
 	'game': {
 		label: 'Game Settings',
 		settings: [
-			'category-hit-windows'
+			'category-hit-windows',
+			'game-risky'
 		]
 	},
 	

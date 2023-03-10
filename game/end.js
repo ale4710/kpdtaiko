@@ -5,27 +5,24 @@ var modsDisplayEnd = (new ModsView(
 	1,
 	eid('game-stats-extra-info')
 ));
-function end() {
+function end(messageOverride) {
     ended = true;
     document.body.classList.remove('special');
     outputGameplayInfoFinal();
 
-    var endDispChildren = eid('end-display-in').children;
-    for(var i = 0; i < endDispChildren.length; i++) {
-        endDispChildren[i].classList.add('hidden');
-    }
-
-    var elToShow;
-    if(isPerfectAccuracy()) {
-        elToShow = eid('end-display-perfect');
+    var message;
+	if(messageOverride) {
+		message = messageOverride;
+	} else if(isPerfectAccuracy()) {
+        message = 'Perfect!';
     } else if(isFullCombo()) {
-        elToShow = eid('end-display-full-combo');
+        message = 'Full Combo!';
     } else if(autoplayEnabled) {
-        elToShow = eid('end-display-autoplay-tried');
+        message = 'I tried my best.';
     } else {
-        elToShow = eid('end-display-normal-complete');
+        message = 'Song Complete!';
     }
-    elToShow.classList.remove('hidden');
+    eid('end-display-in').textContent = message;
 
     document.body.classList.add('ended');
 	
