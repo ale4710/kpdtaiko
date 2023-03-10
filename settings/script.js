@@ -32,6 +32,7 @@ window.addEventListener('load',function(){
 			}, 10);
 		} else {
 			disableControls = false;
+			curpage = mainScreenPageN;
 			eid('main').classList.remove('hidden');
 			initSettings(0);
 			updateHeader();
@@ -333,6 +334,4 @@ settingChangePageN = addPage(
 	}
 );
 
-
-curpage = mainScreenPageN;
 updatenavbar();
