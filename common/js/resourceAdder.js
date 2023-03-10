@@ -38,3 +38,13 @@ function addGlobalReference(type, filename) {
 		document.head.appendChild(s);
 	}));
 }
+
+function addGlobalReferenceGroup(type, filenames) {
+	let promises = [];
+	filenames.forEach(function(filename){
+		promises.push(
+			addGlobalReference(type, filename)
+		);
+	});
+	return Promise.allSettled(promises);
+}
