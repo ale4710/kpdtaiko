@@ -13,7 +13,7 @@ var titleScreen = (function() {
     ].forEach((opt)=>{menu.addOption(opt.l,opt.id);});
 	
 	function exitgame() {
-		window.close();
+		window.parent.close();
 	}
 
     function keyhandle(k) {

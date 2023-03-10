@@ -271,8 +271,11 @@ body.intro #intro-overlay {
     overflow: hidden;
 	transform: translatex(0);
 	transition: transform var(--intro-animation-duration) var(--intro-animation-timingfn);
-	
 }
+body.intro #intro-slider.intro-out {
+	transform: translatex(-200%);
+}
+
 #intro-slider-text {width: 100%;}
 #intro-slider-text > div {
     overflow: hidden;

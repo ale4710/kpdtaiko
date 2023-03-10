@@ -23,6 +23,7 @@
         lib+'md5',
 		lib+'taffy-min',
         //normal scripts
+		user+'frameShowManager',
 		user+'compat',
         user+'etcf',
         user+'settings',

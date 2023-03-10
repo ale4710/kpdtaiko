@@ -120,3 +120,7 @@ function firstLoad(loaderFn) {
 		eid('loading-display-in').textContent = 'Loading...';
 	});
 })();
+
+window.addEventListener('load', function(){
+	document.body.classList.add('loading-started');
+});

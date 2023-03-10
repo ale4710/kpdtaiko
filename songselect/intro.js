@@ -1,6 +1,7 @@
 var playIntro = (function(){
 	var fhandler = new PreviousFocusHandler();
 	var introTO;
+	var introCancelable = true;
 	
 	var decideSound = new Audio('sound/decide.ogg');
 	function updateSoundVolumes(){
@@ -14,7 +15,9 @@ var playIntro = (function(){
 		(function(k){ //keyhandler
 			switch(k.key) {
 				case 'Backspace':
-					introCancel();
+					if(introCancelable) {
+						introCancel();
+					}
 					break;
 			}
 		}),
@@ -41,7 +44,12 @@ var playIntro = (function(){
 		decideSound.play();
 		
 		introTO = setTimeout(function(){
-			location = url;
+			introCancelable = false;
+			let introSlider = eid('intro-slider');
+			introSlider.classList.add('intro-out');
+			introSlider.addEventListener('transitionend', function(){
+				location = url;
+			});
 		}, 1500);
 	}
 })();

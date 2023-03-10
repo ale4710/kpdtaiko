@@ -13,7 +13,8 @@
 
 body {
     margin: 0;
-    background: var(--background-color);
+    /* background: var(--background-color); */
+	background-color: transparent;
     color: var(--text-color);
     font-family: 'open sans','noto sans',sans-serif;
     /* overflow: hidden; */
