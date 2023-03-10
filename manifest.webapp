@@ -6,7 +6,7 @@
     "subtitle":"A rhythm game for KaiOS.",
     "description":"DOMtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files.",
     "default_locale": "en-US",
-    "launch_path":"/settings/index.html#bootup",
+    "launch_path":"/main-app/index.html",
     "type":"privileged",
     "theme_color": "#FFFFFF",
     "fullscreen": "true",

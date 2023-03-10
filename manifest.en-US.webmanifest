@@ -5,7 +5,7 @@
     "lang": "en-US",
 	"orientation": "portrait",
 	"display": "fullscreen",
-    "start_url":"/settings/index.html#bootup",
+    "start_url":"/main-app/index.html",
     "theme_color": "#FFFFFF",
 	"icons": [
 		{
@@ -20,7 +20,7 @@
 		}
 	],
 	"b2g_features": {
-		"version": "0.0.9",
+		"version": "0.3.1",
 		"type":"privileged",
 		"default_locale": "en-US",
 		"subtitle":"A rhythm game for KaiOS.",
