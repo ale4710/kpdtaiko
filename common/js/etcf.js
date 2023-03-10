@@ -263,22 +263,19 @@ function xmlhttprqsc(url,responsetype,cbs, cbf) {
 }
 
 var alertMessage = (function(){
-	var timeout,
-	fgcolors = [
+	let timeout;
+	let fgcolors = [
 		'fff',
 		'000',
 		'000',
 		'fff'
-	],
-	bgcolors = [
+	];
+	let bgcolors = [
 		'2a2a2a',
 		'fff',
 		'ff0',
 		'f00'
-	],
-	almel;
-	
-	setTimeout(()=>{almel = eid('alertMessage')});
+	];
 	
 	function feaddhash(e,i,a){a[i]='#'+e;}
 	fgcolors.forEach(feaddhash);
@@ -286,12 +283,12 @@ var alertMessage = (function(){
 	feaddhash = undefined;
 	
 	function hidealmsg() {
-		almel.style.transform = null;
+		eid('alertMessage').style.transform = null;
 	}
 	
 	return (function(msg, disptime, msgtype) {
 		clearTimeout(timeout);
-		
+		let almel = eid('alertMessage');
 		almel.textContent = msg;
 		almel.style.color = fgcolors[msgtype] || null;
 		almel.style.background = bgcolors[msgtype] || null;

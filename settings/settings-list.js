@@ -281,6 +281,7 @@ settingsList = {
 	'game-risky': {
         label: 'Risky',
         type: 2,
+		check: function(n){return n >= 0;},
         default: 0
     },
 	
