@@ -20,5 +20,5 @@
 			audio.stop();
 			end('Too many missed...');
 		}
-	})
+	});
 })();
