@@ -8,15 +8,11 @@ var settingChangePageN;
 
 window.addEventListener('load',function(){
 	console.log('loaded');
-	//load stuff for init
-	let extraLoad = [
-		'controlsChanger'
-	];
-	extraLoad.forEach((f, i)=>{
-		extraLoad[i] = addGlobalReference(0, f);
-	});
 	
-	Promise.allSettled(extraLoad).then(()=>{
+	addGlobalReferenceGroup(0, [
+		//load stuff for init
+		'controlsChanger'
+	]).then(()=>{
 		extraLoad = undefined;
 		if(location.hash === '#bootup') {
 			console.log('app has been started.');
