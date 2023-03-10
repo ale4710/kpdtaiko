@@ -25,6 +25,7 @@
 			<li><a href="#note">note</a></li>
 			<li><a href="#setup">setup</a></li>
 			<li><a href="#song-select-screen">song select screen</a></li>
+			<li><a href="#hit-windows">hit windows</a></li>
 			<li><a href="#offset-adjustment">offset adjustment</a></li>
 			<li><a href="#custom-hit-sounds">custom hitsounds</a></li>
 			<li><a href="#game-modifiers">game modifiers</a></li>
@@ -69,13 +70,56 @@
 		
 		
 		
+		<h2 id="hit-windows">hit windows</h2>
+		<p>there are settings that allow you to modify the hit windows.
+		<h3>hit window sizes</h3>
+		<p>the following is a table that lists the allowed deviation from the target time.
+		<p>so 10ms would mean that the window is 20ms wide. 10ms too early and 10ms too late.
+		<table>
+			<tr>
+				<th>size</th>
+				<th>good</th>
+				<th>okay</th>
+				<th>miss</th>
+			</tr>
+			<tr>
+				<td>normal</td>
+				<td>35ms</td>
+				<td>80ms</td>
+				<td>95ms</td>
+			</tr>
+			<tr>
+				<td>wide</td>
+				<td>46ms</td>
+				<td>104ms</td>
+				<td>124ms</td>
+			</tr>
+			<tr>
+				<td>tight</td>
+				<td>24ms</td>
+				<td>56ms</td>
+				<td>67ms</td>
+			</tr>
+		</table>
+		<h3>hit window modification</h3>
+		<p>you are allowed to create your own hit windows.
+		<p>the settings are located at <code>settings > game settings > hit windows</code>.
+		<p>the number you put in will be the allowed deviation from the target time.
+		<h3>about miss hit window</h3>
+		<p>the miss hit window is a kind of "spam" protection.
+		<p>if you were to spam "don" in a chart full of dons, it is likely that you will land within the miss hit window.
+		<p>if you play normally, however, it's unlikely (but still possible) that you'll hit the miss hit window.
+		<p><a href="#top">top</a>
+		
+		
+		
 		<h2 id="offset-adjustment">offset adjustment</h2>
 		<h3>how offset works</h3>
 		<p>basically, positive values will make the notes appear later, and negative values will make the notes appear later.
 		<h3>global offset</h3>
 		<p>global offset can be adjusted from the settings menu.
 		<h3>local offset</h3>
-		<p>during gameplay, you can press <code>#</code> on your keypad to get the following to appear in the corner:
+		<p>during gameplay, you can press and hold <code>#</code> on your keypad to get the following to appear in the corner:
 		<center>
 			<img src="offset-info.png" />
 		</center>
