@@ -1,6 +1,7 @@
 var playRandomSelectSongAnimation = (function(){
 	let thisPage;
 	let animationStartedTime;
+	let lastSelectedSong;
 	const ANIMATION_TIME = 1000;
 	const HTML_CLASSNAME = 'random-select-animation-playing';
 	const UNDERLAY_ELEMENT = eid('song-select-select-underlay');
@@ -47,9 +48,11 @@ var playRandomSelectSongAnimation = (function(){
 	
 	function animate() {
 		if(performance.now() - animationStartedTime <= ANIMATION_TIME) {
-			UNDERLAY_ELEMENT.textContent = songList[
-				Math.floor(Math.random() * songList.length)
-			].title || '???';
+			lastSelectedSong += 1 + Math.floor(Math.random() * (songList.length - 2));
+			if(lastSelectedSong >= songList.length) {
+				lastSelectedSong -= songList.length;
+			}
+			UNDERLAY_ELEMENT.textContent = songList[lastSelectedSong].title || '???';
 			//requestAnimationFrame(animate);
 			animateReferenceNumber = setTimeout(
 				animate,
@@ -70,6 +73,11 @@ var playRandomSelectSongAnimation = (function(){
 	
 	return function(){
 		animationStartedTime = performance.now();
+		lastSelectedSong = (
+			(lastSongListSelected === songList.length - 1)? 
+			0 : 
+			lastSongListSelected + 1
+		)
 		audio.volume *= 0.1;
 		curpage = thisPage;
 		document.body.classList.add(HTML_CLASSNAME);
