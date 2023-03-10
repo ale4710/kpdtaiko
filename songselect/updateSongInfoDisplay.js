@@ -109,6 +109,9 @@ function updateSongInfoDisplay() {
 				nbgimg.src = url;
 				nbgimg.id = 'song-background';
 				nbgimg.classList.add('center', 'song-background');
+				nbgimg.onload = (function(ev){
+					ev.target.classList.add('song-background-fade-in');
+				});
 				eid('song-background-container').appendChild(nbgimg);
 				break;
 		}
