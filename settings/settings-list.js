@@ -33,16 +33,6 @@ settingsList = {
     }
     */
 
-    'offset-mode': { //timeOffset
-        label: 'Offset Mode',
-        type: 0,
-        values: [
-            'Earlier (-)',
-            'Later (+)'
-        ],
-        default: 1
-    },
-
     'offset': { //timeOffset
         label: 'Offset (ms)',
         type: 2,
@@ -369,7 +359,6 @@ settingsListCategories = {
 	'offset': {
 		label: 'Offset',
 		settings: [
-            'offset-mode',
             'offset'
 		]
 	},

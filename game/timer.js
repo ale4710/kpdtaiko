@@ -47,7 +47,7 @@ var timerMode1 = {
 };
 
 var timeOffset = 0;
-var globalTimeOffset = getSettingValue('offset') * (-1 + (2 * getSettingValue('offset-mode')));
+var globalTimeOffset = getSettingValue('offset');
 var localTimeOffset = 0;
 function recalculateOffset() {
 	timeOffset = globalTimeOffset + localTimeOffset;
