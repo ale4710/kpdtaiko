@@ -20,6 +20,7 @@ function outputGameplayInfoFinalExtra() {
 			undefined,
 			undefined,
 			undefined,
+			undefined,
 			missMapMinValue
 		);
 		eid('game-stats-combo-map-min-value').textContent = missMapMinValue;

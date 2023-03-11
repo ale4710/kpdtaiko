@@ -189,6 +189,7 @@ var createMissMap = (function(){
 		lineWidth = 1,
 		color = '#fff',
 		borderColor = '#000',
+		missColor = '#f00',
 		fontSize = 12,
 		significantPeak = 25,
 		w = 200,
@@ -236,6 +237,7 @@ var createMissMap = (function(){
 		function getXpos(time) {return (time / (data.length - 1)) * w;};
 		
 		let graph = new Path2D();
+		let missLines = new Path2D();
 		
 		//for labels
 		ctx.textBaseline = 'top';
@@ -251,6 +253,16 @@ var createMissMap = (function(){
 			let x = getXpos(peak.time);
 			let y = h - ((peak.height / (data.length - 1)) * h);
 			graph.lineTo(x, y);
+			
+			if(index + 1 !== peaks.length) {
+				//its a miss...
+				graph.lineTo(
+					((peak.time + 1) / (data.length - 1)) * w,
+					h
+				);
+				missLines.moveTo(x, 0);
+				missLines.lineTo(x, h);
+			}
 			
 			if(peak.height >= significantPeak) {
 				let textInfo = ctx.measureText(peak.height);
@@ -274,13 +286,6 @@ var createMissMap = (function(){
 				ctx.fillStyle = color;
 				ctx.fillText(peak.height, tx, ty);
 			}
-			
-			if(index + 1 !== peaks.length) {
-				graph.lineTo(
-					((peak.time + 1) / (data.length - 1)) * w,
-					h
-				);
-			}
 		});
 		
 		//draw the graph
@@ -289,6 +294,10 @@ var createMissMap = (function(){
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = color;
 		ctx.stroke(graph);
+		//draw the miss lines
+		//remember that everything is drawn UNDER everything else
+		ctx.strokeStyle = missColor;
+		ctx.stroke(missLines);
 		
 		return cv.toDataURL();
 	}
