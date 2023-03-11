@@ -20,9 +20,9 @@
 		'media',
 		'updateSongInfoDisplay',
 		'titleScreen',
-        'script',
 		'listSong',
-		'listDifficulty'
+		'listDifficulty',
+        'script'
     ].forEach((fn)=>{
         addGlobalReference(0, fn);
     });
