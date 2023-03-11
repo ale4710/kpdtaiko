@@ -1,4 +1,4 @@
-function addGlobalReference(type, filename) {
+function addGlobalReference(type, filename, settings = {}) {
 	return (new Promise((resolve, reject)=>{
 		var s = document.createElement([
 			'script',
@@ -25,7 +25,11 @@ function addGlobalReference(type, filename) {
 		switch(type) {
 			case 0: //script
 				s.src = filename + '.js';
-				s.defer = true;
+				if('defer' in settings) {
+					s.defer = !!settings.defer;
+				} else {
+					s.defer = true;
+				}
 				s.async = false;
 				break;
 			case 1: //style
