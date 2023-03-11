@@ -82,10 +82,10 @@ function postExtraInfo(info) {
 }
 
 function exitToSongSelect() {
-	location = '/songselect/index.html#' + (new URLSearchParams({
-		'goto': 'songlist',
-		'select-random': 0
-	})).toString();
+	let usp = new URLSearchParams();
+	usp.set('goto', 'songlist');
+	usp.set('select-random', 0);
+	location = '/songselect/index.html#' + usp.toString();
 }
 
 var showDetailedStatsClassList = 'show-stats-detailed';

@@ -6,7 +6,7 @@ var settingNavigationHistory = [];
 var mainScreenPageN;
 var settingChangePageN;
 
-window.addEventListener('load',function(){
+waitDocumentLoaded().then(function(){
 	console.log('loaded');
 	
 	addGlobalReferenceGroup(0, [
@@ -24,10 +24,10 @@ window.addEventListener('load',function(){
 				if(rescan) {
 					location = '/songscan/index.html';
 				} else {
-					location = '/songselect/index.html#' + (new URLSearchParams({
-						'goto': 'title',
-						'select-random': 1
-					})).toString();
+					let usp = new URLSearchParams();
+					usp.set('goto', 'title');
+					usp.set('select-random', 1);
+					location = '/songselect/index.html#' + usp.toString();
 				}
 			}, 10);
 		} else {
@@ -196,10 +196,10 @@ manageSettingsPageHistory = {
             updateHeader();
             initSettings(li.index);
         } else {
-            location = '/songselect/index.html#' + (new URLSearchParams({
-				'goto': 'title',
-				'select-random': 0
-			})).toString();
+			let usp = new URLSearchParams();
+			usp.set('goto', 'title');
+			usp.set('select-random', 0);
+            location = '/songselect/index.html#' + usp.toString();
         }
     }
 }

@@ -8,10 +8,10 @@ function finish() {
 	console.log('finish');
 	database.saveDatabase();
 	sessionStorage.removeItem('songlist');
-	location = '/songselect/index.html#' + (new URLSearchParams({
-		'goto': 'title',
-		'select-random': 1
-	})).toString();
+	let usp = new URLSearchParams();
+	usp.set('goto', 'title');
+	usp.set('select-random', 1);
+	location = '/songselect/index.html#' + usp.toString();
 }
 
 var errhandle = (function(){
