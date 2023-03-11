@@ -2,17 +2,24 @@ body {
 	margin: 0;
 	overflow: hidden;
 	background: var(--background-color);
+	color: var(--text-color);
+	font-family: 'open sans','noto sans',sans-serif;
 }
+
 iframe {
 	background-color: transparent;
 	border: none;
-	
-	/* border-width: 1px;
-	border-style: solid;
-	border-color: white; */
 }
-iframe.hidden {
+body.loading iframe {
 	opacity: 0;
-	
-	/* border-color: red;  */
+}
+
+#loading-display {
+	bottom: 5px;
+	right: 5px;
+	position: absolute;
+	display: none;
+}
+body.loading #loading-display {
+	display: unset;
 }
