@@ -3,17 +3,21 @@
 	let alreadyFailed = false;
 	
 	window.addEventListener('gamemissed', function(){
-		postJudge({
-			text: (maxMissCount - statistics.hits.miss),
-			className: judgeStyles.miss.className
-		});
+		let remaining = maxMissCount - statistics.hits.miss;
+		
+		if(remaining >= 0) {
+			postJudge({
+				text: remaining,
+				className: judgeStyles.miss.className
+			});
+		} //else just let the default miss judge show
 	});
 	
 	gameLoopAdditional.push(function(){
 		if(
 			!ended &&
 			!alreadyFailed &&
-			(statistics.hits.miss >= maxMissCount)
+			(statistics.hits.miss > maxMissCount)
 		) {
 			alreadyFailed = true; //prevent it from double posting
 			postExtraInfo('time');
