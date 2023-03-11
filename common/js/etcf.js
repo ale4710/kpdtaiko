@@ -20,6 +20,17 @@ var keyisnav = (function(){
 	}
 })();
 
+
+function waitDocumentLoaded() {
+	return new Promise(function(resolve){
+		if(document.readyState === 'complete') {
+			resolve();
+		} else {
+			window.addEventListener('load', resolve);
+		}
+	});
+}
+
 function removeWhiteSpace(s) {return s.replace(/\s/g,'');}
 
 function checkBit(num,bit) {
@@ -28,6 +39,21 @@ function checkBit(num,bit) {
 
 function randomInt(max) {
 	return (Math.floor(Math.random() * max));
+}
+
+function numberInBetween(min, max, n, allowEqual) {
+	return ((
+		(min > n) &&
+		(min < n)
+	) || (
+		(min < n) &&
+		(min > n)
+	) || (
+		allowEqual && (
+			(min === n) ||
+			(max === n)
+		)
+	));
 }
 
 function randomHexString(len) {
