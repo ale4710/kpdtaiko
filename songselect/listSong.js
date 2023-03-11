@@ -166,6 +166,64 @@ function printList(sort, group, sortReverse, refocusId) {
 	}));
 }
 
+//song list scroll animator
+var scrollSongList = (function(){
+	let targetScrollTop = 0;
+	let lastTime;
+	const speed = 300;
+	let direction;
+	let element = songSelectMenu.menu;
+	let animationReference;
+	
+	function resetAnimate() {
+		targetScrollTop = undefined;
+		direction = undefined;
+		lastTime = undefined;
+		cancelAnimationFrame(animationReference);
+		animationReference = undefined;
+	}
+	
+	function animate() {
+		let now = performance.now();
+		let dt = now - lastTime;
+		let change = speed * (dt / 1000) * direction;
+		if(direction < 0) {
+			change = Math.floor(change);
+		} else {
+			change = Math.ceil(change);
+		}
+		let newScrollTop = element.scrollTop + change;
+		//let newScrollTop = element.scrollTop + (direction * 0.25);
+		
+		if(
+			(direction < 0 && newScrollTop <= targetScrollTop) ||
+			(direction > 0 && newScrollTop >= targetScrollTop)
+		) {
+			element.scrollTop = targetScrollTop;
+			resetAnimate();
+		} else {
+			element.scrollTop = newScrollTop;
+			lastTime = now;
+			animationReference = requestAnimationFrame(animate);
+		}
+	}
+	
+	return function(tst, immediate) {
+		resetAnimate();
+		if(immediate) {
+			element.scrollTop = tst;
+		} else {
+			lastTime = performance.now();
+			targetScrollTop = tst;
+			direction = (
+				(tst - element.scrollTop < 0)?
+				-1 : 1
+			);
+			requestAnimationFrame(animate);
+		}
+	}
+})();
+
 var userEnabledSmoothScrolling = (getSettingValue('animate-song-select') === 1);
 function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 	smooth = (smooth && userEnabledSmoothScrolling);
@@ -186,14 +244,17 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 	}
 
 	//centering
-	var ce = actEl(),
-	cep = ce.parentElement,
-	st = (ce.offsetTop - (cep.offsetHeight / 2)) + (ce.offsetHeight / 2);
+	var ce = actEl();
+	var cep = ce.parentElement;
+	var st = (ce.offsetTop - (cep.offsetHeight / 2)) + (ce.offsetHeight / 2);
 	
-	cep.scroll({
+	scrollSongList(st, !smooth);
+	
+	/* cep.scroll({
 		top: st,
 		behavior: !!smooth? 'smooth' : 'instant'
-	});
+	}); */
+	
 	//cep.scrollTop = st;
 	
 	//console.log(actEl());
