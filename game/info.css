@@ -75,13 +75,11 @@ body.ready #game-stats-dg {
 }
 
 /* game stats final */
-.game-stats {
+#game-stats {
+    /* top: calc((var(--playfield-top) + var(--playfield-height) + var(--song-info-height)) * var(--height)); */
 	top: calc((var(--playfield-top) + var(--playfield-height)) * var(--height));
 	position: absolute;
 	text-align: center;
-}
-#game-stats {
-    /* top: calc((var(--playfield-top) + var(--playfield-height) + var(--song-info-height)) * var(--height)); */
     transform: translateY(calc(var(--height) * var(--playfield-height) * -1));
     opacity: 0;
 	width: 100%;
