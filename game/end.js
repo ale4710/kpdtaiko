@@ -98,14 +98,16 @@ endedPageN = (function(){
 				exitToSongSelect();
 				break;
 			case 'SoftLeft':
-				document.body.classList.toggle(showDetailedStatsClassList);
+				//document.body.classList.toggle(showDetailedStatsClassList);
+				gotoEndDetailed();
 				break;
 		}
 	}
 	
 	function endedNavbar() {
 		return [
-			document.body.classList.contains(showDetailedStatsClassList)? 'hide' : 'details',
+			//document.body.classList.contains(showDetailedStatsClassList)? 'hide' : 'details',
+			'details',
 			'continue'
 		]
 	}

@@ -78,15 +78,6 @@ function outputGameplayInfoFinal() {
 
 	//drumroll
     eid('game-stats-drumroll').textContent = statistics.drumrollTotal;
-	
-	//img
-	eid('game-stats-histogram').src = createTimeGraph(2);
-	//timedata
-	var td = analyzeTimeData();
-	//  misc data
-	eid('game-stats-late').textContent = td.late;
-	eid('game-stats-early').textContent = td.early;
-	eid('game-stats-average').textContent = td.average.toFixed(2);
 }
 
 function getAverageError() {
@@ -185,6 +176,119 @@ var createTimeGraph = (function(){
 			Math.floor((w - ((barWidth + barSpacing) * binCount)) / 2),
 			0
 		);
+		
+		return cv.toDataURL();
+	}
+})();
+
+var createMissMap = (function(){
+	var cv;
+	var ctx;
+	
+	return function(
+		lineWidth = 1,
+		color = '#fff',
+		borderColor = '#000',
+		fontSize = 12,
+		significantPeak = 25,
+		w = 200,
+		h = 70,
+		data = hitData
+	) {
+		//initialize canvas
+		if(!cv) {
+			cv = document.createElement('canvas'),
+			ctx = cv.getContext('2d');
+		}
+		
+		cv.width = w;
+		cv.height = h;
+		
+		ctx.clearRect(
+			0, 0,
+			w, h
+		);
+		
+		//lets go
+		let peaks = [];
+		let lastPeak = 0;
+		while(true) {
+			let peakPos = data.indexOf('miss', lastPeak);
+			if(peakPos === -1) {
+				break;
+			} else {
+				peaks.push({
+					time: peakPos,
+					height: peakPos - lastPeak
+				});
+				lastPeak = peakPos + 1;
+			}
+		}
+		
+		if(lastPeak !== data.length) {
+			peaks.push({
+				time: data.length - 1,
+				height: data.length - 1 - lastPeak
+			});
+		}
+		finalPeakHeight = undefined;
+		
+		function getXpos(time) {return (time / (data.length - 1)) * w;};
+		
+		let graph = new Path2D();
+		
+		//for labels
+		ctx.textBaseline = 'top';
+		ctx.font = `${fontSize}px sans-serif`;
+		
+		//set ctx composite
+		ctx.globalCompositeOperation = 'source-over';
+		
+		//init
+		graph.moveTo(0, h);
+		
+		peaks.forEach((peak, index)=>{
+			let x = getXpos(peak.time);
+			let y = h - ((peak.height / (data.length - 1)) * h);
+			graph.lineTo(x, y);
+			
+			if(peak.height >= significantPeak) {
+				let textInfo = ctx.measureText(peak.height);
+				let textWidth = textInfo.width;
+				let textHeight = textInfo.actualBoundingBoxDescent;
+				
+				let tx = numberClamp(
+					0,
+					w - textWidth,
+					x - (textWidth / 2)
+				);
+				let ty = numberClamp(
+					0,
+					h - textHeight,
+					y - textHeight - (lineWidth * 1.5)
+				);
+				
+				ctx.strokeStyle = borderColor;
+				ctx.strokeText(peak.height, tx, ty);
+				
+				ctx.fillStyle = color;
+				ctx.fillText(peak.height, tx, ty);
+			}
+			
+			if(index + 1 !== peaks.length) {
+				graph.lineTo(
+					((peak.time + 1) / (data.length - 1)) * w,
+					h
+				);
+			}
+		});
+		
+		//draw the graph
+		//	draw it below everything else
+		ctx.globalCompositeOperation = 'destination-over';
+		ctx.lineWidth = lineWidth;
+		ctx.strokeStyle = color;
+		ctx.stroke(graph);
 		
 		return cv.toDataURL();
 	}

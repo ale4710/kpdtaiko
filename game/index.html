@@ -101,24 +101,41 @@
 			</div>
         </div>
 		
-		<div id="game-stats-details" class="game-stats">
-			<div>
-				<div id="game-stats-histogram-container">
-					<div class="target"></div>
-					<img id="game-stats-histogram" />
-					<div id="game-stats-histogram-labels">
-						<span class="early">early</span>
-						<span class="late">late</span>
+		<div id="game-stats-details" class="game-stats hidden">
+			<div id="game-stats-details-title-container">
+				<!-- title will be inserted programmatically -->
+				<span class="game-stats-details-title-pointer">◀</span>
+				<span id="game-stats-details-title"></span>
+				<span class="game-stats-details-title-pointer">▶</span>
+			</div>
+			<div class="game-stats-detail-page hidden" data-stat-type="timing-data">
+				<div>
+					<div id="game-stats-histogram-container">
+						<div class="target"></div>
+						<img id="game-stats-histogram" />
+						<div id="game-stats-histogram-labels">
+							<span class="early">
+								early
+								<span id="game-stats-early"></span>
+							</span>
+							<span class="late">
+								<span id="game-stats-late"></span>
+								late
+							</span>
+						</div>
 					</div>
 				</div>
+				<div>
+					avg. hit error: <span id="game-stats-average"></span>ms
+				</div>
+				<div class="note">*early/late counts include goods</div>
 			</div>
-			<div>
-				early <span id="game-stats-early"></span>,
-				late <span id="game-stats-late"></span>,
-				avg <span id="game-stats-average"></span>ms
+			<div class="game-stats-detail-page hidden" data-stat-type="combo-map">
+				<img id="game-stats-combo-map" />
+				<div class="note">only combos above <span id="game-stats-combo-map-min-value">--</span> are labeled.</div>
 			</div>
-			<div class="note">*early/late counts include goods</div>
 		</div>
+		<!-- end game-stats-details -->
 
 		<!--bottom sub info-->
         <div class="text-outline bottom-sub-info bottom-sub-info-left show-during-gameplay-only">

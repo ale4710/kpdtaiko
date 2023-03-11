@@ -108,6 +108,7 @@ body.ended.show-stats #game-stats {
 	font-size: 12px;
 }
 
+/* details */
 #game-stats-details { /*showing in modal style*/
 	width: 100%;
 	border-width: 1px 0;
@@ -117,9 +118,21 @@ body.ended.show-stats #game-stats {
 	margin-top: 5%;
 	padding: 2% 0;
 }
-#game-stats-details > .note {
+#game-stats-details-title-container {
+	padding-bottom: 2%;
+}
+.game-stats-details-title-pointer {
 	font-size: 12px;
 }
+
+.game-stats-detail-page .note {
+	font-size: 12px;
+}
+/* combo map */
+#game-stats-combo-map {
+	border: 1px solid #fff;
+}
+/* histogram */
 #game-stats-histogram {
 	border-bottom: 1px solid #fff;
 	position: relative;
@@ -146,14 +159,6 @@ body.ended.show-stats #game-stats {
 	padding: 0 1%;
 }
 #game-stats-histogram-labels > .late {float: right;}
-
-/* game stats final but more detailed */
-#game-stats-details {
-	display: none;
-}
-body.show-stats-detailed #game-stats-details {
-	display: unset;
-}
 
 /* song progress */
 :root {--progress-height: 3px;}

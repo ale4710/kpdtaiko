@@ -24,6 +24,7 @@
         'autoplay',
         'pause',
         'end',
+		'endDetailed',
         'timer',
         'game',
         'timeAdjust',
