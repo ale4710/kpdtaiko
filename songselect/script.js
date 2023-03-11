@@ -31,7 +31,7 @@ document.addEventListener('visibilitychange',()=>{
 	}
 });
 
-window.addEventListener('load',()=>{
+waitDocumentLoaded().then(()=>{
 	let fp;
 	//we request the song list, and then,..
 	let cachedSongList = sessionStorage.getItem('songlist');

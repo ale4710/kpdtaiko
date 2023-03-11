@@ -130,6 +130,6 @@ function firstLoad(loaderFn) {
 	});
 })();
 
-window.addEventListener('load', function(){
+waitDocumentLoaded().then(function(){
 	document.body.classList.add('loading-started');
 });
