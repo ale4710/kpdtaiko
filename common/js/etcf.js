@@ -1,7 +1,13 @@
 var testing = false;
 
-function eid(id) {return document.getElementById(id);}
-function ecls(cn) {return document.getElementsByClassName(cn);}
+function eid(id, src) {
+	src = src || document;
+	return src.getElementById(id);
+}
+function ecls(cn, src) {
+	src = src || document;
+	return src.getElementsByClassName(cn);
+}
 function actEl(){return document.activeElement}
 function emptyfn(){}
 
