@@ -83,9 +83,8 @@ var playRandomSelectSongAnimation = (function(){
 		document.body.classList.add(HTML_CLASSNAME);
 		
 		rouletteSound.currentTime = 0;
-		rouletteSound.play().then(function(){
-			resultSound.pause();
-			animate();
-		});
+		rouletteSound.play();
+		resultSound.pause();
+		animate();
 	}
 })();
