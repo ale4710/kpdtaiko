@@ -1,5 +1,4 @@
-var 
-settingsList = {
+var settingsList = {
     /* 
     'setting-name': {
         'label': string,
@@ -336,9 +335,9 @@ settingsList = {
         label: 'Advanced Settings',
         type: 5
     }
-},
+};
 
-settingsListCategories = {
+var settingsListCategories = {
 
     //label is the label of the category.
     //settings is an array with the names from above. they will be displayed in this order.
