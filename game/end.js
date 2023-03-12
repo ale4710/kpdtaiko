@@ -5,6 +5,15 @@ var modsDisplayEnd = (new ModsView(
 	1,
 	eid('game-stats-extra-info-mods')
 ));
+
+function endedReset() {
+	ended = false;
+	endedAllowContinue = false;
+	document.body.classList.remove(
+		'ended',
+		'show-stats'
+	);
+}
 function end(messageOverride) {
     ended = true;
     document.body.classList.remove('special');
@@ -101,14 +110,23 @@ endedPageN = (function(){
 				//document.body.classList.toggle(showDetailedStatsClassList);
 				gotoEndDetailed();
 				break;
+			case 'SoftRight':
+				//start again
+				reset();
+				showNavbar(false);
+				transparentNavbar(false);
+				curpage = gamePageN;
+				gameLoop();
+				gameAnim();
+				break;
 		}
 	}
 	
 	function endedNavbar() {
 		return [
-			//document.body.classList.contains(showDetailedStatsClassList)? 'hide' : 'details',
 			'details',
-			'continue'
+			'continue',
+			'restart'
 		]
 	}
 	

@@ -65,6 +65,8 @@ function reset() {
     timerFullReset();
 
     audioControl.stop();
+	
+	endedReset();
 
     drawReset();
     calculateDrawingOrder(gameFile);
