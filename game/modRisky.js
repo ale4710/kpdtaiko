@@ -1,6 +1,5 @@
 (function(){
 	let maxMissCount = modsList.mods.risky.check();
-	let alreadyFailed = false;
 	
 	window.addEventListener('gamemissed', function(){
 		let remaining = maxMissCount - statistics.hits.miss;
@@ -10,16 +9,9 @@
 				text: remaining,
 				className: judgeStyles.miss.className
 			});
-		} //else just let the default miss judge show
-	});
-	
-	gameLoopAdditional.push(function(){
-		if(
-			!ended &&
-			!alreadyFailed &&
-			(statistics.hits.miss > maxMissCount)
-		) {
-			alreadyFailed = true; //prevent it from double posting
+		} else {
+			//else just let the default miss judge show
+			//also... stop gameplay.
 			postExtraInfo('time');
 			audio.stop();
 			end('Too many missed...');
