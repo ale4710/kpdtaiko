@@ -23,6 +23,7 @@
         'infoAndScore',
         'autoplay',
         'pause',
+		'graphs',
         'end',
 		'endDetailed',
         'timer',
