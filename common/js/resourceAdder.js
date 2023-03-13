@@ -11,7 +11,7 @@ function addGlobalReference(type, filename, settings = {}) {
 			resolve();
 		}
 		function thingErrored(err){
-			console.error(err);
+			console.error(filename, err);
 			rmListeners();
 			reject();
 		}
