@@ -1,10 +1,9 @@
-var domColorFinder = new ColorThief(),
-bottomStageFailedIdolInit = (function(){
-	var
-	shared = {},
-	fns = {},
-	fnFns = {},
-	fnCats = [
+var domColorFinder;
+var bottomStageFailedIdolInit = (function(){
+	var shared = {};
+	var fns = {};
+	var fnFns = {};
+	var fnCats = [
 		'reset',
 		'dataUpdated',
 		'init',
@@ -25,51 +24,47 @@ bottomStageFailedIdolInit = (function(){
 		}
 	});
 	
-	var scriptsToLoad = [
-		'misc',
-		'bg',
-		'character'
-	],
-	scriptsLoaded = 0,
-	scriptsTotal = scriptsToLoad.length;
-	
-	scriptsToLoad.forEach((url)=>{
-		addGlobalReference(0,
-			`bottomstage/${bottomStageFolder}/${url}`
-		);
+	//	load scripts
+	//provide loader for scripts
+	function fibsinit(scriptInfo) {
+		if(typeof(scriptInfo) === 'object') {
+			Object.keys(scriptInfo).forEach((k)=>{
+				if(k in fns) {
+					fns[k].push(scriptInfo[k]);
+				}
+			});
+		}
+	}
+	//actually load them
+	addGlobalReferenceGroup(0, [
+		'/common/lib/color-thief.umd',
+		`bottomstage/${bottomStageFolder}/misc`,
+		`bottomstage/${bottomStageFolder}/bg`,
+		`bottomstage/${bottomStageFolder}/character`
+	]).then(function(){
+		//once all loaded...
+		//clean up
+		fnCats.forEach((cat)=>{
+			if(fns[cat].length === 0) {
+				fnFns[cat] = emptyfn;
+			}
+		});
+		fns = null;
+		fnCats = null;
+		
+		//other inits
+		domColorFinder = new ColorThief();
+		
+		//lets go
+		bottomStageInit(()=>{
+			return fnFns
+		});
 	});
-	scriptsToLoad = null;
 	
+	//bottomStageFailedIdolInit is...
 	return {
 		imgPath: `bottomstage/${bottomStageFolder}/img/`,
 		shared: shared,
-		init: function(scriptInfo) {
-			if(typeof(scriptInfo) === 'object') {
-				var sik = Object.keys(scriptInfo);
-				sik.forEach((k)=>{
-					if(k in fns) {
-						fns[k].push(scriptInfo[k]);
-					}
-				});
-			}
-			
-			if(++scriptsLoaded === scriptsTotal) {
-				//clean up
-				scriptsLoaded = null;
-				scriptsTotal = null;
-				
-				fnCats.forEach((cat)=>{
-					if(fns[cat].length === 0) {
-						fnFns[cat] = emptyfn;
-					}
-				});
-				fns = null;
-				fnCats = null;
-				
-				bottomStageInit(()=>{
-					return fnFns
-				});
-			}
-		}
+		init: fibsinit
 	};
 })();

@@ -11,9 +11,7 @@
 	
     //scripts
     [
-		'/common/lib/color-thief.umd',
-
-        'etc',
+		'etc',
         'controls',
         'audio',
 		'bottomStage',
