@@ -104,6 +104,8 @@ function printList(sort, group, sortReverse, refocusId) {
 			groupKeysSorted = [0];
 		} else {
 			groupKeysSorted = Object.keys(groupedSongs).sort((a,b)=>{
+				a = a.toLowerCase();
+				b = b.toLowerCase();
 				return (a === b)? 0 : (1 - (2 * (a < b)));
 			});
 			
