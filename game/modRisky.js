@@ -4,7 +4,7 @@
 	window.addEventListener('gamemissed', function(){
 		let remaining = maxMissCount - statistics.hits.miss;
 		
-		if(remaining >= 0) {
+		if(remaining > 0) {
 			postJudge({
 				text: remaining,
 				className: judgeStyles.miss.className
