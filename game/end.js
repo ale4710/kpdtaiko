@@ -13,6 +13,8 @@ function endedReset() {
 		'ended',
 		'show-stats'
 	);
+	
+	endedExtraReset();
 }
 function end(messageOverride) {
     ended = true;

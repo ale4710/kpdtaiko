@@ -1,4 +1,10 @@
-var gameInfoFinalExtraPosted = false;
+var gameInfoFinalExtraPosted;
+
+function endedExtraReset() {
+	gameInfoFinalExtraPosted = false;
+}
+endedExtraReset();
+
 function outputGameplayInfoFinalExtra() {
 	if(!gameInfoFinalExtraPosted) {
 		gameInfoFinalExtraPosted = true;
@@ -77,8 +83,8 @@ var gotoEndDetailed = (function(){
 		if(typeof(currentTab) !== 'number') {
 			currentTab = 0;
 			updateTab(0);
-			outputGameplayInfoFinalExtra();
 		}
+		outputGameplayInfoFinalExtra();
 		eid('game-stats-details').classList.remove('hidden');
 		curpage = thisPage;
 	}
