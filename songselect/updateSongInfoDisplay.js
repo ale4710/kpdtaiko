@@ -2,6 +2,8 @@ window.addEventListener('songmedialoaded', updateSongInfoDisplay);
 
 var audioLoadingTimeout;
 
+var audioStartAtPreviewPoint = (getSettingValue('audio-start-at-preview-point') === 1);
+
 function updateSongInfoDisplay() {
 	console.log('updateSongInfoDisplay');
 	
@@ -130,7 +132,11 @@ function updateSongInfoDisplay() {
 	
 	function playaudio(blob) {
 		audio.src = URL.createObjectURL(blob);
-		audioStartPoint = (curSong.previewTime || 0) / 1000;
+		if(audioStartAtPreviewPoint) {
+			audioStartPoint = (curSong.previewTime || 0) / 1000;
+		} else {
+			audioStartPoint = 0;
+		}
 		audio.currentTime = audioStartPoint;
 		audio.dataset.internalPath = audiopath;
 		//this is just incase it takes a long time for the list to load,

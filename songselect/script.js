@@ -8,9 +8,19 @@ var lastSongSelected;
 
 var songsAvailable = true;
 
+var randomizeSongOnTitleScreen = (getSettingValue('title-screen-random-song') === 1);
 audio.addEventListener('ended',()=>{
-	audio.currentTime = audioStartPoint;
-	audio.play();
+	//randomize song on title screen
+	if(
+		randomizeSongOnTitleScreen &&
+		curpage === titleScreen.page
+	) {
+		selectRandomSongInSongList();
+	} else {
+		audio.currentTime = audioStartPoint;
+		audio.play();
+	}
+	
 });
 
 function updateAudioVolume() {

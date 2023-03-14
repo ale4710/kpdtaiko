@@ -53,6 +53,7 @@ var titleScreen = (function() {
 	);
 
     return {
+		page: thisPage,
         show: function(){
 			curpage = thisPage;
 			CONTAINER.classList.remove('hidden');

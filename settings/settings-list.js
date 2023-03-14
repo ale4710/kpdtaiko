@@ -274,6 +274,26 @@ var settingsList = {
         default: 0
     },
 	
+	'title-screen-random-song': {
+        label: 'Title Screen Music',
+        type: 0,
+		values: [
+			'Constant Song',
+			'Randomize Song'
+		],
+        default: 1
+    },
+	
+	'audio-start-at-preview-point': {
+        label: 'Audio Preview Point',
+        type: 0,
+		values: [
+			'Beginning',
+			'Defined By Chart'
+		],
+        default: 1
+    },
+	
 	//actions and such
 	'goto-controls-changer': {
 		label: 'Input Settings',
@@ -405,6 +425,8 @@ var settingsListCategories = {
 			'animate-song-select',
 			'show-difficulty-on-intro',
 			'song-list-animate-random',
+			'audio-start-at-preview-point',
+			'title-screen-random-song',
 			'rescan-library'
 		]
 	},

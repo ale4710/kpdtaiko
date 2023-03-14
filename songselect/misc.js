@@ -1,3 +1,23 @@
+//collator (for sorting)
+var sorter = (function(){
+	let collator = new Intl.Collator('JA-jp', {
+		usage: 'sort',
+		//sensitivity: 'variant', //is default
+		numeric: true
+	});
+	
+	function compare(a,b,reverse) {
+		//a = a.toLowerCase();
+		//b = b.toLowerCase();
+		return collator.compare(a,b) * (1 - (!!reverse * 2));
+	}
+	
+	return {
+		compare: compare,
+		collator: collator
+	};
+})();
+
 //directory changed
 var directoryChangedMessageShown = false;
 function showDirectoryChangedMessage() {

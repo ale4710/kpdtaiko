@@ -2,6 +2,7 @@
 var songPageListN;
 var songSelectMenu = (new Menu(eid('song-select-list')));
 var lastSongListSelected = 0;
+var songListGroupLocations = [];
 
 var sortMethodChangedPending = false;
 window.addEventListener('sortmethodchanged', ()=>{
@@ -49,6 +50,8 @@ function reprintList(refocus) {
 function printList(sort, group, sortReverse, refocusId) {
 	console.log(sort,group);
 	
+	sortReverse = !!sortReverse;
+	
 	if(typeof(refocusId) !== 'number') {
 		refocusId = undefined;
 	}
@@ -60,9 +63,11 @@ function printList(sort, group, sortReverse, refocusId) {
 	);
 	
 	return (new Promise((resolve)=>{
-		var ids = [...Array(songList.length).keys()],
-		groupedSongs = {},
-		noGroupSymbol = Symbol();
+		var ids = [...Array(songList.length).keys()];
+		var groupedSongs = {};
+		var noGroupSymbol = Symbol();
+		
+		songListGroupLocations.length = 0;
 		
 		if(typeof(group) === 'string') {
 			ids.forEach((id)=>{
@@ -104,9 +109,7 @@ function printList(sort, group, sortReverse, refocusId) {
 			groupKeysSorted = [0];
 		} else {
 			groupKeysSorted = Object.keys(groupedSongs).sort((a,b)=>{
-				a = a.toLowerCase();
-				b = b.toLowerCase();
-				return (a === b)? 0 : (1 - (2 * (a < b)));
+				return sorter.compare(a, b, sortReverse);
 			});
 			
 			if(noGroupSymbol in groupedSongs) {
@@ -120,8 +123,10 @@ function printList(sort, group, sortReverse, refocusId) {
 		
 		//print
 		groupKeysSorted.forEach((gid)=>{
+			//init
 			var toPrint;
 			if(!ids) {
+				//the song ids are grouped
 				toPrint = groupedSongs[gid];
 				
 				var sepLabel = gid;
@@ -130,6 +135,7 @@ function printList(sort, group, sortReverse, refocusId) {
 				}
 				songSelectMenu.addSeperator(sepLabel);
 			} else {
+				//the song ids are ungrouped
 				toPrint = ids;
 			}
 
@@ -139,20 +145,35 @@ function printList(sort, group, sortReverse, refocusId) {
 					default: 
 						//sort = 'title';
 					case 'title':
-						var a = songList[a].title.toLowerCase(),
-						b = songList[b].title.toLowerCase();
-						pairCase = (a === b)? 0 : (1 - (2 * (a < b)));
+						pairCase = sorter.compare(
+							songList[a].title,
+							songList[b].title,
+							sortReverse
+						);
 						break;
 				}
 				
-				return pairCase * (1 - (!!sortReverse * 2));
+				return pairCase;
 			});
 			
+			//group stuff
+			var groupTempId = songListGroupLocations.length;
+			var groupLocation;
+			
+			//print songs for real
 			toPrint.forEach((song, i)=>{
 				var o = songSelectMenu.addOption(
 					songList[song].title,
 					song
 				);
+				
+				if( //songs are grouped and it is the first
+					(!ids) &&
+					(i === 0)
+				) {
+					o.dataset.group = groupTempId;
+					groupLocation = o.tabIndex;
+				}
 				
 				if(refocusId === song) {
 					console.log('okay refocus to', song, gid);
@@ -161,6 +182,11 @@ function printList(sort, group, sortReverse, refocusId) {
 					refocusReturnVal = 0;
 				}
 			});
+			
+			//group stuff
+			if(typeof(groupLocation) === 'number') {
+				songListGroupLocations.push(groupLocation);
+			}
 		});
 
 		sessionStorage.setItem('songSelectSortMode', sort);
@@ -227,7 +253,12 @@ var scrollSongList = (function(){
 })();
 
 var userEnabledSmoothScrolling = (getSettingValue('animate-song-select') === 1);
-function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
+function navigateSongList(
+	n,
+	abs,
+	noUpdateSongDisplay,
+	smooth
+) {
 	smooth = (smooth && userEnabledSmoothScrolling);
 	lastSongListSelected = songSelectMenu.navigate(n, abs);
 	lastSongSelected = parseInt(
@@ -260,6 +291,28 @@ function navigateSongList(n,abs,noUpdateSongDisplay,smooth) {
 	//cep.scrollTop = st;
 	
 	//console.log(actEl());
+}
+
+function navigateSongListGroup(nav) {
+	if(songListGroupLocations.length > 1) {
+		let newGroupTempId = navigatelist(
+			//current song
+			parseInt(
+				songSelectMenu.getChildren()[lastSongListSelected].dataset.group
+			),
+			//list
+			songListGroupLocations,
+			//move
+			nav
+		);
+		
+		navigateSongList(
+			songListGroupLocations[newGroupTempId],
+			true,
+			false,
+			false
+		);
+	}
 }
 
 function selectRandomSongInSongList() {
@@ -366,6 +419,7 @@ songListPageN = (function(){
 	function keyhandle(k) {
 		if(songsAvailable) {
 			switch(k.key) {
+				//navigate song list
 				case 'ArrowUp':
 					var u = -1;
 				case 'ArrowDown':
@@ -376,6 +430,17 @@ songListPageN = (function(){
 						true
 					);
 					break;
+					
+				//jump groups
+				case 'ArrowLeft':
+					var p = -1;
+				case 'ArrowRight':
+					navigateSongListGroup(
+						p || 1,
+					);
+					break;
+					
+				//other stuff
 				case 'Enter':
 					selectSong();
 					break;
