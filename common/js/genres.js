@@ -17,7 +17,7 @@ const GENRE = {
 };
 
 let GENRE_LABEL = {};
-GENRE_LABEL[GENRE.game] = 'Game';
+GENRE_LABEL[GENRE.game] = 'Game Music';
 GENRE_LABEL[GENRE.anime] = 'Anime';
 GENRE_LABEL[GENRE.pop] = 'Pop';
 GENRE_LABEL[GENRE.novelty] = 'Novelty';

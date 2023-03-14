@@ -1,6 +1,6 @@
 var parseTjaFile = (function(){
 	const GENRE_MAP = {
-		'J-POP': GENRE.jpop,
+		'J-POP': GENRE.pop,
 		'アニメ': GENRE.anime,
 		'どうよう': GENRE.children,
 		'バラエティ': GENRE.variety,
