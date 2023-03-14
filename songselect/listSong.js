@@ -167,12 +167,11 @@ function printList(sort, group, sortReverse, refocusId) {
 					song
 				);
 				
-				if( //songs are grouped and it is the first
-					(!ids) &&
-					(i === 0)
-				) {
+				if(!ids) {
+					//songs are grouped
 					o.dataset.group = groupTempId;
-					groupLocation = o.tabIndex;
+					//is it the first? if so...
+					if(i === 0) {groupLocation = o.tabIndex;}
 				}
 				
 				if(refocusId === song) {
