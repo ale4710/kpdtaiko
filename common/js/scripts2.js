@@ -33,6 +33,7 @@
 				//normal scripts
 				bg+user+'compat',
 				bg+user+'etcf',
+				bg+user+'genres',
 				bg+user+'frameShowManager',
 				bg+user+'settings',
 				bg+user+'gameFn',

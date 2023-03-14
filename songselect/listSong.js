@@ -80,6 +80,9 @@ function printList(sort, group, sortReverse, refocusId) {
 						case 'alphabet':
 							groupKey = ts.title.toUpperCase().substr(0,1);
 							break;
+						case 'genre':
+							groupKey = GENRE_LABEL[ts.genre] || null;
+							break;
 						default:
 							groupKey = null;
 							break;

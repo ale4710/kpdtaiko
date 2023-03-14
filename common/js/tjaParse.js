@@ -1,4 +1,15 @@
 var parseTjaFile = (function(){
+	const GENRE_MAP = {
+		'J-POP': GENRE.jpop,
+		'アニメ': GENRE.anime,
+		'どうよう': GENRE.children,
+		'バラエティ': GENRE.variety,
+		'ボーカロイド': GENRE.vocaloid,
+		'VOCALOID': GENRE.vocaloid,
+		'クラシック': GENRE.classical,
+		'ゲームミュージック': GENRE.game
+	};
+	
 	function errorMaker(line,reason) {
 		return `Error! Line ${line + 1}: ${reason}`;
 	}
@@ -26,6 +37,7 @@ var parseTjaFile = (function(){
 			artist: null,
 			artistDisplayMode: 0,
 			creator: null,
+			genre: null,
 			difficulty: null,
 			difficultySort: 0,
 			difficultyLevel: null,
@@ -421,6 +433,10 @@ var parseTjaFile = (function(){
 							tjaFinal.creator = value;
 							if(checkAllCourse) {unassignedCourseData.creator = value}
 							break;
+						case 'genre':
+							value = GENRE_MAP[value] || null;
+							tjaFinal.genre = value;
+							if(checkAllCourse) {unassignedCourseData.genre = value}
 						case 'headscroll': scrollInitMultiplier *= parseFloat(value); break;
 						case 'level': 
 							var lvl = parseInt(value);

@@ -21,10 +21,11 @@ var groupSortManager = (function(){
 			key: 'group',
 			options: [
 				{k: 'nogroup', l: 'None', p: null},
-				{k: 'filetype', l: 'File Type', p: 'fileType'},
 				{k: 'artist', l: 'Artist', p: 'artist'},
+				{k: 'genre', l: 'Genre', p: 'system-genre'}, //system-genre instead of genre because genres are numbers here
 				{k: 'mediaSource', l: 'Media Source', p: 'mediaSource'},
 				{k: 'creator', l: 'Chart(set) Creator', p: 'creator'},
+				{k: 'filetype', l: 'File Type', p: 'fileType'},
 				{k: 'alphabet', l: 'First Letter', p: 'system-alphabet'}
 			],
 			defaultOption: 0

@@ -15,17 +15,30 @@
     //if it's a ballon then this is the end time.
 } */
 var parseOsuFile = (function(){
-    var bracket = (s)=>{return `[${s}]`;},
-    commaSplit = (s)=>{return s.split(',');},
-    colonSplit = (s)=>{
+    var bracket = (s)=>{return `[${s}]`;};
+    var commaSplit = (s)=>{return s.split(',');};
+    var colonSplit = (s)=>{
         var sm = s.match(/^([^:]+): ?(.*)/);
         sm.shift();
         return sm;
-    },
+    };
 
-    typeGate = 0b1011,
-    hitsoundColorGate = 0b1010,
-    hitsoundBigGate = 0b0100;
+    var typeGate = 0b1011;
+    var hitsoundColorGate = 0b1010;
+    var hitsoundBigGate = 0b0100;
+	
+	var GENRE_SEARCH = {};
+	GENRE_SEARCH[GENRE.game] = 'video game';
+	GENRE_SEARCH[GENRE.anime] = 'anime';
+	GENRE_SEARCH[GENRE.rock] = 'rock';
+	GENRE_SEARCH[GENRE.pop] = 'pop';
+	GENRE_SEARCH[GENRE.novelty] = 'novelty';
+	GENRE_SEARCH[GENRE.hiphop] = 'hip hip';
+	GENRE_SEARCH[GENRE.electronic] = 'electronic';
+	GENRE_SEARCH[GENRE.metal] = 'metal';
+	GENRE_SEARCH[GENRE.classical] = 'classical';
+	GENRE_SEARCH[GENRE.folk] = 'folk';
+	GENRE_SEARCH[GENRE.jazz] = 'jazz';
 
     function getHitObjectType(type,hitsounds) {
         var r = {
@@ -70,6 +83,7 @@ var parseOsuFile = (function(){
             creator: null,
             difficulty: null,
             difficultyLevel: null,
+			genre: null,
             objects: [],
             image: null,
             audio: null,
@@ -145,6 +159,32 @@ var parseOsuFile = (function(){
                         case 'Version': curGameObject.difficulty = v[1]; break;
                         case 'BeatmapSetID': curGameObject.osuSetId = v[1]; break;
 						case 'Source': curGameObject.mediaSource = v[1]; break;
+						case 'Tags':
+							//we'll probably do a bunch of stuff here in the future
+							//but for now, we will just guess the song genre
+							let genreScore = {};
+							let genreRanking = [];
+							//in this case, the lower the score is the winner
+							Object.keys(GENRE_SEARCH).forEach((genreId)=>{
+								//search
+								let searchPhrase = GENRE_SEARCH[genreId];
+								let score = v[1].toLowerCase().indexOf(searchPhrase);
+								if(score === -1) {
+									//not found. dont even consider it
+									return; //continue the forEach()
+								}
+								genreScore[genreId] = score;
+								
+								//fill genreRanking array, consider it for ranking
+								genreRanking.push(genreId);
+							});
+							if(genreRanking.length !== 0) {
+								genreRanking.sort((a,b)=>{
+									return genreScore[a] - genreScore[b];
+								});
+								curGameObject.genre = parseInt(genreRanking[0]);
+							}
+							break;
                     }
                     break;
                 case 'gn':
