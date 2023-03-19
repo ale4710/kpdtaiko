@@ -1,10 +1,17 @@
-var gameFile,
-gameLoopReferenceNumber,
-latestObject = 0;
+var gameFile;
+var gameLoopReferenceNumber;
+var latestObject = 0;
 
 function start() {
 	//return;
-    gameFile.objects.forEach((v,i)=>{v.id = i;});
+    gameFile.objects.forEach((v,i)=>{
+		//set id
+		v.id = i;
+		//also check for drumroll
+		if(v.type === 2) {
+			balloonExists = true;
+		}
+	});
     gameFile.barlines.forEach((v,i)=>{v.id = i;});
     console.log('ready!', gameFile);
 

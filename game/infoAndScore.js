@@ -4,10 +4,12 @@ function outputInfo(title,artist,difficulty) {
     eid('info-difficulty').textContent = difficulty;
 }
 
-var statistics,
-hitData = [],
-hitDataMs = [],
-combo = 0;
+var balloonExists = false;
+
+var statistics;
+var hitData = [];
+var hitDataMs = [];
+var combo = 0;
 function infoReset() {
     statistics = {
         normalNoteCount: 0,
@@ -82,7 +84,9 @@ function outputGameplayInfoFinal() {
     if(isFullCombo()) {eid('game-stats-max-combo').classList.add('hilight')}
 
 	//drumroll
-    eid('game-stats-drumroll').textContent = statistics.drumrollTotal;
+    eid('game-stats-drumroll').textContent = (
+		balloonExists? statistics.drumrollTotal : 'N/A'
+	);
 }
 
 function getAverageError() {
