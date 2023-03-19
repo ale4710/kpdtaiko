@@ -64,6 +64,11 @@ function isFullCombo() {return statistics.hits.miss === 0}
 function isPerfectAccuracy() {return getAccuracyRaw() === 1}
 
 function outputGameplayInfoFinal() {
+	//reset
+	eid('game-stats-accuracy').classList.remove('hilight');
+	eid('game-stats-max-combo').classList.remove('hilight');
+	
+	//okay output for real
     eid('game-stats-good').textContent = statistics.hits.good;
     eid('game-stats-okay').textContent = statistics.hits.okay;
     eid('game-stats-miss').textContent = statistics.hits.miss;
