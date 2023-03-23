@@ -34,8 +34,8 @@ var parseTjaFile = (function(){
 		if(typeof(options) !== 'object') {options = {}}
 		let tjaFinal = {
 			title: null,
-			artist: null,
-			artistDisplayMode: 0,
+			subtitle: null,
+			subtitleDisplayMode: 0,
 			creator: null,
 			genre: null,
 			difficulty: null,
@@ -473,11 +473,11 @@ var parseTjaFile = (function(){
 								case '++': adm = 2; break;
 								default: clipStart = false; break;
 							}
-							tjaFinal.artistDisplayMode = adm;
+							tjaFinal.subtitleDisplayMode = adm;
 
 							if(clipStart) {value = value.substr(2);}
-							tjaFinal.artist = value;
-							if(checkAllCourse) {unassignedCourseData.artist = value}
+							tjaFinal.subtitle = value;
+							if(checkAllCourse) {unassignedCourseData.subtitle = value}
 							break;
 
 						case 'balloon':

@@ -14,12 +14,6 @@ function start() {
 	});
     gameFile.barlines.forEach((v,i)=>{v.id = i;});
     console.log('ready!', gameFile);
-
-    outputInfo(
-        gameFile.title,
-        gameFile.artist,
-        gameFile.difficulty
-    );
 	
 	bottomStage.dataUpdated();
 	
@@ -69,6 +63,12 @@ function start() {
 }
 
 function reset() {
+	outputInfo(
+        gameFile.title,
+        gameFile.artist,
+        gameFile.difficulty
+    );
+	
     timerFullReset();
 
     audioControl.stop();

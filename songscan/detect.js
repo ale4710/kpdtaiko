@@ -89,6 +89,7 @@
 								'id',
 								'title',
 								'artist',
+								'subtitle',
 								'genre',
 								'difficulty',
 								'difficultyLevel',

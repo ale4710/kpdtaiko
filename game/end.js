@@ -40,19 +40,20 @@ function end(messageOverride) {
 	bottomStage.finish();
 	
     setTimeout(()=>{
-        if('artistDisplayMode' in gameFile) {
-            switch(gameFile.artistDisplayMode) {
+        if('subtitleDisplayMode' in gameFile) {
+            switch(gameFile.subtitleDisplayMode) {
                 case 0: //hide it
-                    outputInfo(
+                    //it is already hidden, because we put in artist on reset()
+					/* outputInfo(
                         gameFile.title,
                         '',
                         gameFile.difficulty
-                    );
+                    ); */
                     break;
-                case 1: //show next to title
-                    outputInfo(
-                        gameFile.title + ' ' + gameFile.artist,
-                        '',
+                case 1: //show alongside title
+					outputInfo(
+                        gameFile.title,
+                        gameFile.subtitle,
                         gameFile.difficulty
                     );
                     break;

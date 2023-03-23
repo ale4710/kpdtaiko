@@ -21,6 +21,7 @@ function updateSongInfoDisplay() {
 	var lastc = null;
 	[
 		{e: 'artist', k: 'artist'},
+		{e: 'subtitle', k: 'subtitle'},
 		{e: 'filetype', k: 'fileType'},
 		{e: 'creator', k: 'creator'},
 		{e: 'source', k: 'mediaSource'}
