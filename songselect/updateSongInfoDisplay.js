@@ -15,7 +15,6 @@ function updateSongInfoDisplay() {
 
 	//basic data
 	eid('song-info-title').textContent = curSong.title;
-	//eid('song-info-artist').textContent = curSong.artist;
 	
 	//misc data
 	var lastc = null;

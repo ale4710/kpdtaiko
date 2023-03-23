@@ -35,7 +35,7 @@ function selectDifficulty() {
 		eid('intro-slider-difficulty-container').classList.add('hidden');
 	}
 	eid('intro-slider-title-text').textContent = songToPlay.title;
-	eid('intro-slider-artist').textContent = songToPlay.artist;
+	eid('intro-slider-artist').textContent = songToPlay.artist || songToPlay.subtitle || null;
 	
 	playIntro('/game/index.html#' + urlprms.toString());
 }
