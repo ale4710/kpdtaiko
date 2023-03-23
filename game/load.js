@@ -22,14 +22,19 @@ function firstLoad(loaderFn) {
     
     initializeLocalTimeOffset(chartId);
 	
+	let promises = [
+		waitDrawReady(),
+		checkBottomStageReady()
+	];
+	
 	loaderFn(`${chartFolder}/${chartFileName}`).then((blob)=>{
         fileReaderA(blob,'arraybuffer').then((arrayBuf)=>{
-            var gameText = fixTextEncoding(arrayBuf),
-            opts = {
+            let gameText = fixTextEncoding(arrayBuf);
+            let opts = {
                 scrollMultiplier: modsList.mods.scrollSpeed.check()
-            },
-			errorMsg = 'There was a problem while trying to parse your file.',
-			sucessfulParse = true;
+            };
+			let errorMsg = 'There was a problem while trying to parse your file.';
+			let sucessfulParse = true;
 
             switch(chartFileType) {
                 case 'osu':
@@ -50,7 +55,6 @@ function firstLoad(loaderFn) {
                     break;
                 case 'tja':
                     opts.targetCourse = urlParams.get('targetDifficulty');
-                    //opts.checkAllCourse = true;
                     gameFile = parseTjaFile(gameText, opts);
                     break;
             }
@@ -59,52 +63,54 @@ function firstLoad(loaderFn) {
 				postError(errorMsg);
 			} else {
 				//image
-				//checkReadyNeeded++;
 				if(gameFile.image && getSettingValue('show-background')) {
-					loaderFn(`${chartFolder}/${gameFile.image}`)
-					.then((imgBlob)=>{
-						printBg(URL.createObjectURL(imgBlob));
-						/* setCssVariable(
-							'bg-url',
-							`url('${URL.createObjectURL(imgBlob)}')`
-						); */
-						checkReady();
-					})
-					.catch(checkReady);
-				} else {checkReady()}
-
-				//audio
-				//checkReadyNeeded++;
-				function noAudio() {
-					//readyRequired++;
-					timerMode = 1;
-					showNavbar(true);
-					messageBox.create(
-						'Warning!',
-						'The audio could not be loaded. Would you like to continue?',
-						{
-							right: messageBox.makeOpt(()=>{
-								showNavbar(false);
-								checkReady();
-							}, 'yes'),
-							left: messageBox.makeOpt(exitToSongSelect, 'no'),
-							back: messageBox.makeOpt(exitToSongSelect)
-						}
+					promises.push(
+						loaderFn(`${chartFolder}/${gameFile.image}`)
+						.then((imgBlob)=>{
+							printBg(URL.createObjectURL(imgBlob));
+						})
 					);
 				}
-				if(gameFile.audio) {
-					loaderFn(`${chartFolder}/${gameFile.audio}`)
-					.then((audioBlob)=>{
-						loadAudio(audioBlob)
-						.then(checkReady)
-						.catch((e)=>{
-							console.error(e);
-							noAudio();
-						});
-					})
-					.catch(noAudio);
-				} else {noAudio()}
+
+				//audio
+				promises.push(new Promise(function(resolve){
+					function noAudio() {
+						timerMode = 1;
+						originalTimerMode = 1;
+						mediaPlayMode = 2
+						initAudioControl();
+						showNavbar(true);
+						messageBox.create(
+							'Warning!',
+							'The audio could not be loaded. Would you like to continue?',
+							{
+								right: messageBox.makeOpt(()=>{
+									showNavbar(false);
+									resolve();
+								}, 'yes'),
+								left: messageBox.makeOpt(exitToSongSelect, 'no'),
+								back: messageBox.makeOpt(exitToSongSelect)
+							}
+						);
+						updatenavbar();
+					}
+					
+					if(gameFile.audio) {
+						loaderFn(`${chartFolder}/${gameFile.audio}`)
+						.then((audioBlob)=>{
+							loadAudio(audioBlob)
+							.then(resolve)
+							.catch((e)=>{
+								console.error(e);
+								noAudio();
+							});
+						})
+						.catch(noAudio);
+					} else {noAudio()}
+				}));
 			}
+			
+			Promise.allSettled(promises).then(start);
         }).catch(()=>{
 			postError('There was a problem when trying to read the file.');
 		});

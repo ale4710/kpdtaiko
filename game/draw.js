@@ -1,26 +1,35 @@
-var drawReady = false,
+var drawReady = false;
 
-notesDisplay = eid('notes-display'),
+var notesDisplay = eid('notes-display');
 
-latestObjectDrawn,
-noDrawObjects,
-notesMissed,
-objectsPrinted,
+var latestObjectDrawn;
+var noDrawObjects;
+var notesMissed;
+var objectsPrinted;
 
-calculateDrawingOrder,
-drawingOrder,
+var calculateDrawingOrder;
+var drawingOrder;
 
-barlineManager,
+var barlineManager;
 
-drawFn,
-drawFnReset,
-killDraw,
-preDrawFn;
+var drawFn;
+var drawFnReset;
+var killDraw;
+var preDrawFn;
 
 function broadcastDrawReady() {
     window.dispatchEvent(new CustomEvent('drawready'));
     drawReady = true;
     broadcastDrawReady = null;
+}
+function waitDrawReady() {
+	return new Promise(function(resolve){
+		if(drawReady) {
+			resolve();
+		} else {
+			window.addEventListener('drawready', resolve);
+		}
+	});
 }
 
 function drawReset() {

@@ -15,37 +15,6 @@ function printBg(url) {
 	document.body.classList.add('background-image-exists');
 }
 
-var checkReadyNeeded = 4,
-/*
-	checkReadyNeeded:
-	+1 - image loading
-	+1 - audio loading
-	+2 - for the below.
-*/
-checkReady = (function(){
-	var ready = 0;
-	return function(){
-		ready++;
-		console.log(ready, checkReadyNeeded);
-		if(ready === checkReadyNeeded) {
-			start();
-			
-			checkReadyNeeded = null;
-			checkReady = null;
-		}
-	}
-})();
-(()=>{
-	var els = [
-		'drawready',
-		'bottomstageready'
-	];
-	//checkReadyNeeded += els.length;
-	els.forEach((el)=>{
-		window.addEventListener(el, checkReady);
-	});
-})();
-
 var fpsCheckPrev = {};
 function fpsCheck(ref) {
     var tfs = fpsCheckPrev[ref] || 0, nw = (window.performance.now());

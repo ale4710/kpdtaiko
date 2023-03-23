@@ -6,7 +6,8 @@ var sounds = {};
 
 var mediaPlayMode = getSettingValue('media-play-mode'); //0 = html media element, 1 = audiocontext
 
-var audioControl = (function(){
+var audioControl;
+function initAudioControl(){
 	let ctrls = {};
 	
 	ctrls.play = function(){
@@ -42,10 +43,26 @@ var audioControl = (function(){
 			ctrls.seekAbsolute = function(tt){audio.seekAbsolute(tt)};
 			ctrls.seekRelative = function(os){audio.seekRelative(os)};
             break;
+		case 2: //dummy
+			ctrls.play = emptyfn;
+			ctrls.pause = emptyfn;
+			ctrls.checkPlaybackRate = (function(){
+				let pbr = modsList.mods.audioSpeed.check();
+				return function(){
+					return pbr;
+				};
+			})();
+			ctrls.checkPaused = function(){return timerPaused};
+			ctrls.checkTime = function(){return curTime()}; //WARNING: TIMER MODE MUST BE [1] WHEN DUMMY AUDIO IS USED
+			ctrls.checkDuration = function(){return audio.duration()};
+			ctrls.stop = emptyfn;
+			ctrls.seekAbsolute = emptyfn;
+			ctrls.seekRelative = emptyfn;
 	}
 	
-	return ctrls;
-})();
+	audioControl = ctrls;
+}
+initAudioControl();
 
 class AudioFromCtx { //definitely not copied from https://stackoverflow.com/a/31653217
     constructor(audbuf, connectTo, playbackrate) {
