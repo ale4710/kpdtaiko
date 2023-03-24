@@ -17,8 +17,11 @@ function outputGameplayInfoFinalExtra() {
 		//  misc data
 		eid('game-stats-late').textContent = td.late;
 		eid('game-stats-early').textContent = td.early;
-		eid('game-stats-average').textContent = td.average.toFixed(2);
-		
+		{
+			let avg = '--.--';
+			if(!isNaN(td.average)) {avg = td.average.toFixed(2);}
+			eid('game-stats-average').textContent = avg;
+		}
 		// -- combo map --
 		let missMapMinValue = 25;
 		eid('game-stats-combo-map').src = createMissMap(
