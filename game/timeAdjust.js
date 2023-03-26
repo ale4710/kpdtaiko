@@ -18,6 +18,9 @@ function initializeLocalTimeOffset(id) {
 		'ArrowRight': 1
 	};
 	
+	let timingAdjustPreventKey = '*';
+	let timingAdjustDisabled = false;
+	
 	let offsetDisplay = eid('offset-display');
 	function printOffset() {
 		eid('local-offset').textContent = Math.floor(localTimeOffset);
@@ -56,25 +59,38 @@ function initializeLocalTimeOffset(id) {
 					localStorage.setItem(localTimeOffsetLSKey, localTimeOffset);
 				}
 			}
-		} else if(
-			(k.key === timingAdjustKey) &&
-			(!k.repeat)
-		) {
-			adjustEnabled = true;
-			
-			printOffset();
-			printAverageError();
-			printAverageErrorInterval = setInterval(printAverageError, 100);
-			
-			offsetDisplay.classList.remove('hidden');
+		} else if(!k.repeat) {
+			switch(k.key) {
+				case timingAdjustKey:
+					if(!timingAdjustDisabled) {
+						adjustEnabled = true;
+						
+						printOffset();
+						printAverageError();
+						printAverageErrorInterval = setInterval(printAverageError, 100);
+						
+						offsetDisplay.classList.remove('hidden');
+					}
+					break;
+				
+				case timingAdjustPreventKey:
+					timingAdjustDisabled = true;
+					break;
+			}
 		}
 	});
 	
 	window.addEventListener('keyup', function(k){
-		if(k.key === timingAdjustKey) {
-			adjustEnabled = false;
-			clearInterval(printAverageErrorInterval);
-			offsetDisplay.classList.add('hidden');
+		switch(k.key) {
+			case timingAdjustKey:
+				adjustEnabled = false;
+				clearInterval(printAverageErrorInterval);
+				offsetDisplay.classList.add('hidden');
+				break;
+				
+			case timingAdjustPreventKey:
+				timingAdjustDisabled = false;
+				break;
 		}
 	});
 })();
