@@ -249,17 +249,19 @@ function miss(disappear) {
 }
 
 //balloon stuff
-var balloonHit = 0,
-balloonArrived = false;
+var balloonHit = 0;
+var balloonArrived = false;
 function balloonReset() {
+	window.dispatchEvent(new CustomEvent('gameballoonreset'));
     balloonHit = 0;
     balloonArrived = false;
 }
 
 //drumroll stuff
-var drumrollHit = 0,
-drumrollArrived = false;
+var drumrollHit = 0;
+var drumrollArrived = false;
 function drumrollReset() {
+	window.dispatchEvent(new CustomEvent('gamedrumrollreset'));
     drumrollHit = 0;
     drumrollArrived = false;
 }
