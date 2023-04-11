@@ -1,0 +1,19 @@
+{
+	"label": "Idol",
+	"settings": {
+		"idol": {
+			"label": "Idol",
+			"type": 0,
+			"values": [
+				"Me",
+				"You",
+				"Her",
+				"Custom"
+			],
+			"default": 0
+		}
+	},
+	"settingsOrder": [
+		"idol"
+	]
+}
