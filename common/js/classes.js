@@ -1,17 +1,39 @@
 var getRandomClassName = (function(){
-	var takennames = [];
-	return function() {
-		var name;
+	var globalTakenNames = [];
+	return function(takenNames = globalTakenNames) {
+		let name;
 		while(
-			takennames.indexOf(name) !== -1 ||
+			takenNames.indexOf(name) !== -1 ||
 			typeof(name) === 'undefined'
 		) {
 			name = Math.floor(Math.random() * Math.pow(10, 20));
 		}
-		takennames.push(name);
+		takenNames.push(name);
 		return name;
 	}
 })();
+
+class FakeEventTarget {
+	constructor() {
+		this.listeners = {};
+	}
+	
+	addListener(fn) {
+		let id = getRandomClassName(Object.keys(this.listeners));
+		this.listeners[id] = fn;
+		return id;
+	}
+	
+	removeListener(id) {
+		return (delete this.listeners[id]);
+	}
+	
+	broadcast() {
+		Object.values(this.listeners).forEach((fn)=>{
+			fn(...arguments);
+		});
+	}
+}
 
 class PreviousFocusHandler {
     constructor(){
