@@ -52,7 +52,7 @@ function start() {
 		ready = true;
 		reset();
 		
-		bottomStage.init();
+		bottomStage.finishedLoading();
 
 		gameLoopStop();
 		gameLoop();
@@ -97,7 +97,7 @@ function gameLoop(proceed) {
     checking();
     autoplay();
 	
-	bottomStage.check();
+	bottomStage.update();
 	
 	gameLoopAdditional.forEach((fn)=>{fn();});
 

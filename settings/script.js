@@ -11,8 +11,16 @@ waitDocumentLoaded().then(function(){
 	
 	addGlobalReferenceGroup(0, [
 		//load stuff for init
-		'controlsChanger'
-	]).then(()=>{
+		'controlsChanger',
+		'bottomStageSettings'
+	])
+	.then(()=>{
+		//initialize stuff that needs to be initialized
+		return Promise.all([
+			_loadBottomStageSettings()
+		]);
+	})
+	.then(()=>{
 		extraLoad = undefined;
 		if(location.hash === '#bootup') {
 			console.log('app has been started.');

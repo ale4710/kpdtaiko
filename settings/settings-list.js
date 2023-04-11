@@ -221,8 +221,7 @@ var settingsList = {
         type: 0,
         values: [
             'Simple',
-            'Failed Idol',
-			'Livestream',
+            'Idol'
         ],
         default: 0
     },
@@ -340,6 +339,16 @@ var settingsList = {
         label: 'Bottom Stage',
         type: 5
     },
+	'category-general-bottom-stage': {
+        action: 'general-bottom-stage',
+        label: 'General Stage Settings',
+        type: 5
+    },
+	'category-specific-bottom-stage': {
+        action: 'specific-bottom-stage', //NOTE: this category is populated somewhere else
+        label: 'Specific Stage Settings',
+        type: 5
+    },
 	'category-game': {
         action: 'game',
         label: 'Game Settings',
@@ -405,6 +414,14 @@ var settingsListCategories = {
 		label: 'Bottom Stage',
 		settings: [
 			'bottom-stage-style',
+			'category-specific-bottom-stage',
+			'category-general-bottom-stage',
+		]
+	},
+	
+	'general-bottom-stage': {
+		label: 'General Stage Settings',
+		settings: [
 			'background-dim',
 			'show-background',
 			'show-lyrics'
