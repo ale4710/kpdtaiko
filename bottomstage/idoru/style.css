@@ -4,12 +4,12 @@
 #bottom-stage {
 	--bg-height: 75%;
 }
-#bottom-stage > div.cover {
+#bottom-stage > div > div.cover {
 	background: #000;
 	opacity: 0;
 	transition: opacity var(--transition-length);
 }
-body.ended #bottom-stage > div.cover {
+body.ended #bottom-stage > div > div.cover {
 	opacity: 1;
 }
 
