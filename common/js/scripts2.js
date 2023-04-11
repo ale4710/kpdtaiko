@@ -51,11 +51,11 @@
 				bg+user+'osuParse',
 				bg+user+'resourceAdder',
 				
-				//next part
-				'resources',
-				
 				//test script
-				//bg+user+'test'
+				bg+user+'test',
+				
+				//next part
+				'resources'
 			]);
 		});
 	}

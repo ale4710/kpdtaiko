@@ -20,7 +20,7 @@
 		}
 	],
 	"b2g_features": {
-		"version": "0.3.1",
+		"version": "0.3.4",
 		"type":"privileged",
 		"default_locale": "en-US",
 		"subtitle":"A rhythm game for KaiOS.",
