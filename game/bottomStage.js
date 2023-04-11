@@ -1,6 +1,9 @@
 var bottomStage = null;
 
-bottomStageManager.load(getSettingValue('bottom-stage-style')).then(function(bs){
+bottomStageManager.load([
+	'simple',
+	'idoru'
+][getSettingValue('bottom-stage-style')]).then(function(bs){
 	bottomStage = bs;
 	window.dispatchEvent(new CustomEvent('bottomstageready'));
 });
