@@ -1,4 +1,4 @@
-var bottomStage = null;
+var bottomStage;
 
 bottomStageManager.load([
 	'simple',
