@@ -154,10 +154,35 @@ function _fiScriptInitialize(
 	});
 	
 	//load characters
-	return new Promise(function(resolve){
-		if(true) {
+	let loadCharactersPromise;
+	if('userCharacters' in shared) {
+		//user character(s)
+		let loadFilesPromises = {};
+		shared.userCharacters.forEach((character)=>{
+			Object.keys(character.images).forEach((imgKey)=>{
+				let imgLocalPath = character.images[imgKey];
+				let imgLoadPromise;
+				if(imgLocalPath in loadFilesPromises) {
+					imgLoadPromise = loadFilesPromises[imgLocalPath];
+				} else {
+					imgLoadPromise = getFile(shared.userCharacterPath + imgLocalPath)
+					.then((blob)=>{return URL.createObjectURL(blob)});
+					loadFilesPromises[imgLocalPath] = imgLoadPromise;
+				}
+				
+				imgLoadPromise.then((url)=>{
+					character.images[imgKey] = url;
+					return url; //for chaining
+				});
+			});
+		});
+		
+		loadCharactersPromise = Promise.allSettled(Object.values(loadFilesPromises))
+		.then(()=>{return shared.userCharacters});
+	} else {
+		loadCharactersPromise = new Promise(function(resolve){
 			//singular internal
-			let charBasePath = `${selfManager.basePath}character/${selfManager.getSetting('idol')}/`
+			let charBasePath = `${selfManager.basePath}character/${shared.characterId - 1}/`
 			xmlhttprqsc(
 				charBasePath + 'config.json',
 				'json',
@@ -179,10 +204,10 @@ function _fiScriptInitialize(
 				}),
 				resolve
 			);
-		} else {
-			//custom that allows for multiple characters
-		}
-	}).then(function(characterConfigs){
+		});
+	}
+	
+	return loadCharactersPromise.then(function(characterConfigs){
 		if(Array.isArray(characterConfigs)) {
 			let initImgLoadPromises = [];
 			characterConfigs.forEach((characterConfig)=>{

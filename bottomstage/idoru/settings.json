@@ -5,13 +5,20 @@
 			"label": "Idol",
 			"type": 0,
 			"values": [
+				"Custom",
 				"Character 1",
 				"Character 1 (Inverted)"
 			],
-			"default": 0
+			"default": 1
+		},
+		"custom-idol-path": {
+			"label": "Custom Idol Path",
+			"type": 3,
+			"default": "sakuya"
 		}
 	},
 	"settingsOrder": [
-		"idol"
+		"idol",
+		"custom-idol-path"
 	]
 }
