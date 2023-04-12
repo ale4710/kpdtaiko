@@ -81,7 +81,7 @@ function _fiScriptInitialize(
 						let ut = this;
 						this.imgElement.addEventListener('animationend', function aniend(){
 							ut.animationLocked = false;
-							ut.img.removeEventListener('animationend', aniend);
+							ut.imgElement.removeEventListener('animationend', aniend);
 						});
 					}
 					
