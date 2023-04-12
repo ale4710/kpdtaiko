@@ -74,7 +74,10 @@ function _fiScriptInitialize(
 			if(!this.animationLocked) {
 				this.stopAnimation();
 				
-				if(aniId in this.animations) {
+				if(
+					(aniId in this.animations) &&
+					(!!this.animations[aniId].animation)
+				) {
 					this.animationLocked = lock;
 					
 					if(lock) {
