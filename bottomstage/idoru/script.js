@@ -56,7 +56,7 @@ function _bottomStageInitialize(interface, selfManager) {
 					'background',
 					'misc'
 				];
-				function loadScript() {
+				(function loadScript() {
 					let scriptName = scripts.pop();
 					if(scriptName) {
 						//load the script
@@ -72,12 +72,9 @@ function _bottomStageInitialize(interface, selfManager) {
 						});
 					} else {
 						//all scripts are loaded
-						loadScript = undefined;
 						finalResolve();
 					}
-				}
-				//start it off
-				loadScript();
+				})();
 			});
 		});
 		//automatically resolved
