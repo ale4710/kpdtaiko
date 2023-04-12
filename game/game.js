@@ -95,7 +95,7 @@ function gameLoop(proceed) {
     timerUpdate();
     metronome.check();
     checking();
-    autoplay();
+    (autoplay || emptyfn)();
 	
 	bottomStage.update();
 	
