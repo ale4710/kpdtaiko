@@ -5,10 +5,8 @@
 			"label": "Idol",
 			"type": 0,
 			"values": [
-				"Me",
-				"You",
-				"Her",
-				"Custom"
+				"Character 1",
+				"Character 1 (Inverted)"
 			],
 			"default": 0
 		}

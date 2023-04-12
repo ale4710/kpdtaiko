@@ -73,8 +73,9 @@ var bottomStageManager = (function(){
 		let bottomStageData = {};
 		
 		class BottomStageSelfManager {
-			constructor(basePath) {
-				this.basePath = basePath;
+			constructor(stageName) {
+				this.stageName = stageName;
+				this.basePath = basePath + stageName + '/';
 			}
 			
 			finalizeUnload() {
@@ -82,7 +83,7 @@ var bottomStageManager = (function(){
 			}
 			
 			getSetting(settingName) {
-				getSettingValue(formSettingName(this.basePath, settingName));
+				return getSettingValue(formSettingName(this.stageName, settingName));
 			}
 		}
 		
@@ -112,8 +113,8 @@ var bottomStageManager = (function(){
 			bottomStageInterface.data = bottomStageData; //it shares it
 			
 			//  make a self manager
-			let thisBasePath = basePath + stageName + '/';
-			let selfManager = new BottomStageSelfManager(thisBasePath);
+			let selfManager = new BottomStageSelfManager(stageName);
+			let thisBasePath = selfManager.basePath;
 			
 			//  okay it is ready
 			return addGlobalReference(0, thisBasePath + 'script')

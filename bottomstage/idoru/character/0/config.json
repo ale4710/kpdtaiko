@@ -1,0 +1,20 @@
+{
+	"images": {
+		"normal": "normal.png",
+		"special": "special.png"
+	},
+	"animations": {
+		"beat": {
+			"animation": "bop",
+			"mode": null
+		},
+		"toSpecial": {
+			"animation": "spin",
+			"mode": null
+		},
+		"special": {
+			"animation": "bop",
+			"mode": null
+		}
+	}
+}

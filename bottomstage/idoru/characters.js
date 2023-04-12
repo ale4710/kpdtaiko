@@ -5,14 +5,13 @@ function _fiScriptInitialize(
 	niseEvents
 ) {
 	//characters
-	
 	let characterContainer = document.createElement('div');
 	characterContainer.classList.add('character-container');
 	shared.container.appendChild(characterContainer);
 	
 	let createDefaultImageList = (function(){
 		function makepath(cn, fn) {
-			return `${selfManager.basePath}img/character/${cn}/${fn}.png`;
+			return `${selfManager.basePath}/character/${cn}/${fn}.png`;
 		}
 		let fns = [
 			'normal',
@@ -28,12 +27,7 @@ function _fiScriptInitialize(
 	})();
 	
 	class CharacterCL {
-		constructor(
-			images,
-			beatAnim,
-			specialAnim,
-			toSpecialAnim
-		) {
+		constructor(config) {
 			var container = document.createElement('div');
 			
 			var floorLight = document.createElement('div');
@@ -43,29 +37,36 @@ function _fiScriptInitialize(
 			var characterPositioner = document.createElement('div');
 			characterPositioner.classList.add('character-positioner', 'horizontal-center');
 			
-			this.img = document.createElement('img');
-			this.img.classList.add('character');
-			characterPositioner.appendChild(this.img);
+			this.imgElement = document.createElement('img');
+			this.imgElement.classList.add('character');
+			characterPositioner.appendChild(this.imgElement);
 
 			container.appendChild(characterPositioner);
 			
 			characterContainer.appendChild(container);
 			
-			this.images = images;
+			this.images = {};
+			[
+				'normal',
+				'special'
+			].forEach((imageKey)=>{
+				this.images[imageKey] = config.images[imageKey];
+			});
 			
-			this.animationClassNames = [
-				beatAnim,
-				specialAnim,
-				toSpecialAnim
-			];
-			
-			this.animationMode = {};
+			this.animations = {};
+			[
+				'beat',
+				'special',
+				'toSpecial'
+			].forEach((animationKey)=>{
+				this.animations[animationKey] = config.animations[animationKey];
+			});
 			
 			this.animationLocked = false;
 		}
 		
 		update(fn) {
-			this.img.src = this.images[fn];
+			this.imgElement.src = this.images[fn];
 		}
 		
 		playAnimation(aniId, lock) {
@@ -73,74 +74,47 @@ function _fiScriptInitialize(
 			if(!this.animationLocked) {
 				this.stopAnimation();
 				
-				this.animationLocked = lock;
-				
-				if(lock) {
-					var ut = this;
-					this.img.addEventListener('animationend', function aniend(){
-						ut.animationLocked = false;
-						ut.img.removeEventListener('animationend', aniend);
-					});
-				}
-				
-				var aniTimeOvr = 0;
-				
-				if(aniId in this.animationMode) {
-					switch(this.animationMode[aniId]) {
+				if(aniId in this.animations) {
+					this.animationLocked = lock;
+					
+					if(lock) {
+						let ut = this;
+						this.imgElement.addEventListener('animationend', function aniend(){
+							ut.animationLocked = false;
+							ut.img.removeEventListener('animationend', aniend);
+						});
+					}
+					
+					let animation = this.animations[aniId];
+					
+					let aniTimeOvr = 0;
+					switch(animation.mode) {
 						case 'beat':
 							aniTimeOvr = (60000 / metronome.getBpm().bpm) + 'ms';
 							break;
 					}
+					
+					playAnim(
+						this.imgElement,
+						animation.animation,
+						aniTimeOvr
+					);
 				}
-				
-				playAnim(
-					this.img, 
-					this.animationClassNames[aniId],
-					aniTimeOvr
-				);
 			}
 		}
 		
 		stopAnimation() {
-			this.img.classList.remove(...this.animationClassNames);
+			Object.values(this.animations).forEach((animInfo)=>{
+				this.imgElement.classList.remove(animInfo.animation);
+			});
 		}
 	}
 	
-	var chfns = {
-		nm: 'normal',
-		sp: 'special'
-	},
-	characters = [];
+	let characters = [];
 	
 	function updateChar(fn) {
 		characters.forEach((c)=>{c.update(fn)});
 	}
-	
-	[
-		{
-			imgList: createDefaultImageList(0), 
-			beat: 'bop', 
-			special: 'bop', 
-			toSpecial: 'spin',
-			
-			/* animationMode: {
-				1: 'beat'
-			} */
-		},
-	].forEach((ci)=>{
-		var tc = new CharacterCL(
-			ci.imgList,
-			ci.beat,
-			ci.special,
-			ci.toSpecial
-		);
-		if(ci.animationMode) {
-			tc.animationMode = ci.aniMode;
-		}
-		characters.push(tc);
-	});
-	
-	updateChar(chfns.nm);
 	
 	//animations
 	//  to special mode
@@ -148,10 +122,10 @@ function _fiScriptInitialize(
 	function specialModeChangeListener(ev) {
 		characters.forEach((character)=>{
 			if(ev.detail.enabled) {
-				character.playAnimation(2, true);
-				updateChar(chfns.sp);
+				character.playAnimation('toSpecial', true);
+				updateChar('special');
 			} else {
-				updateChar(chfns.nm);
+				updateChar('normal');
 			}
 		});
 	}
@@ -159,7 +133,10 @@ function _fiScriptInitialize(
 	//  bop
 	function bopAnimTickListener() {
 		//character
-		var spEn = Number(specialMode.checkStatus());
+		let spEn = [
+			'beat',
+			'special'
+		][Number(specialMode.checkStatus())];
 		characters.forEach((character)=>{
 			character.playAnimation(spEn);
 		});
@@ -173,8 +150,58 @@ function _fiScriptInitialize(
 	});
 	
 	niseEvents.reset.addListener(function(){
-		updateChar(chfns.nm);
+		updateChar('normal');
 	});
 	
-	return Promise.resolve();
+	//load characters
+	return new Promise(function(resolve){
+		if(true) {
+			//singular internal
+			let charBasePath = `${selfManager.basePath}character/${selfManager.getSetting('idol')}/`
+			xmlhttprqsc(
+				charBasePath + 'config.json',
+				'json',
+				(function(ev){
+					let config = ev.target.response;
+					if(config) {
+						//make full path for the images
+						[
+							'normal',
+							'special'
+						].forEach((imgKey)=>{
+							config.images[imgKey] = charBasePath + config.images[imgKey];
+						});
+						//ok done
+						resolve([config]);
+					} else {
+						resolve();
+					}
+				}),
+				resolve
+			);
+		} else {
+			//custom that allows for multiple characters
+		}
+	}).then(function(characterConfigs){
+		if(Array.isArray(characterConfigs)) {
+			let initImgLoadPromises = [];
+			characterConfigs.forEach((characterConfig)=>{
+				let character = new CharacterCL(characterConfig);
+				initImgLoadPromises.push(new Promise(function(resolve){
+					function imageEventListener(ev){
+						ev.target.removeEventListener('load', imageEventListener);
+						ev.target.removeEventListener('error', imageEventListener);
+						resolve();
+					};
+					character.imgElement.addEventListener('load', imageEventListener);
+					character.imgElement.addEventListener('error', imageEventListener);
+				}));
+				characters.push(character);
+			});
+			updateChar('normal');
+			return Promise.all(initImgLoadPromises);
+		} else {
+			return Promise.resolve();
+		}
+	});
 }
