@@ -438,7 +438,7 @@ songListPageN = (function(){
 					var p = -1;
 				case 'ArrowRight':
 					navigateSongListGroup(
-						p || 1,
+						p || 1
 					);
 					break;
 					
