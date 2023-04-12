@@ -288,10 +288,14 @@ function xmlhttprqsc(url,responsetype,cbs, cbf) {
     rq.addEventListener('load',cbs);
     rq.addEventListener('error',(e)=>{
         console.error(e);
-        cb(cbf);
+        cbf(e);
     });
     rq.responseType = responsetype || '';
-    rq.send();
+    try {
+		rq.send();
+	} catch(e) {
+		cbf(e);
+	}
 }
 
 var alertMessage = (function(){
