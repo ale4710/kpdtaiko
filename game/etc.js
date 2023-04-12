@@ -9,11 +9,11 @@ var modsDisplay = (new ModsView(
 ));
 
 function printBg(url) {
-	if(bottomStage) {
-		if(bottomStage.data.img) {URL.revokeObjectURL(bottomStageData.img);}
+	checkBottomStageReady().then(function(){
+		if(bottomStage.data.img) {URL.revokeObjectURL(bottomStage.data.img);}
 		bottomStage.data.img = url;
 		bottomStage.dataUpdated();
-	}
+	});
 	document.body.classList.add('background-image-exists');
 }
 
