@@ -2,7 +2,8 @@ var bottomStage;
 
 bottomStageManager.load([
 	'simple',
-	'idoru'
+	'idoru',
+	'audioAnalyzer'
 ][getSettingValue('bottom-stage-style')]).then(function(bs){
 	bottomStage = bs;
 	window.dispatchEvent(new CustomEvent('bottomstageready'));

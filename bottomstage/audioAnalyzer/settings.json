@@ -1,0 +1,33 @@
+{
+	"label": "Audio Visualization",
+	"settings": {
+		"visualizer": {
+			"label": "Visualizer",
+			"type": 0,
+			"values": [
+				"Waveform",
+				"Frequency"
+			],
+			"default": 0
+		},
+		"color": {
+			"label": "Color",
+			"type": 0,
+			"values": [
+				"From Background Image",
+				"Fallback Color Only"
+			],
+			"default": 0
+		},
+		"fallback-color": {
+			"label": "Fallback Color",
+			"type": 3,
+			"default": "#fff"
+		}
+	},
+	"settingsOrder": [
+		"visualizer",
+		"color",
+		"fallback-color"
+	]
+}

@@ -392,6 +392,64 @@ function checkHTMLaudioAutoPlay() {
 	});
 }
 
+var audioAnalyzer = (function(){
+	let interface = {};
+	
+	let analyzer;
+	function initIfNot(){
+		if(!analyzer) {
+			if(audioCtx) {
+				analyzer = audioCtx.createAnalyser();
+				audioCtxSpace.mediaGain.connect(analyzer);
+				
+				analyzer.smoothingTimeConstant = 0.4;
+				
+				interface.analyzerNode = analyzer;
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	};
+	
+	function checkArray(existing) {
+		if(
+			!existing ||
+			(existing.length !== analyzer.frequencyBinCount)
+		) {
+			return new Uint8Array(analyzer.frequencyBinCount);
+		} else {
+			return existing;
+		}
+	};
+	
+	[
+		{
+			iname: 'getWaveform',
+			aname: 'getByteTimeDomainData'
+		},
+		{
+			iname: 'getFrequencies',
+			aname: 'getByteFrequencyData'
+		}
+	].forEach(function(ginfo){
+		let array;
+		let aname = ginfo.aname;
+		interface[ginfo.iname] = function(){
+			if(initIfNot()) {
+				array = checkArray(array);
+				analyzer[aname](array);
+				return array;
+			}
+		};
+		ginfo = undefined;
+	});
+	
+	return interface;
+})();
+
 //audio context suspending
 document.addEventListener('visibilitychange',()=>{
     if(audioCtx) {

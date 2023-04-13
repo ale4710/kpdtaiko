@@ -221,7 +221,8 @@ var settingsList = {
         type: 0,
         values: [
             'Simple',
-            'Idol'
+            'Idol',
+            'Audio Visualization'
         ],
         default: 0
     },

@@ -3,7 +3,8 @@ var bottomStageManager = (function(){
 	
 	const stages = [
 		'simple',
-		'idoru'
+		'idoru',
+		'audioAnalyzer'
 	];
 	
 	function formSettingPrefix(stageName) {
