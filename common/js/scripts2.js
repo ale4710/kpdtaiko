@@ -39,6 +39,7 @@
 				bg+user+'gameFn',
 				bg+user+'textEncoding',
 				bg+user+'classes',
+				bg+user+'advert',
 				bg+user+'bottomStageManager',
 				bg+user+'control',
 				bg+user+'mods',

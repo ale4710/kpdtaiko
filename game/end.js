@@ -6,6 +6,8 @@ var modsDisplayEnd = (new ModsView(
 	eid('game-stats-extra-info-mods')
 ));
 
+var endedAdvert;
+
 function endedReset() {
 	ended = false;
 	endedAllowContinue = false;
@@ -17,6 +19,14 @@ function endedReset() {
 	endedExtraReset();
 }
 function end(messageOverride) {
+	//damned adverts
+	if(!endedAdvert) {
+		endedAdvert = new advertManager.FullscreenAdvertManager('ended-interstitial');
+		endedAdvert.requestEvery = 5;
+		endedAdvert.loadAdvert();
+	}
+	
+	//actual code that is useful
     ended = true;
     document.body.classList.remove('special');
     outputGameplayInfoFinal();
@@ -107,7 +117,17 @@ endedPageN = (function(){
 		switch(k.key) {
 			case 'Enter':
 			case 'Backspace':
-				exitToSongSelect();
+				let essp;
+				if(
+					endedAdvert && 
+					endedAdvert.pendingAdvert &&
+					endedAdvert.pendingAdvert !== true
+				) {
+					essp = endedAdvert.displayWaitCloseAdvert();
+				} else {
+					essp = Promise.resolve();
+				}
+				essp.finally(exitToSongSelect);
 				break;
 			case 'SoftLeft':
 				//document.body.classList.toggle(showDetailedStatsClassList);

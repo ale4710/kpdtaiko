@@ -138,4 +138,6 @@ function firstLoad(loaderFn) {
 
 waitDocumentLoaded().then(function(){
 	document.body.classList.add('loading-started');
+	//fucking adverts
+	advertManager.initialize();
 });
