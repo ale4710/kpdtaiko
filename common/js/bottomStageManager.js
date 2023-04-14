@@ -29,9 +29,10 @@ var bottomStageManager = (function(){
 						if(ev.target.response) {
 							let settingsNamePrefix = formSettingPrefix(stageName);
 							//category entry
+							let stageLabel = ev.target.response.label || stageName;
 							additionalConfig['category-' + settingsNamePrefix] = {
 								action: settingsNamePrefix,
-								label: ev.target.response.label || stageName,
+								label: stageLabel,
 								type: 5
 							};
 							
@@ -41,7 +42,7 @@ var bottomStageManager = (function(){
 								order.push(formSettingName(stageName, key));
 							});
 							additionalCategoryGroups[settingsNamePrefix] = {
-								label: settingsNamePrefix,
+								label: stageLabel,
 								settings: order
 							};
 							order = undefined;

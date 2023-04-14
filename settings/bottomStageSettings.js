@@ -14,7 +14,14 @@ function _loadBottomStageSettings() {
 		settingsListCategories['specific-bottom-stage'] = spcCat;
 		
 		//categories
-		Object.keys(settings.categories).forEach((category)=>{
+		let spcCatEntries = Object.keys(settings.categories);
+		spcCatEntries.sort(function(a,b){
+			return 1 - (2 * (
+				settings.categories[a].label <
+				settings.categories[b].label
+			))
+		});
+		spcCatEntries.forEach((category)=>{
 			spcCat.settings.push('category-' + category);
 			settingsListCategories[category] = settings.categories[category];
 		});
