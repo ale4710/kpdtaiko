@@ -67,6 +67,9 @@ function _bottomStageInitialize(interface, selfManager) {
 				ctx,
 				color || fallbackColor
 			);
-		}
+		};
+		interface.reset = function(){
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+		};
 	});
 };
