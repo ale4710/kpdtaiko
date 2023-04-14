@@ -402,7 +402,7 @@ var audioAnalyzer = (function(){
 				analyzer = audioCtx.createAnalyser();
 				audioCtxSpace.mediaGain.connect(analyzer);
 				
-				analyzer.smoothingTimeConstant = 0.4;
+				analyzer.smoothingTimeConstant = 0.65;
 				
 				interface.analyzerNode = analyzer;
 				return true;
