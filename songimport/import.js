@@ -114,7 +114,10 @@ function beginImport() {
 														break;
 													case 'tja':
 														let tjaFileSummary = parseTjaFile(gameFile, {checkAllCourse: true});
-														if(tjaFileSummary) {
+														if(
+															tjaFileSummary &&
+															(tjaFileSummary.length !== 0)
+														) {
 															validFile = true;
 															tjaFileSummary.forEach((tjaFile)=>{
 																if(
