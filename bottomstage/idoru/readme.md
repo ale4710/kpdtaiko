@@ -41,28 +41,30 @@ the configuration file is a `json` file. it is an array with objects that descri
 
 an example of the configuration is below:
 
-	[
-		{
-			"images": {
-				"normal": "normal.png",
-				"special": "special.png"
+``` json
+[
+	{
+		"images": {
+			"normal": "normal.png",
+			"special": "special.png"
+		},
+		"animations": {
+			"beat": {
+				"animation": "bop",
+				"mode": null
 			},
-			"animations": {
-				"beat": {
-					"animation": "bop",
-					"mode": null
-				},
-				"toSpecial": {
-					"animation": "spin",
-					"mode": null
-				},
-				"special": {
-					"animation": "bop",
-					"mode": null
-				}
+			"toSpecial": {
+				"animation": "spin",
+				"mode": null
+			},
+			"special": {
+				"animation": "bop",
+				"mode": null
 			}
 		}
-	]
+	}
+]
+```
 
 each array entry is an idol. the idols will be spaced evenly on stage. 
 
