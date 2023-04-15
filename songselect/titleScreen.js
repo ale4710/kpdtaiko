@@ -7,6 +7,7 @@ var titleScreen = (function() {
     let menu = new Menu(CONTENT_CONTAINER);
     [
         {l: 'Play', id: 'play'},
+		{l: 'Import', id: 'import'},
         {l: 'Settings', id: 'settings'},
 		{l: 'Manual', id: 'manual'},
 		{l: 'Exit', id: 'exit'}
@@ -31,6 +32,10 @@ var titleScreen = (function() {
                         break;
                     case 'settings':
                         location = '/settings/index.html';
+						disableControls = true;
+                        break;
+					case 'import':
+						location = '/songimport/index.html';
 						disableControls = true;
                         break;
 					case 'manual':
