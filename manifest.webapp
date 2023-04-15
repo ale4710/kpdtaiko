@@ -26,6 +26,6 @@
         }
     },
     "permissions":{
-        "device-storage:sdcard":{"access":"readonly"}
+        "device-storage:sdcard":{"access":"readwrite"}
     }
 }
