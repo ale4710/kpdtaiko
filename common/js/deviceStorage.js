@@ -1,4 +1,4 @@
-var gameDirectory = '.domtaiko',
+var gameDirectory = '.kpdtaiko',
 gameSubDirectories = {
     songs: 'songs',
 	import: 'import',
