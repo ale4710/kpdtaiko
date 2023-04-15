@@ -14,7 +14,7 @@
 		"custom-idol-path": {
 			"label": "Custom Idol Path",
 			"type": 3,
-			"default": "sakuya"
+			"default": "kurosawa_ruby"
 		}
 	},
 	"settingsOrder": [
