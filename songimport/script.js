@@ -29,4 +29,5 @@ waitDocumentLoaded().then(()=>{
 	curpage = initialPageN;
 	updatenavbar();
 	disableControls = false;
+	preventNavDefault = false;
 });
