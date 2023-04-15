@@ -309,6 +309,16 @@ var settingsList = {
 		}),
 		type: 4
 	},
+	
+	'clear-and-rescan-library': {
+		label: 'Clear & Rescan Library',
+		action: (function(){
+			localStorage.removeItem('songDatabase');
+			location = '/songscan/index.html';
+			disableControls = true;
+		}),
+		type: 4
+	},
 
     'category-default': {
         action: 'default',
@@ -445,7 +455,8 @@ var settingsListCategories = {
 			'song-list-animate-random',
 			'audio-start-at-preview-point',
 			'title-screen-random-song',
-			'rescan-library'
+			'rescan-library',
+			'clear-and-rescan-library'
 		]
 	},
 	
