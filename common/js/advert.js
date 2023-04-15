@@ -4,7 +4,7 @@ var advertManager = (function(){
 	
 	const pubId = 'sakuya is cute!!!!!!!';
 	const timeout = 10000;
-	const appName = 'domtaiko';
+	const appName = 'kpdtaiko';
 	
 	interface.initialize = function(){
 		delete interface.initialize;

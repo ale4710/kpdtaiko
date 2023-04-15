@@ -1,14 +1,18 @@
-# DOMtaiko
+# kpdtaiko
 this is a taiko player for KaiOS. It is currently work in progress.
 
-it's called DOMtaiko because, originally, it was only going to use the DOM for graphics. however i quickly switched to other methods to try to improve performance on actual devices.
+kpdtaiko means "KeyPaD taiko", because it is played on a keypad.
+
+this project was previously known as DOMtaiko. it was called DOMtaiko because, originally, it was only going to use the DOM for graphics.
+
+the name was changed to avoid confusion with another project, and to provide a name that more accurately reflects the project.
 
 [demo on device](https://youtu.be/BOYv75n20d8) - shows the application running on an actual device.  
 [demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen.
 
 ## links
-on [gitlab](https://gitlab.com/ale4710/domtaiko)  
-on [github](https://github.com/ale4710/domtaiko)
+on [gitlab](https://gitlab.com/ale4710/kpdtaiko)  
+on [github](https://github.com/ale4710/kpdtaiko)
 
 ## warning
 there will be bugs, because i did not test it a lot.
@@ -23,25 +27,25 @@ the default controls are as follows:
 ## setup
 place songs in your default media location. the location is
 
-	.domtaiko/songs/
+	.kpdtaiko/songs/
 
 supported formats are `osu` and `tja`.
 
 each song should be in its own folder. e.g.
 
 	# one song
-	.domtaiko/songs/mani_mani/chart.tja
-	.domtaiko/songs/mani_mani/audio.ogg
+	.kpdtaiko/songs/mani_mani/chart.tja
+	.kpdtaiko/songs/mani_mani/audio.ogg
 	
 	# another song
-	.domtaiko/songs/bitter_escape/chart.osu
-	.domtaiko/songs/bitter_escape/audio.ogg
+	.kpdtaiko/songs/bitter_escape/chart.osu
+	.kpdtaiko/songs/bitter_escape/audio.ogg
 
 ## custom hit sounds
 place sounds in
 
-	.domtaiko/custom/don.ogg
-	.domtaiko/custom/kat.ogg
+	.kpdtaiko/custom/don.ogg
+	.kpdtaiko/custom/kat.ogg
 
 due to reasons it needs to be ogg.
 

@@ -1,10 +1,10 @@
 {
     "version": "0.0.1",
-    "name": "DOMtaiko",
-    "display": "DOMtaiko",
-    "short_name": "DOMtaiko",
+    "name": "kpdtaiko",
+    "display": "kpdtaiko",
+    "short_name": "kpdtaiko",
     "subtitle":"A rhythm game for KaiOS.",
-    "description":"DOMtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files.",
+    "description":"kpdtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files.",
     "default_locale": "en-US",
     "launch_path":"/main-app/index.html",
     "type":"privileged",
@@ -20,9 +20,9 @@
     },
     "locales": {
         "en-US": {
-            "name": "DOMtaiko",
+            "name": "kpdtaiko",
             "subtitle":"A rhythm game for KaiOS.",
-            "description":"DOMtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files."
+            "description":"kpdtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files."
         }
     },
     "permissions":{
