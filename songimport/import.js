@@ -197,7 +197,7 @@ function beginImport() {
 				})();
 			} else {
 				//queue is length 0
-				return Promise.resolve(true);
+				topProceed(true);
 			}
 		});
 	}).catch((err)=>{
@@ -247,11 +247,19 @@ function beginImport() {
 		
 		filesImported.sort(); //default alphabet sorting
 		eid('import-summary-count').textContent = filesImported.length;
-		filesImported.forEach((filename)=>{
-			let el = document.createElement('div');
-			el.textContent = filename;
-			eid('import-summary-list').appendChild(el);
-		});
+		if(filesImported.length === 0) {
+			let nonEl = document.createElement('div');
+			nonEl.textContent = '(No archives imported)';
+			nonEl.classList.add('center', 'text-center', 'no-archives');
+			eid('import-summary-list').appendChild(nonEl);
+		} else {
+			filesImported.forEach((filename)=>{
+				let el = document.createElement('div');
+				el.textContent = filename;
+				el.classList.add('archive-entry');
+				eid('import-summary-list').appendChild(el);
+			});
+		}
 		filesImported = undefined;
 		
 		disableControls = false;

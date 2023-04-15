@@ -22,13 +22,16 @@
 	--icon-left-size: 14px;
 	--icon-left-padding: 4px;
 }
-#import-summary-list > div {
+#import-summary-list > .no-archives {
+	width: 100%;
+}
+#import-summary-list > .archive-entry {
 	--total-left-icon-size: calc(var(--icon-left-size) + (var(--icon-left-padding) * 2));
 	width: calc(100% - var(--total-left-icon-size));
 	margin-left: var(--total-left-icon-size);
 	position: relative;
 }
-#import-summary-list > div::before {
+#import-summary-list > .archive-entry::before {
 	position: absolute;
 	content: "";
 	right: calc(100% + var(--icon-left-padding));
