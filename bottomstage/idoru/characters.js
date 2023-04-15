@@ -170,10 +170,9 @@ function _fiScriptInitialize(
 				} else {
 					imgLoadPromise = getFile(shared.userCharacterPath + imgLocalPath)
 					.then((blob)=>{return URL.createObjectURL(blob)});
-					loadFilesPromises[imgLocalPath] = imgLoadPromise;
 				}
 				
-				imgLoadPromise.then((url)=>{
+				loadFilesPromises[imgLocalPath] = imgLoadPromise.then((url)=>{
 					character.images[imgKey] = url;
 					return url; //for chaining
 				});
