@@ -25,7 +25,7 @@ let initialPageN = addPage(
 );
 
 waitDocumentLoaded().then(()=>{
-	eid('initial-screen-location').textContent = `${gameDirectory}/${gameSubDirectories.import}`;
+	eid('initial-screen-location').textContent = `${gameDirectory}/${gameSubDirectories.import}/`;
 	curpage = initialPageN;
 	updatenavbar();
 	disableControls = false;
