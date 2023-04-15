@@ -11,6 +11,7 @@ the name was changed to avoid confusion with another project, and to provide a n
 [demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen.
 
 ## links
+[project website](https://alego.web.fc2.com/kaiosapps/kpdtaiko/)  
 on [gitlab](https://gitlab.com/ale4710/kpdtaiko)  
 on [github](https://github.com/ale4710/kpdtaiko)
 
