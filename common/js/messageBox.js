@@ -86,6 +86,7 @@ var messageBox = (function(){
         elements.screen.classList.add('hidden');
         elements.body.innerHTML = '';
         currentActions = null;
+		active = false;
         fochandler.clear();
     }
 
