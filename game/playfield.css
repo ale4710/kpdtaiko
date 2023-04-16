@@ -101,17 +101,24 @@ body.loading-started {
 #playfield #notes-display .note.missed {background: #666}
 #playfield #notes-display .note.balloon {background: none}
 
-#playfield #notes-display > div.info-hitarea {
-    width: calc(var(--playfield-height) * var(--height));
+#playfield #notes-display > .info-hitarea {
+	width: calc(var(--playfield-height) * var(--height));
     text-align: center;
-    z-index: var(--highest-zindex);
+}
+#playfield #notes-display:not(.info-hitarea-bottom) > .info-hitarea {
+	bottom: 100%;
+}
+#playfield #notes-display.info-hitarea-bottom > .info-hitarea {
+	top: 100%;
 }
 
-#playfield #notes-display > div#judge {
-    bottom: 100%;
-    left: 0;
+#playfield #notes-display:not(.info-hitarea-bottom) > div#judge {
     --nudge-amount: -20%;
 }
+#playfield #notes-display.info-hitarea-bottom > div#judge {
+    --nudge-amount: 20%;
+}
+#judge {left: 0}
 #judge.judge-red {color: #f00}
 #judge.judge-white {color: #fff}
 #judge.judge-yellow {color: #ff0}
@@ -134,7 +141,6 @@ body.loading-started {
 
 #playfield #judge-offset {
     left: calc(var(--playfield-height) * var(--height));
-    bottom: 100%;
     font-size: 12px;
 }
 #playfield #judge-offset.late {color: #f33}
