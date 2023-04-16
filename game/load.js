@@ -24,7 +24,8 @@ function firstLoad(loaderFn) {
 	
 	let promises = [
 		waitDrawReady(),
-		checkBottomStageReady()
+		checkBottomStageReady(),
+		loadTopCharacter()
 	];
 	
 	loaderFn(`${chartFolder}/${chartFileName}`).then((blob)=>{

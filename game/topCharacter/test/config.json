@@ -1,0 +1,10 @@
+{
+	"normal": {
+		"spritesheet": "normal.png",
+		"frameCount": 4
+	},
+	"special": {
+		"spritesheet": "special.png",
+		"frameCount": 4
+	}
+}

@@ -1,0 +1,32 @@
+.top-character {
+	--tc-height: calc(var(--playfield-top) * var(--height));
+	--hscale: 1; /* hscale - horizontal scale */
+	
+	position: absolute;
+	
+	top: 0;
+	left: 0;
+	height: var(--tc-height);
+	width: calc(var(--tc-height) * var(--hscale));
+	
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position-x: 0;
+	background-position-y: 0;
+}
+
+.top-character.hidden {
+	display: unset;
+	opacity: 0;
+}
+
+#top-character-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	transition: opacity ease-out var(--transition-length); /*for hide-on-ended*/
+}
+body.ready #top-character-container {
+	display: unset;
+}

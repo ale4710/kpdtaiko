@@ -82,11 +82,13 @@ function reset() {
 	balloonReset();
 	drumrollReset();
 
-	bottomStage.reset();
+	metronome.reset();
     checkingReset();
     infoReset();
-    metronome.reset();
     updateBpm();
+	
+	bottomStage.reset();
+	topCharacter.reset();
 }
 
 var gameLoopAdditional = [];

@@ -3,6 +3,7 @@
     [
         'style',
         'playfield',
+		'topCharacter',
         'bg',
         'info'
     ].forEach((fn)=>{
@@ -15,6 +16,7 @@
         'controls',
         'audio',
 		'bottomStage',
+		'topCharacter',
         'draw',
         'drawNoteTools',
         'drawSelect',

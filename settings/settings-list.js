@@ -294,6 +294,23 @@ var settingsList = {
         default: 1
     },
 	
+	'top-character': {
+        label: 'Top Character',
+        type: 0,
+        values: [
+            'None',
+            'Custom',
+            'Test (Debug)'
+        ],
+        default: 0
+    },
+	
+	'top-character-custom-path': {
+        label: 'Top Character Custom Path',
+        type: 3,
+        default: 'sakuya'
+    },
+	
 	//actions and such
 	'goto-controls-changer': {
 		label: 'Input Settings',
@@ -343,6 +360,11 @@ var settingsList = {
 	'category-song-select': {
         action: 'song-select',
         label: 'Song Select Settings',
+        type: 5
+    },
+	'category-top-character': {
+        action: 'top-character',
+        label: 'Top Character',
         type: 5
     },
 	'category-bottom-stage': {
@@ -414,6 +436,7 @@ var settingsListCategories = {
 	'visual': {
 		label: 'Visual Settings',
 		settings: [
+			'category-top-character',
 			'category-bottom-stage',
             'show-judge-offset',
 			'judge-animation-mode',
@@ -426,7 +449,15 @@ var settingsListCategories = {
 		settings: [
 			'bottom-stage-style',
 			'category-specific-bottom-stage',
-			'category-general-bottom-stage',
+			'category-general-bottom-stage'
+		]
+	},
+	
+	'top-character': {
+		label: 'Top Character',
+		settings: [
+			'top-character',
+			'top-character-custom-path',
 		]
 	},
 	
