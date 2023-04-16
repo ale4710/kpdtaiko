@@ -1,12 +1,60 @@
 var _bottomStageAudioVisualizerDrawingFunction = (function(){
 	const barHeight = 0.85;
 	
-	let highestWithData = 0;
+	class MeanManager {
+		constructor() {
+			this.reset();
+		}
+		
+		add(n) {
+			this.sum += n;
+			this.total++;
+		}
+		
+		getMean() {
+			return this.sum / this.total;
+		}
+		
+		reset() {
+			this.sum = 0;
+			this.total = 0;
+		}
+	}
 	
-	const volumeMaxSampleCount = 250;
-	let volumeSampleCount = 0;
-	let volumeSampleToSubtract = [];
-	let volumeSampleSum = 0;
+	class MovingMeanManager extends MeanManager {
+		constructor(samplesToUse = 250) {
+			super();
+			this.subtracts = new Float32Array(samplesToUse);
+			this.pointer = 0;
+		}
+		
+		add(n) {
+			//normal
+			super.add(n);
+			
+			//for the "moving mean"
+			this.sum -= this.subtracts[this.pointer];
+			this.subtracts[this.pointer] = n;
+			
+			//set pointer
+			this.pointer++;
+			if(this.pointer === this.subtracts.length) {this.pointer = 0;}
+			
+			//misc
+			this.total = Math.min(this.total, this.subtracts.length);
+		}
+		
+		reset() {
+			super.reset();
+			this.pointer = 0;
+			for(let i = 0; i < this.subtracts.length; i++) {
+				this.subtracts[i] = 0;
+			}
+		}
+	}
+	
+	let highestWithData = 0;
+	let volumeMeanManager = new MovingMeanManager(250);
 	
 	return function(ctx, color){
 		if(audio.paused()) {return}
@@ -25,7 +73,7 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 			}
 			if(i <= highestWithData) {
 				visibleFrequencySum += frequency; //for autogain
-				let volumeAverage = (volumeSampleSum / Math.min(volumeSampleCount, volumeMaxSampleCount));
+				let volumeAverage = volumeMeanManager.getMean();
 				volumeAverage *= 0.7;
 				let thisBarHeight = ctx.canvas.height * barHeight * (Math.max(0, (frequency - (volumeAverage))) / (1 - volumeAverage));
 				if(isNaN(thisBarHeight)) {thisBarHeight = 0}
@@ -42,11 +90,8 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 		}
 		
 		 //autogain stuff
-		volumeSampleCount++;
 		let visibleFrequencyAverage = visibleFrequencySum / (highestWithData + 1);
-		volumeSampleToSubtract.push(visibleFrequencyAverage);
-		if(volumeSampleCount > volumeMaxSampleCount) {volumeSampleSum -= volumeSampleToSubtract.shift()}
-		volumeSampleSum += visibleFrequencyAverage;
+		volumeMeanManager.add(visibleFrequencyAverage);
 
 		if(highestWithData !== 0) {
 			//from here draw the bottom
