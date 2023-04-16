@@ -3,6 +3,10 @@ setCssVariable(
     getSettingValue('background-dim') / 100
 );
 
+if(getSettingValue('show-bpm') === 0) {
+	eid('bpm-display-all').classList.add('hidden');
+}
+
 var modsDisplay = (new ModsView(
 	0,
 	eid('top-info-center')

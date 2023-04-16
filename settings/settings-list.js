@@ -135,6 +135,16 @@ var settingsList = {
         default: 1
     },
 	
+	'show-bpm': {
+        label: 'Show BPM Display',
+        type: 0,
+        values: [
+            'Hide',
+            'Show'
+        ],
+        default: 1
+    },
+	
 	'show-difficulty-on-intro': {
         label: 'Show Difficulty On Intro',
         type: 0,
@@ -440,6 +450,7 @@ var settingsListCategories = {
 			'category-bottom-stage',
             'show-judge-offset',
 			'judge-animation-mode',
+			'show-bpm',
             'show-notes'
 		]
 	},
