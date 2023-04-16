@@ -3,7 +3,8 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 	
 	class MeanManager {
 		constructor() {
-			this.reset();
+			this.sum = 0;
+			this.total = 0;
 		}
 		
 		add(n) {
@@ -53,7 +54,7 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 		}
 	}
 	
-	let highestWithData = 0;
+	let dataHighestMean = new MeanManager();
 	let volumeMeanManager = new MovingMeanManager(250);
 	
 	return function(ctx, color){
@@ -61,6 +62,11 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 		
 		let frequencies = audioAnalyzer.getFrequencies();
 		let visibleFrequencySum = 0; //autogain
+		let thisHighestWithData = 0; //autozoom
+		let lastHighestWithData = dataHighestMean.getMean() || Infinity;
+		let volumeAverage = (volumeMeanManager.getMean() * 0.7) || 0;
+		
+		//drawing
 		ctx.beginPath();
 		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		ctx.fillStyle = color;
@@ -69,12 +75,10 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 		for(let i = 0; i < frequencies.length; i++) {
 			let frequency = frequencies[i] / 255;
 			if(frequency > 0.15) {
-				highestWithData = Math.max(highestWithData, i);
+				thisHighestWithData = i;
 			}
-			if(i <= highestWithData) {
+			if(i <= lastHighestWithData) {
 				visibleFrequencySum += frequency; //for autogain
-				let volumeAverage = volumeMeanManager.getMean();
-				volumeAverage *= 0.7;
 				let thisBarHeight = ctx.canvas.height * barHeight * (Math.max(0, (frequency - (volumeAverage))) / (1 - volumeAverage));
 				if(isNaN(thisBarHeight)) {thisBarHeight = 0}
 				let y = ctx.canvas.height - thisBarHeight;
@@ -82,7 +86,7 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 					ctx.moveTo(0, y);
 				} else {
 					ctx.lineTo(
-						(i / highestWithData) * ctx.canvas.width,
+						(i / lastHighestWithData) * ctx.canvas.width,
 						y
 					);
 				}
@@ -90,10 +94,13 @@ var _bottomStageAudioVisualizerDrawingFunction = (function(){
 		}
 		
 		 //autogain stuff
-		let visibleFrequencyAverage = visibleFrequencySum / (highestWithData + 1);
+		let visibleFrequencyAverage = visibleFrequencySum / (lastHighestWithData + 1);
 		volumeMeanManager.add(visibleFrequencyAverage);
+		
+		//autozoom stuff
+		dataHighestMean.add(thisHighestWithData);
 
-		if(highestWithData !== 0) {
+		if(lastHighestWithData >= 1) {
 			//from here draw the bottom
 			ctx.lineTo(ctx.canvas.width, ctx.canvas.height);
 			ctx.lineTo(0, ctx.canvas.height);
