@@ -80,6 +80,8 @@ function enumerateFiles(path, handlefn) {
 					let handlefnrv = handlefn(iterateRetv.value);
 					if(handlefnrv === 'stop') {
 						resolve();
+					} else if(handlefnrv instanceof Promise) {
+						handlefnrv.then(next);
 					} else {
 						next();
 					}
@@ -102,6 +104,8 @@ function enumerateFiles(path, handlefn) {
 					let handlefnrv = handlefn(ev.target.result);
 					if(handlefnrv === 'stop') {
 						resolve();
+					} else if(handlefnrv instanceof Promise) {
+						handlefnrv.then(ev.target.continue);
 					} else {
 						ev.target.continue();
 					}
