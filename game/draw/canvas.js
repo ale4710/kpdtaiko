@@ -181,10 +181,9 @@
 
                     var push = false;
                     orderCheck: if(objectsPrinted.length !== 0) {
-                        for(var i = objectsPrinted.length; i > 0; i--) {
-                            var ii = i - 1;
-                            if(objectsPrinted[ii].id > objectPrintInfo.id) {
-                                objectsPrinted.splice(ii,0,objectPrintInfo);
+                        for(var i = objectsPrinted.length - 1; i >= 0; i--) {
+                            if(objectsPrinted[i].id < objectPrintInfo.id) {
+                                objectsPrinted.splice(i + 1, 0, objectPrintInfo);
                                 break orderCheck;
                             }
                         }
