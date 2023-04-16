@@ -19,7 +19,7 @@ body {
     font-family: 'open sans','noto sans',sans-serif;
     /* overflow: hidden; */
 }
-.hidden {display: none!important;}
+.hidden {display: none;}
 .dim {background: var(--background-color-o75)}
 .dimmer {background: var(--background-color-o50)}
 .solid-background {background: var(--background-color);}
