@@ -9,6 +9,8 @@ var topCharacter = (function(){
 	}
 	let elements;
 	
+	let lastSpecialSwitch = -Infinity;
+	
 	let enabled = false;
 	let images = {};
 	
@@ -115,6 +117,7 @@ var topCharacter = (function(){
 	
 	window.addEventListener('specialmodechanged', function(){
 		if(enabled) {
+			lastSpecialSwitch = performance.now();
 			frame = 0;
 			update();
 		}
@@ -122,10 +125,12 @@ var topCharacter = (function(){
 	
 	window.addEventListener('bpmtick', function(){
 		if(enabled) {
-			let imgDef = images[getStatusKey()];
-			frame++;
-			if(frame >= imgDef.frameCount) {frame = 0}
-			update();
+			if(performance.now() - lastSpecialSwitch > 10) {
+				let imgDef = images[getStatusKey()];
+				frame++;
+				if(frame >= imgDef.frameCount) {frame = 0}
+				update();
+			}
 		}
 	});
 	
