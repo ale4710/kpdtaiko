@@ -10,7 +10,19 @@ let initialPageN = addPage(
 		switch(k.key) {
 			case 'Backspace':
 			case 'SoftLeft':
-				toTitleScreen();
+				if(imported) {
+					messageBox.create(
+						'Rescan',
+						'Would you like to rescan the song library?',
+						{
+							right: messageBox.makeOpt(()=>{location = '/songscan/index.html';}, 'yes'),
+							left: messageBox.makeOpt(toTitleScreen, 'no'),
+							back: messageBox.makeOpt(emptyfn, undefined, true)
+						}
+					);
+				} else {
+					toTitleScreen();
+				}
 				break;
 			case 'Enter':
 				eid('initial-screen').classList.add('hidden');
@@ -21,7 +33,7 @@ let initialPageN = addPage(
 				break;
 		}
 	}),
-	(function(){return ['cancel','import']})
+	(function(){return ['back','import']})
 );
 
 waitDocumentLoaded().then(()=>{

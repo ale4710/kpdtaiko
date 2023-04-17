@@ -1,18 +1,10 @@
-let summaryPageN = addPage(
+var imported = false;
+var summaryPageN = addPage(
 	(function(k){
 		switch(k.key) {
 			case 'Backspace':
 			case 'Enter':
-				messageBox.create(
-					'Rescan',
-					'Would you like to rescan the song library?',
-					{
-						center: messageBox.makeOpt(()=>{location = '/songscan/index.html';}, 'yes'),
-						right: messageBox.makeOpt(toTitleScreen, 'no'),
-						left: messageBox.makeOpt(messageBox.defaultCb, 'cancel'),
-						back: messageBox.makeOpt(messageBox.defaultCb)
-					}
-				);
+				fromImportToInitPage();
 				break;
 			default:
 				eid('import-summary-list').focus();
@@ -21,6 +13,12 @@ let summaryPageN = addPage(
 	}),
 	(function(){return ['','continue']})
 );
+
+function fromImportToInitPage(){
+	eid('progress-display-container').classList.add('hidden');
+	eid('initial-screen').classList.remove('hidden');
+	curpage = initialPageN;
+};
 
 function beginImport() {
 	let songDirectory = `${gameDirectory}/${gameSubDirectories.songs}`;
@@ -204,12 +202,6 @@ function beginImport() {
 		//a big error occured?
 		console.error(err);
 		
-		function toinitpage(){
-			eid('progress-display-container').classList.add('hidden');
-			eid('initial-screen').classList.remove('hidden');
-			curpage = initialPageN;
-		};
-		
 		let msg = (typeof(err) === 'string' && err) || 'Unknown error occurred.';
 		if(
 			'target' in err &&
@@ -223,8 +215,8 @@ function beginImport() {
 			'An error occured.',
 			msg,
 			{
-				center: messageBox.makeOpt(toinitpage, 'ok'),
-				back: messageBox.makeOpt(toinitpage)
+				center: messageBox.makeOpt(fromImportToInitPage, 'ok'),
+				back: messageBox.makeOpt(fromImportToInitPage)
 			}
 		);
 		disableControls = false;
