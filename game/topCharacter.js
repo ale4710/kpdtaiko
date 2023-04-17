@@ -14,9 +14,12 @@ var topCharacter = (function(){
 	let enabled = false;
 	let images = {};
 	
+	let initialTick = true;
 	let frame = 0;
+	let allowResetFrame = true;
 	function reset() {
-		frame = 0;
+		frame = 0; //this is a full reset, so we set frame to 0 regardless of allowResetFrame
+		initialTick = true;
 		if(elements) {
 			if(elements.special) { elements.special.classList.add('hidden'); }
 			if(elements.normal) { elements.normal.classList.remove('hidden'); }
@@ -27,16 +30,16 @@ var topCharacter = (function(){
 	
 	let characterLoading = false;
 	interface.setCharacter = (function(cc, folder, internal){
-		return new Promise((resolve, reject)=>{
+		return new Promise((topResolve, topReject)=>{
 			if(characterLoading) {
-				reject('a character is already loading');
+				topReject('a character is already loading');
 			}
 			
 			if(!(
 				cc &&
 				(typeof(cc) === 'object')
 			)) {
-				reject('character config is not provided or incorrect');
+				topReject('character config is not provided or incorrect');
 			}
 			
 			enabled = false;
@@ -48,14 +51,15 @@ var topCharacter = (function(){
 			}
 			elements = {};
 			
-			let imgProcessPromises = [];
+			let imageUrls = {};
+			let imgLoadPromises = [];
 			[
 				'normal',
 				'special'
 			].forEach((mode)=>{
-				imgProcessPromises.push(new Promise((ippResolve)=>{
+				let spritesheetPath = cc[mode].spritesheet;
+				if(!(spritesheetPath in imageUrls)) {
 					let imgLoadPromise;
-					let spritesheetPath = cc[mode].spritesheet;
 					if(internal) {
 						imgLoadPromise = Promise.resolve(`topCharacter/${folder}/${spritesheetPath}`);
 					} else {
@@ -63,40 +67,65 @@ var topCharacter = (function(){
 							return URL.createObjectURL(file);
 						});
 					}
-					imgLoadPromise.then((url)=>{
-						let iinfo = {
-							frameCount: cc[mode].frameCount,
-							failed: false
-						};
-						images[mode] = iinfo;
-						let img = document.createElement('img');
-						img.src = url;
-						img.addEventListener('load', ()=>{
-							let tcel = document.createElement('div');
-							tcel.classList.add('top-character');
-							tcel.style.setProperty('--hscale', (img.width / iinfo.frameCount) / img.height);
-							tcel.style.backgroundImage = `url("${url}")`;
-							eid('top-character-container').appendChild(tcel);
-							elements[mode] = tcel;
-							
-							ippResolve();
-						});
-						img.addEventListener('error', ()=>{
-							iinfo.failed = true;
-							ippResolve();
-						});
-					})
-					.catch(()=>{
-						images[mode] = {failed: true};
-						ippResolve();
-					});
-				}));
+					
+					imageUrls[spritesheetPath] = true;
+					imgLoadPromises.push(
+						imgLoadPromise
+						.then((url)=>{
+							imageUrls[spritesheetPath] = url;
+						})
+						.catch(()=>{
+							delete imgUrls[spritesheetPath];
+						})
+					);
+				}
 			});
 			
-			Promise.allSettled(imgProcessPromises).then(()=>{
+			Promise.allSettled(imgLoadPromises)
+			.then(()=>{
+				imgLoadPromises = undefined;
+				let imgProcessPromises = [];
+				
+				[
+					'normal',
+					'special'
+				].forEach((mode)=>{
+					let spritesheetPath = cc[mode].spritesheet;
+					if(spritesheetPath in imageUrls) {
+						imgProcessPromises.push(new Promise((ippResolve)=>{
+							let url = imageUrls[spritesheetPath];
+							let iinfo = {
+								frameCount: cc[mode].frameCount,
+								failed: false
+							};
+							images[mode] = iinfo;
+							let img = document.createElement('img');
+							img.src = url;
+							img.addEventListener('load', ()=>{
+								let tcel = document.createElement('div');
+								tcel.classList.add('top-character');
+								tcel.style.setProperty('--hscale', (img.width / iinfo.frameCount) / img.height);
+								tcel.style.backgroundImage = `url("${url}")`;
+								eid('top-character-container').appendChild(tcel);
+								elements[mode] = tcel;
+								
+								ippResolve();
+							});
+							img.addEventListener('error', ()=>{
+								iinfo.failed = true;
+								ippResolve();
+							});
+						}));
+					}
+				});
+				
+				return Promise.allSettled(imgProcessPromises);
+			})
+			.then(()=>{
 				enabled = true;
+				allowResetFrame = (images.normal.frameCount !== images.special.frameCount);
 				reset();
-				resolve();
+				topResolve();
 			});
 		});
 	});
@@ -118,16 +147,23 @@ var topCharacter = (function(){
 	window.addEventListener('specialmodechanged', function(){
 		if(enabled) {
 			lastSpecialSwitch = performance.now();
-			frame = 0;
+			if(allowResetFrame){frame = 0;}
 			update();
 		}
 	});
 	
 	window.addEventListener('bpmtick', function(){
 		if(enabled) {
-			if(performance.now() - lastSpecialSwitch > 10) {
+			if(
+				!allowResetFrame ||
+				(performance.now() - lastSpecialSwitch > 10)
+			) {
 				let imgDef = images[getStatusKey()];
-				frame++;
+				if(initialTick) {
+					initialTick = false;
+				} else {
+					frame++;
+				}
 				if(frame >= imgDef.frameCount) {frame = 0}
 				update();
 			}
