@@ -105,7 +105,7 @@ var settingsList = {
     'background-dim': {
         label: 'Background Dim (%)',
         type: 2,
-        default: 0,
+        default: 50,
         check: (n)=>{
             return (
                 !isNaN(parseInt(n)) &&
