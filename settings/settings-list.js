@@ -39,7 +39,7 @@ var settingsList = {
     },
 
     'show-judge-offset':{
-        label: 'Show Delays',
+        label: 'Show Hit Error',
         type: 0,
         values: [
             'Hide',
