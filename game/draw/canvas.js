@@ -172,8 +172,7 @@
                     obj = gf[cur.id];
 
                     //garbage collection avoidance?
-                    var objectPrintInfo = drawNoteObjectsCache.pop();
-                    if(!objectPrintInfo) {objectPrintInfo = {}}
+                    var objectPrintInfo = drawNoteObjectsCache.pop() || {};
 
                     objectPrintInfo.id = obj.id;
                     objectPrintInfo.type = noteTypes[obj.type];
