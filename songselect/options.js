@@ -4,11 +4,11 @@ var gameMenu = (function() {
 	var curMenu = 0;
 
     //main menu
-    var gameMenuMenu = new OptionsMenu('Game Menu');
+    var gameMenuMenu = new OptionsMenu('Menu');
     [
         {l: 'Game Speed Options', id: 'speedopt'},
         {l: 'Volume Adjustment', id: 'volume'},
-		{l: 'Sort By...', id: 'sortmenu'},
+		//{l: 'Sort By...', id: 'sortmenu'},
 		{l: 'Group By...', id: 'groupmenu'}
     ].forEach((opt)=>{gameMenuMenu.addOption(opt.l,opt.id);});
     //key handler is generic.
