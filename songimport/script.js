@@ -1,3 +1,10 @@
+function hideAllScreens() {
+	let screens = ecls('fscreen');
+	for(let i = 0; i < screens.length; i++) {
+		screens[i].classList.add('hidden');
+	}
+}
+
 function toTitleScreen() {
 	let usp = new URLSearchParams();
 	usp.set('goto', 'title');
@@ -25,7 +32,7 @@ let initialPageN = addPage(
 				}
 				break;
 			case 'Enter':
-				eid('initial-screen').classList.add('hidden');
+				hideAllScreens();
 				eid('progress-display-container').classList.remove('hidden');
 				curpage = undefined;
 				disableControls = true;
@@ -37,6 +44,8 @@ let initialPageN = addPage(
 );
 
 waitDocumentLoaded().then(()=>{
+	eid('main-content').classList.remove('hidden');
+	toInitPage();
 	eid('initial-screen-location').textContent = `${gameDirectory}/${gameSubDirectories.import}/`;
 	curpage = initialPageN;
 	updatenavbar();

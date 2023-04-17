@@ -4,7 +4,7 @@ var summaryPageN = addPage(
 		switch(k.key) {
 			case 'Backspace':
 			case 'Enter':
-				fromImportToInitPage();
+				toInitPage();
 				break;
 			default:
 				eid('import-summary-list').focus();
@@ -14,8 +14,8 @@ var summaryPageN = addPage(
 	(function(){return ['','continue']})
 );
 
-function fromImportToInitPage(){
-	eid('progress-display-container').classList.add('hidden');
+function toInitPage(){
+	hideAllScreens();
 	eid('initial-screen').classList.remove('hidden');
 	curpage = initialPageN;
 };
@@ -180,6 +180,7 @@ function beginImport() {
 							})
 							.then(()=>{
 								if(filesExtracted) {
+									imported = true;
 									filesImported.push(zipFileName);
 								}
 							});
@@ -215,8 +216,8 @@ function beginImport() {
 			'An error occured.',
 			msg,
 			{
-				center: messageBox.makeOpt(fromImportToInitPage, 'ok'),
-				back: messageBox.makeOpt(fromImportToInitPage)
+				center: messageBox.makeOpt(toInitPage, 'ok'),
+				back: messageBox.makeOpt(toInitPage)
 			}
 		);
 		disableControls = false;
