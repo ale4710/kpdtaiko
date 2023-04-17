@@ -104,12 +104,13 @@ body.loading-started {
 #playfield #notes-display > .info-hitarea {
 	width: calc(var(--playfield-height) * var(--height));
     text-align: center;
+	--position: 100%;
 }
 #playfield #notes-display:not(.info-hitarea-bottom) > .info-hitarea {
-	bottom: 100%;
+	bottom: var(--position);
 }
 #playfield #notes-display.info-hitarea-bottom > .info-hitarea {
-	top: 100%;
+	top: var(--position);
 }
 
 #playfield #notes-display:not(.info-hitarea-bottom) > div#judge {
@@ -155,6 +156,7 @@ body.loading-started {
     left: -50%;
     box-shadow: #fff 0 0 5px;
     opacity: 0;
+	z-index: -1;
 }
 body.special #playfield-glow {
     opacity: 1;
