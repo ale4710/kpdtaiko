@@ -138,8 +138,9 @@ var topCharacter = (function(){
 			let element = elements[getStatusKey()];
 			if(element) {
 				element.classList.remove('hidden');
-				//element.style.backgroundPositionX = -(frame * element.offsetWidth) + 'px';
-				element.style.backgroundPositionX = -(frame * element.getBoundingClientRect().width) + 'px';
+				let bgPosX = -(frame * element.getBoundingClientRect().width) + 'px';
+				//let bgPosX = -(frame * element.offsetWidth) + 'px';
+				element.style.backgroundPosition = bgPosX + ' 0';
 			}
 		}
 	}
