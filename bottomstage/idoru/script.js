@@ -44,6 +44,8 @@ function _bottomStageInitialize(interface, selfManager) {
 							switch(err.error.name) {
 								case 'NotFoundError': throw 'Your file could not be found:\r\n' + shared.userCharacterPath + 'config.json';
 								case 'SecurityError': throw 'Your path contains illegal characters or illegal sequences.';
+								default: throw 'An error occurred while trying to retrieve the config file.';
+								
 							}
 					}
 				}
