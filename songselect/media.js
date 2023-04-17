@@ -60,7 +60,7 @@ var mediaLoader = (function(){
 					switch(source) {
 						case 'internal':
 							xmlhttprqsc(
-								'/songs/' + path,
+								path,
 								'blob',
 								function(e){
 									loadMediaSuccess(

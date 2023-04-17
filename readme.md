@@ -62,11 +62,11 @@ ensure that the testing script is enabled in `/common/js/scripts2.js`:
 	//test script
 	bg+user+'test',
 
-then, on the root of the web server, make a folder called `songs`.
+then, on the root of the web server, make a folder called `debugsongs`.
 
 in that folder should be a file called `songlist.json`, and the songs you wish to play.
 
-`songlist.json` should contain a json array with the paths to the chart files themselves, relative to `songs/`.
+`songlist.json` should contain a json array with the paths to the chart files themselves, relative to `/debugsongs/`.
 
 for example, consider the following directory structure.
 

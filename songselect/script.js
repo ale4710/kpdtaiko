@@ -66,7 +66,7 @@ waitDocumentLoaded().then(()=>{
 				if(deviceStorage) {
 					message += `The song directory is located at ${formFullgameDirectory()}. Please check the directory.`;
 				} else {
-					message += 'Since you appear to be debugging on a PC, please make sure there is a "songlist.json" file in the "/songs/" folder, with an array pointing to the part to each song file.';
+					message += 'Since you appear to be debugging on a PC, please make sure there is a "songlist.json" file in the "/debugsongs/" folder, with an array pointing to the part to each song file.';
 				}
 			}
 			

@@ -5,7 +5,7 @@ function beginScan(detectedFn){
 	changed = 0,
 	nsongs = 0;
 	
-	xmlhttprqsc('/songs/songlist.json', 'json', function(e){
+	xmlhttprqsc('/debugsongs/songlist.json', 'json', function(e){
 		sl = e.target.response;
 		window.dispatchEvent(new CustomEvent('songlistready'));
 	});
@@ -13,10 +13,10 @@ function beginScan(detectedFn){
 	return (new Promise(function(resolve){
 		function doit() {
 			if(cur in sl) {
-				var f = sl[cur],
-				parts = parseFilePath(f);
+				let f = '/debugsongs/' + sl[cur];
+				let parts = parseFilePath(f);
 				xmlhttprqsc(
-					'/songs/' + f,
+					f,
 					'blob',
 					function(e){
 						outputProgress(`now scanning ${parts.filename}`);
