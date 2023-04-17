@@ -10,7 +10,8 @@
         [
         'settings-list',
         'setting-updater',
-        'script'
+        'script',
+		'start'
     ].forEach((fn)=>{
         addGlobalReference(0, fn);
     });
