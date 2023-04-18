@@ -62,15 +62,15 @@ waitDocumentLoaded().then(()=>{
 			localStorage.removeItem('do-not-rescan');
 			
 			if(err === 'empty') {
-				message = 'No songs were found in the song directory. ';
+				message = '<p>No songs were found in the song directory.<p>'; //yes, a *open* <p> tag
 				if(deviceStorage) {
-					message += `The song directory is located at ${formFullgameDirectory()}. Please check the directory.`;
+					message += `The song directory is located at ${formFullgameDirectory()}. Please check the directory.<p>See the "setup" section of the manual for more details.`;
 				} else {
 					message += 'Since you appear to be debugging on a PC, please make sure there is a "songlist.json" file in the "/debugsongs/" folder, with an array pointing to the part to each song file.';
 				}
 			}
 			
-			eid('error-screen-text').textContent = message;
+			eid('error-screen-text').innerHTML = message;
 		});
 	}
 	
