@@ -7,7 +7,8 @@ var parseTjaFile = (function(){
 		'ボーカロイド': GENRE.vocaloid,
 		'VOCALOID': GENRE.vocaloid,
 		'クラシック': GENRE.classical,
-		'ゲームミュージック': GENRE.game
+		'ゲームミュージック': GENRE.game,
+		'ナムコオリジナル': GENRE.original
 	};
 	
 	function errorMaker(line,reason) {

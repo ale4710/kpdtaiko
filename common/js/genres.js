@@ -29,6 +29,6 @@ GENRE_LABEL[GENRE.metal] = 'Metal';
 GENRE_LABEL[GENRE.folk] = 'Folk';
 GENRE_LABEL[GENRE.jazz] = 'Jazz';
 GENRE_LABEL[GENRE.vocaloid] = 'Vocaloid';
-GENRE_LABEL[GENRE.original] = 'Original';
+GENRE_LABEL[GENRE.original] = 'NAMCO Original';
 GENRE_LABEL[GENRE.variety] = 'Variety';
 GENRE_LABEL[GENRE.children] = 'Children\'s Music';
