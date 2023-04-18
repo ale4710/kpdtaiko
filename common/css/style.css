@@ -11,12 +11,14 @@
     --transition-length: 1s;
 }
 
+body, input {
+	color: var(--text-color);
+    font-family: 'open sans','noto sans',sans-serif;
+}
 body {
     margin: 0;
     /* background: var(--background-color); */
 	background-color: transparent;
-    color: var(--text-color);
-    font-family: 'open sans','noto sans',sans-serif;
     /* overflow: hidden; */
 }
 .hidden {display: none;}
