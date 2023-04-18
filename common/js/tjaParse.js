@@ -437,6 +437,7 @@ var parseTjaFile = (function(){
 							value = GENRE_MAP[value] || null;
 							tjaFinal.genre = value;
 							if(checkAllCourse) {unassignedCourseData.genre = value}
+							break;
 						case 'headscroll': scrollInitMultiplier *= parseFloat(value); break;
 						case 'level': 
 							var lvl = parseInt(value);
