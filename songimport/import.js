@@ -58,8 +58,9 @@ function beginImport() {
 						updateProgress('opening ' + zipFileName);
 						
 						let filesExtracted = false;
+						let errorOccurred = false;
 						
-						JSZip().loadAsync(zipFile)
+						JSZip().loadAsync(zipFile, {decodeFileName: fixTextEncoding})
 						.then((zip)=>{
 							updateProgress('reading ' + zipFileName);
 							//note down game files
@@ -83,8 +84,9 @@ function beginImport() {
 									if(gameFilePath) {
 										//parse the game files
 										if(gameFilePath.filePathFull in zip.files) {
-											zip.files[gameFilePath.filePathFull].async('text').then((gameFile)=>{
+											zip.files[gameFilePath.filePathFull].async('arraybuffer').then((gameFile)=>{
 												console.log('parsing' + gameFilePath.filePathFull);
+												gameFile = fixTextEncoding(gameFile);
 												//only write out the file if it is valid
 												let validFile = false;
 												switch(gameFilePath.fileExtention) {
@@ -135,7 +137,10 @@ function beginImport() {
 													//only write out if its valid
 													updateProgress(`writing ${zipFileName}/${gameFilePath.filePathFull}`);
 													writePromise = addFile(`${songDirectory}/${zipFileName}/${gameFilePath.filePathFull}`, new Blob([gameFile]))
-													.catch((err)=>{console.error(err);})
+													.catch((err)=>{
+														errorOccurred = true;
+														console.error(err);
+													})
 												} else {
 													writePromise = Promise.resolve();
 												}
@@ -166,7 +171,10 @@ function beginImport() {
 													updateProgress(`writing ${zipFileName}/${rfile}`);
 													return addFile(`${songDirectory}/${zipFileName}/${rfile}`, blob);
 												})
-												.catch((err)=>{console.error(err);})
+												.catch((err)=>{
+													errorOccurred = true;
+													console.error(err);
+												})
 											} else {
 												rfileCheckWrite = Promise.resolve();
 											}
