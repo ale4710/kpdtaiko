@@ -1,4 +1,4 @@
-var gameDirectory = '.kpdtaiko',
+var gameDirectory = 'others/.kpdtaiko',
 gameSubDirectories = {
     songs: 'songs',
 	import: 'import',
@@ -10,7 +10,7 @@ notifyOnError = true;
 
 function formFullgameDirectory(){
 	if(testing) {return '?'}
-    return `${deviceStorage.storageName}/${gameDirectory}/${gameSubDirectories.songs}`;
+    return `${gameDirectory}/${gameSubDirectories.songs}`;
 }
 
 function getSongDirFile(path) {
@@ -50,6 +50,7 @@ function addFile(path, blob) {
 			resolve();
 		}); 
 		writeRequest.addEventListener('error', (ev)=>{
+			console.error('write failed!',path,ev);
 			reject(ev.target);
 		});
 	});
@@ -57,11 +58,14 @@ function addFile(path, blob) {
 
 function deleteFile(path) {
 	return new Promise((resolve, reject)=>{
+		console.log('deleting',path);
 		let delRequest = deviceStorage.delete(path);
 		delRequest.addEventListener('success', (ev)=>{
+			console.log('OK deleted:',path);
 			resolve();
 		});
 		delRequest.addEventListener('error', (ev)=>{
+			console.error('delete failed!',path,ev);
 			reject(ev.target);
 		});
 	});
