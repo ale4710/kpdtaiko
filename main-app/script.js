@@ -7,6 +7,13 @@ function resizeFrame() {
 	f.width = window.innerWidth;
 	f.height = window.innerHeight;
 }
+function preventBackKey(k) {
+	console.log(k);
+	if(k.key === 'Backspace') {
+		k.preventDefault();
+	}
+}
+
 window.addEventListener('resize', resizeFrame);
 window.addEventListener('load', ()=>{
 	document.body.appendChild(f);
@@ -15,5 +22,13 @@ window.addEventListener('load', ()=>{
 	resizeFrame();
 });
 
-function hideFrame() {document.body.classList.add('loading');}
-function showFrame() {document.body.classList.remove('loading');}
+function hideFrame() {
+	f.blur();
+	document.body.classList.add('loading');
+	window.addEventListener('keydown', preventBackKey);
+}
+function showFrame() {
+	document.body.classList.remove('loading');
+	f.focus();
+	window.removeEventListener('keydown', preventBackKey);
+}
