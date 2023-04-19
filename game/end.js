@@ -23,10 +23,10 @@ function end(messageOverride) {
 	if(!endedAdvert) {
 		endedAdvert = new advertManager.FullscreenAdvertManager('ended-interstitial');
 		endedAdvert.requestEvery = 5;
-		endedAdvert.loadAdvert();
+		endedAdvert.timeout = 7500;
 	}
 	
-	//actual code that is useful
+	//actual useful code
     ended = true;
     document.body.classList.remove('special');
     outputGameplayInfoFinal();
@@ -117,13 +117,15 @@ endedPageN = (function(){
 		switch(k.key) {
 			case 'Enter':
 			case 'Backspace':
+				//hide game stuff
+				eid('advert-loading-screen').classList.remove('hidden');
+				audio.stop();
+				//advertising.........
 				let essp;
-				if(
-					endedAdvert && 
-					endedAdvert.pendingAdvert &&
-					endedAdvert.pendingAdvert !== true
-				) {
-					essp = endedAdvert.displayWaitCloseAdvert();
+				if(endedAdvert) {
+					essp = endedAdvert.loadAdvert().then(()=>{
+						return endedAdvert.displayWaitCloseAdvert();
+					});
 				} else {
 					essp = Promise.resolve();
 				}

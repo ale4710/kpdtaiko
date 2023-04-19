@@ -31,7 +31,10 @@ var advertManager = (function(){
 						options.h = h;
 					}
 					
-					options.onerror = reject;
+					options.onerror = (err)=>{
+						console.error(err);
+						reject(err);
+					};
 					options.onready = resolve;
 					
 					getKaiAd(options);
@@ -114,6 +117,8 @@ var advertManager = (function(){
 							.then((advert)=>{this.pendingAdvert = advert;})
 							.catch((err)=>{
 								this._removePendingAdvert();
+								this.showHistory.requestCount--;
+								this._saveHistory();
 								throw err;
 							});
 					}
@@ -125,12 +130,17 @@ var advertManager = (function(){
 				
 				displayAdvert() {
 					if(this.pendingAdvert) {
-						return new Promise((resolve)=>{
+						return new Promise((resolve, reject)=>{
 							this.pendingAdvert.call('display');
 							this.pendingAdvert.on('display', ()=>{
 								this._removePendingAdvert();
 								this.addHistory();
 								resolve();
+							});
+							this.pendingAdvert.on('error', (err)=>{
+								this._removePendingAdvert();
+								console.error(err);
+								reject(err);
 							});
 						});
 					} else {
@@ -140,8 +150,8 @@ var advertManager = (function(){
 				
 				displayWaitCloseAdvert() {
 					return new Promise((resolve)=>{
-						this.pendingAdvert.on('close', resolve)
-						this.displayAdvert();
+						this.pendingAdvert.on('close', resolve);
+						this.displayAdvert().catch(resolve);
 					});
 				}
 			}

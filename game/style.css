@@ -21,3 +21,7 @@ body.ready:not(.ended) .bottom-sub-info.show-during-gameplay-only {
 body.paused .hidden-on-paused {
 	display: none;
 }
+
+#advert-loading-screen {
+	z-index: 1;
+}
