@@ -1,3 +1,57 @@
+//system volume control
+var systemVolumeControl = (function(){
+	let interface = {};
+	
+	let vcReady = false;
+	let vc;
+	let vcPromise;
+	let vcFakeEventTarget = new FakeEventTarget();
+	
+	if(checkb2gns()) {
+		//3.0
+		vcPromise = Promise.resolve();
+	} else {
+		vcPromise = Promise.resolve(navigator.volumeManager);
+	}
+	
+	vcPromise.then((vcfp)=>{
+		vc = vcfp;
+		vcReady = true;
+		vcFakeEventTarget.broadcast();
+		vcFakeEventTarget = undefined;
+	});
+	
+	interface.checkAvailable = (function(){
+		if(checkb2gns()) {
+			//3.0
+			//TODO
+			return false;
+		} else {
+			//2.5
+			//it is available immediately
+			return true;
+		}
+	});
+	
+	interface.get = (function(){
+		let gp;
+		if(vcReady) {
+			gp = Promise.resolve(vc);
+		} else {
+			gp = new Promise((resolve)=>{
+				vcFakeEventTarget.addListener(()=>{
+					resolve(vc);
+				});
+			});
+		}
+		
+		return gp;
+	});
+	
+	return interface;
+})();
+
+//volume control menu
 var volumeControl = (function(){
     var thisPage;
 	var volmax = 20;
@@ -72,7 +126,11 @@ var volumeControl = (function(){
                 break;
 
             case 'SoftRight':
-                navigator.volumeManager.requestShow();
+                systemVolumeControl.get().then((vc)=>{
+					if(vc) {
+						vc.requestShow();
+					}
+				});
                 break;
 
             case 'SoftLeft':
@@ -100,7 +158,13 @@ var volumeControl = (function(){
 	
 	thisPage = addPage(
 		keyhandle,
-		(function(){return ['back','','system']})
+		(function(){
+			let nb = ['back','',''];
+			if(systemVolumeControl.checkAvailable()) {
+				nb[2] = 'system';
+			}
+			return nb;
+		})
 	);
 
     return {
