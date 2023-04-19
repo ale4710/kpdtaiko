@@ -8,7 +8,6 @@ function resizeFrame() {
 	f.height = window.innerHeight;
 }
 function preventBackKey(k) {
-	console.log(k);
 	if(k.key === 'Backspace') {
 		k.preventDefault();
 	}
