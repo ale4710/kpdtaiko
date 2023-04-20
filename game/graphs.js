@@ -122,7 +122,7 @@ var createMissMap = (function(){
 		if(lastPeak !== data.length) {
 			peaks.push({
 				time: data.length - 1,
-				height: data.length - 1 - lastPeak
+				height: data.length - lastPeak
 			});
 		}
 		finalPeakHeight = undefined;
