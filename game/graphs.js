@@ -58,15 +58,19 @@ var createTimeGraph = (function(){
 		});
 		
 		//center the image
+		let graphWidth = ((barWidth + barSpacing) * binCount);
 		let img = ctx.getImageData(0,0,w,h);
 		ctx.clearRect(0,0,w,h);
 		ctx.putImageData(
 			img,
-			Math.floor((w - ((barWidth + barSpacing) * binCount)) / 2),
+			Math.floor((w - graphWidth) / 2),
 			0
 		);
 		
-		return cv.toDataURL();
+		return {
+			image: cv.toDataURL(),
+			graphWidth: graphWidth
+		};
 	}
 })();
 

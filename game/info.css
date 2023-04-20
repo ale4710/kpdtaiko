@@ -142,14 +142,19 @@ body.ended.show-stats #game-stats {
 	display: inline-block;
 	position: relative;
 }
-#game-stats-histogram-container > .target {
+#game-stats-histogram-target-container .target {
+	--left: 50%;
+	--line-color: #0f0;
+	
 	width: 1px;
 	height: 100%;
-	background-color: #f00;
+	background-color: var(--line-color);
 	position: absolute;
-	left: calc(50% - 0.5px);
+	left: calc(var(--left) - 0.5px);
 	top: 0;
 }
+#game-stats-histogram-target-container .target.good {--line-color: #ff0;}
+#game-stats-histogram-target-container .target.okay {--line-color: #f00;}
 #game-stats-histogram-labels {
 	text-align: left;
 	font-size: 12px;

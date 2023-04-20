@@ -11,7 +11,34 @@ function outputGameplayInfoFinalExtra() {
 		
 		// -- histogram --
 		//img
-		eid('game-stats-histogram').src = createTimeGraph(2);
+		let timeGraph = createTimeGraph(2);
+		eid('game-stats-histogram').src = timeGraph.image;
+		//lines
+		{
+			let targetCont = eid('game-stats-histogram-target-container');
+			let targets = targetCont.children;
+			while(targets.length !== 0) {targets.remove()}
+			targets = undefined;
+			//template
+			let target = document.createElement('div');
+			target.classList.add('target');
+			//	perfect target
+			targetCont.appendChild(target); //append directly here on purpose
+			//	the rest of the judgements
+			[
+				'good',
+				'okay'
+			].forEach((judgement)=>{
+				for(m = -1; m < 2; m += 2) {
+					let pos = 50 + ((hitWindow[judgement] / hitWindow.miss) * 50 * m);
+					let tt = target.cloneNode();
+					tt.classList.add(judgement);
+					tt.style.setProperty('--left', pos + '%');
+					targetCont.appendChild(tt);
+				}
+			});
+		}
+		timeGraph = undefined; //dont need anymore
 		//timedata
 		var td = analyzeTimeData();
 		//  misc data
