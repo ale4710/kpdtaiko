@@ -28,25 +28,25 @@ the default controls are as follows:
 ## setup
 place songs in your default media location. the location is
 
-	.kpdtaiko/songs/
+	other/.kpdtaiko/songs/
 
 supported formats are `osu` and `tja`.
 
 each song should be in its own folder. e.g.
 
 	# one song
-	.kpdtaiko/songs/mani_mani/chart.tja
-	.kpdtaiko/songs/mani_mani/audio.ogg
+	other/.kpdtaiko/songs/mani_mani/chart.tja
+	other/.kpdtaiko/songs/mani_mani/audio.ogg
 	
 	# another song
-	.kpdtaiko/songs/bitter_escape/chart.osu
-	.kpdtaiko/songs/bitter_escape/audio.ogg
+	other/.kpdtaiko/songs/bitter_escape/chart.osu
+	other/.kpdtaiko/songs/bitter_escape/audio.ogg
 
 ## custom hit sounds
 place sounds in
 
-	.kpdtaiko/custom/don.ogg
-	.kpdtaiko/custom/kat.ogg
+	other/.kpdtaiko/custom/don.ogg
+	other/.kpdtaiko/custom/kat.ogg
 
 due to reasons it needs to be ogg.
 
@@ -70,7 +70,7 @@ in that folder should be a file called `songlist.json`, and the songs you wish t
 
 for example, consider the following directory structure.
 
-	songs/
+	debugsongs/
 		manimani/
 			chart.tja
 			audio.ogg
