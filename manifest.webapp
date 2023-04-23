@@ -3,7 +3,7 @@
     "name": "kpdtaiko",
     "display": "kpdtaiko",
     "short_name": "kpdtaiko",
-    "subtitle":"A rhythm game for KaiOS.",
+    "subtitle":"A rhythm game.",
     "description":"kpdtaiko is a rhythm game. It supports .osu and .tja files.",
     "default_locale": "en-US",
     "launch_path":"/main-app/index.html",
@@ -21,7 +21,7 @@
     "locales": {
         "en-US": {
             "name": "kpdtaiko",
-            "subtitle":"A rhythm game for KaiOS.",
+            "subtitle":"A rhythm game.",
             "description":"kpdtaiko is a rhythm game. It supports .osu and .tja files."
         }
     },

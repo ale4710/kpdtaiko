@@ -36,7 +36,7 @@
 		"locales": {
 			"en-US": {
 				"name": "kpdtaiko",
-				"subtitle":"A rhythm game for KaiOS.",
+				"subtitle":"A rhythm game.",
 				"description":"kpdtaiko is a rhythm game. It supports .osu and .tja files."
 			}
 		}
