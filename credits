@@ -38,13 +38,30 @@ MIT Licence
 
 [sounds]
 
-hitsound-0
-"Low Floor Tom level 2.wav" by kiddinla from Freesound.org (CC 0)
-"124-Taiko-Rim.wav" by klemmy from Freesound.org (CC BY 3.0)
+/game/sounds/hitsound-0/don.ogg
+/game/sounds/hitsound-0/kat.ogg
+	"Low Floor Tom level 2.wav" by kiddinla from Freesound.org (CC 0)
+	"124-Taiko-Rim.wav" by klemmy from Freesound.org (CC BY 3.0)
 
-hitsound-1
-"Wood Block" by Sassaby from Freesound.org (CC 0)
+/game/sounds/hitsound-1/don.ogg
+/game/sounds/hitsound-1/kat.ogg
+	"Wood Block" by Sassaby from Freesound.org (CC 0)
 
-hitsound-2
-"Snare Drum, Single Hit, A (H1).wav" by InspectorJ from Freesound.org (CC BY 4.0)
-"Rimshot (sweet)" by Sajmund from Freesound.org (CC 0)
+/game/sounds/hitsound-2/don.ogg
+/game/sounds/hitsound-2/kat.ogg
+	"Snare Drum, Single Hit, A (H1).wav" by InspectorJ from Freesound.org (CC BY 4.0)
+	"Rimshot (sweet)" by Sajmund from Freesound.org (CC 0)
+
+/songselect/sound/ding.ogg
+	"Ding Effect.wav" by JulesV4 from Freesound.org (CC 0)
+
+/songselect/sound/decide.ogg
+	"decide.mp3" by fumiya112 from Freesound.org (CC 0)
+
+/game/sounds/metronome.ogg
+/songselect/sound/roulette.ogg
+	made using Audacity
+
+/game/sounds/blank.mp3
+	it's from (https://github.com/anars/blank-audio)
+	but i mean it's just blank audio, idk...
