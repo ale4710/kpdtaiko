@@ -1,7 +1,7 @@
 {
     "name": "kpdtaiko",
 	"id": "kpdtaiko",
-    "description":"kpdtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files.",
+    "description":"kpdtaiko is a rhythm game. It supports .osu and .tja files.",
     "lang": "en-US",
 	"orientation": "portrait",
 	"display": "fullscreen",
@@ -37,7 +37,7 @@
 			"en-US": {
 				"name": "kpdtaiko",
 				"subtitle":"A rhythm game for KaiOS.",
-				"description":"kpdtaiko is a simulator of the rhythm game Taiko no Tatsujin. It supports .osu and .tja files."
+				"description":"kpdtaiko is a rhythm game. It supports .osu and .tja files."
 			}
 		}
 	}
