@@ -346,6 +346,14 @@ var settingsList = {
 		}),
 		type: 4
 	},
+	
+	'about-screen': {
+		label: 'About kpdtaiko...',
+		action: (function(){
+			window.open('/about/about.html');
+		}),
+		type: 4
+	},
 
     'category-default': {
         action: 'default',
@@ -423,7 +431,8 @@ var settingsListCategories = {
 			'category-song-select',
 			'category-visual',
 			'category-sounds',
-			'category-advanced'
+			'category-advanced',
+			'about-screen'
         ]
     },
 	
