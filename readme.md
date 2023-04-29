@@ -7,8 +7,9 @@ this project was previously known as DOMtaiko. it was called DOMtaiko because, o
 
 the name was changed to avoid confusion with another project, and to provide a name that more accurately reflects the project.
 
-[demo on device](https://youtu.be/BOYv75n20d8) - shows the application running on an actual device.  
-[demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen.
+[demo on device](https://www.youtube.com/watch?v=OB_leU3yVsg) - shows the application running on an actual device.  
+[old demo on device](https://youtu.be/BOYv75n20d8) - same as the above, but it is an older version of the application.  
+[old demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen, but it is an older version of the application.
 
 ## links
 [project website](https://alego.web.fc2.com/kaiosapps/kpdtaiko/)  
