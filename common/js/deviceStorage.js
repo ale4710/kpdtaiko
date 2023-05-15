@@ -1,12 +1,21 @@
-var gameDirectory = 'others/.kpdtaiko',
-gameSubDirectories = {
+var gameDirectory = 'others/.kpdtaiko';
+var gameSubDirectories = {
     songs: 'songs',
 	import: 'import',
     userMedia: 'custom'
-},
-deviceStorage = (getb2g().getDeviceStorage && getb2g().getDeviceStorage('sdcard')) || null,
+};
+var deviceStorage;
 
-notifyOnError = true;
+var notifyOnError = true;
+
+function initializeDeviceStorage() {
+	deviceStorage = (getb2g().getDeviceStorage && getb2g().getDeviceStorage('sdcard')) || null;
+	initializeDeviceStorage = undefined;
+}
+
+if(localStorage.getItem('runCount')) {
+	initializeDeviceStorage();
+}
 
 function formFullgameDirectory(){
 	if(testing) {return '?'}

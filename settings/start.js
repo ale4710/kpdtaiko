@@ -19,7 +19,40 @@ waitDocumentLoaded().then(function(){
 			sessionStorage.setItem('apprunning',true);
 			initSettings(0,true);
 			
-			(new Promise((proceed)=>{
+			let firstRunMessagePromise;
+			
+			let runCount = parseInt(localStorage.getItem('runCount') || 0);
+			localStorage.setItem('runCount', ++runCount);
+			
+			if(runCount <= 1) {
+				//message for first run
+				firstRunMessagePromise = new Promise((proceed)=>{
+					let continueAction = messageBox.makeOpt(
+						proceed,
+						'ok',
+						false
+					);
+					messageBox.create(
+						'Storage Permission',
+						'This game requires access to your device storage. Please accept all of the following storage access requests.',
+						{
+							back: continueAction,
+							center: continueAction
+						}
+					);
+					updatenavbar();
+					disableControls = false;
+				})
+				.then(()=>{
+					initializeDeviceStorage();
+					disableControls = true;
+					return true;
+				});
+			} else {
+				firstRunMessagePromise = Promise.resolve();
+			}
+			
+			firstRunMessagePromise.then(()=>new Promise((proceed)=>{
 				//create game folders
 				if(!deviceStorage) {
 					proceed();
@@ -37,7 +70,7 @@ waitDocumentLoaded().then(function(){
 							proceed();
 						}
 					})();
-			}
+				}
 			})).then(()=>{
 				let rescan = (localStorage.getItem('do-not-rescan') !== '1');
 				setTimeout(()=>{
