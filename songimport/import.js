@@ -1,17 +1,61 @@
 var imported = false;
+var errorLog = [];
+var errorLogMessages = {
+	'zipReadError': 'Failed to read archive.',
+	'SecurityError': 'Write permission denied.',
+	'NoModificationAllowedError': 'The existing file cannot be modified.',
+	'NotSupportedError': 'Unsupported operation.'
+};
 var summaryPageN = addPage(
 	(function(k){
 		switch(k.key) {
 			case 'Backspace':
 			case 'Enter':
+			{
+				errorLog.length = 0;
 				toInitPage();
-				break;
-			default:
+			} break;
+			case 'SoftRight': {
+				if(errorLog.length !== 0) {
+					let dummyElement = document.createElement('div');
+					errorLog.forEach((error)=>{
+						let entry = document.createElement('div');
+						entry.style.padding = '5px 0';
+						entry.textContent = error.filename;
+						
+						let reason = document.createElement('div');
+						reason.style.paddingLeft = '5px';
+						reason.textContent = (
+							(error.error in errorLogMessages)? 
+								errorLogMessages[error.error] :
+								`Unknown error. (${error.error})`
+						);
+						entry.appendChild(reason);
+						
+						dummyElement.appendChild(entry);
+					});
+					
+					let a = messageBox.makeOpt(messageBox.defaultCb, 'ok');
+					messageBox.create(
+						'Error Log',
+						dummyElement.innerHTML,
+						{
+							center: a,
+							back: a
+						}
+					);
+				}
+			} break;
+			default: {
 				eid('import-summary-list').focus();
-				break;
+			} break;
 		}
 	}),
-	(function(){return ['','continue']})
+	(function(){return [
+		'',
+		'continue',
+		(errorLog.length === 0? '' : 'errors')
+	]})
 );
 
 function toInitPage(){
@@ -27,8 +71,24 @@ function beginImport() {
 	
 	let filesImported = [];
 	
+	errorLog.length = 0;
+	
 	function updateProgress(msg) {
 		eid('progress-display').textContent = msg;
+	};
+	
+	function writeError(err, filename) {
+		let elEntry = {
+			filename: filename,
+			error: null
+		};
+		if(
+			'error' in err &&
+			err.error instanceof DOMError
+		) {
+			elEntry.error = err.error.name;
+		}
+		return elEntry;
 	};
 	
 	updateProgress('collecting files');
@@ -140,6 +200,7 @@ function beginImport() {
 													.catch((err)=>{
 														errorOccurred = true;
 														console.error(err);
+														errorLog.push(writeError(err));
 													})
 												} else {
 													writePromise = Promise.resolve();
@@ -174,6 +235,8 @@ function beginImport() {
 												.catch((err)=>{
 													errorOccurred = true;
 													console.error(err);
+													errorLog.push(writeError(err));
+													
 												})
 											} else {
 												rfileCheckWrite = Promise.resolve();
@@ -195,7 +258,10 @@ function beginImport() {
 						})
 						.catch((err)=>{
 							console.error(err);
-							failedFiles.push(file.name);
+							errorLog.push({
+								error: 'zipReadError',
+								filename: file.name
+							});
 						})
 						.finally(processQueue);
 					} else {
@@ -246,6 +312,7 @@ function beginImport() {
 		eid('progress-display-container').classList.add('hidden');
 		eid('import-summary').classList.remove('hidden');
 		
+		//printing file summary
 		filesImported.sort(); //default alphabet sorting
 		eid('import-summary-count').textContent = filesImported.length;
 		if(filesImported.length === 0) {
@@ -263,6 +330,10 @@ function beginImport() {
 		}
 		filesImported = undefined;
 		
+		//error notification
+		eid('import-summary-error-occurred').classList.toggle('hidden', errorLog.length === 0);
+		
+		//misc
 		disableControls = false;
 		curpage = summaryPageN;
 		updatenavbar();
