@@ -20,7 +20,10 @@ function endedReset() {
 }
 function end(messageOverride) {
 	//damned adverts
-	if(!endedAdvert) {
+	if(
+		advertManager.ready &&
+		!endedAdvert
+	) {
 		endedAdvert = new advertManager.FullscreenAdvertManager('ended-interstitial');
 		endedAdvert.requestEvery = 5;
 		endedAdvert.timeout = 7500;
