@@ -4,6 +4,9 @@ body {
 	background: var(--background-color);
 	color: var(--text-color);
 	font-family: 'open sans','noto sans',sans-serif;
+	
+	--height: 100vh;
+	--width: 100vw;
 }
 
 iframe {

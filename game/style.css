@@ -25,3 +25,9 @@ body.paused .hidden-on-paused {
 #advert-loading-screen {
 	z-index: 1;
 }
+
+#loading-display-corner {
+	bottom: 5px;
+	right: 5px;
+	position: absolute;
+}

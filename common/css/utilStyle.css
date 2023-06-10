@@ -33,3 +33,9 @@
 	-1px 0 var(--text-outline-color),
 	0 -1px var(--text-outline-color);
 }
+
+.hidden {display: none;}
+.dim {background: var(--background-color-o75)}
+.dimmer {background: var(--background-color-o50)}
+.solid-background {background: var(--background-color);}
+:focus {outline: none;}

@@ -8,17 +8,17 @@
 	
     //scripts
     [
-        //'exampledata',
+        '/common/js/introSliderAndDifficultySummary',
 
         'songListMananger',
         'modsDisplay',
 		'groupSortManager',
-        'misc',
         'speedControl',
         'options',
         'intro',
 		'media',
 		'updateSongInfoDisplay',
+		'misc',
 		'titleScreen',
 		'listSong',
 		'listDifficulty',

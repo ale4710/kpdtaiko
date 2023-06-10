@@ -12,6 +12,15 @@ function postError(msg) {
 	);
 }
 
+function updateCornerLoadingDisplay(t) {
+	if(t === false) {
+		eid('loading-display-corner').remove();
+		updateCornerLoadingDisplay = undefined;
+	} else {
+		eid('loading-display-corner').textContent = t;
+	}
+}
+
 function firstLoad(loaderFn) {
 	firstLoad = null;
 	
@@ -28,6 +37,7 @@ function firstLoad(loaderFn) {
 		loadTopCharacter()
 	];
 	
+	updateCornerLoadingDisplay('Loading chart...');
 	loaderFn(`${chartFolder}/${chartFileName}`).then((blob)=>{
         fileReaderA(blob,'arraybuffer').then((arrayBuf)=>{
             let gameText = fixTextEncoding(arrayBuf);
@@ -111,6 +121,7 @@ function firstLoad(loaderFn) {
 				}));
 			}
 			
+			updateCornerLoadingDisplay('Loading resources...');
 			Promise.allSettled(promises).then(start);
         }).catch(()=>{
 			postError('There was a problem when trying to read the file.');
@@ -132,9 +143,7 @@ function firstLoad(loaderFn) {
 	}
 	
 	//load it
-	addGlobalReferenceGroup(0, scriptsToLoad).then(()=>{
-		eid('loading-display-in').textContent = 'Loading...';
-	});
+	addGlobalReferenceGroup(0, scriptsToLoad);
 })();
 
 waitDocumentLoaded().then(function(){

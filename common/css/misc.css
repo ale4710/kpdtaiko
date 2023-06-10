@@ -10,3 +10,62 @@
 .mods-view.small > * {padding: 0 2px;}
 .mods-view.medium > * {padding: 0 1px;}
 .mods-view-label {padding-left: 2px;}
+
+/* song difficulty */
+:root {
+	--difficulty-color-0: #6ffcfc;
+	--difficulty-color-1: #b5fc6f;
+	--difficulty-color-2: #fcfc6f;
+	--difficulty-color-3: #fc6ffc;
+	--difficulty-color-4: #9402fc;
+	--difficulty-color-5: #fff;
+	--diff-color: #fff;
+}
+.difficulty-lv0 {--diff-color: var(--difficulty-color-0)}
+.difficulty-lv1 {--diff-color: var(--difficulty-color-1)}
+.difficulty-lv2 {--diff-color: var(--difficulty-color-2)}
+.difficulty-lv3 {--diff-color: var(--difficulty-color-3)}
+.difficulty-lv4 {--diff-color: var(--difficulty-color-4)}
+.difficulty-lv5 {--diff-color: var(--difficulty-color-5)}
+
+/* song difficulty summary */
+.difficulty-summary-container {
+	--inner-size: 16px;
+	--border-width: 2px; /* additional to --size */
+	--whole-size: calc(var(--inner-size) + (var(--border-width) * 2));
+	height: var(--whole-size);
+	margin-top: 2px;
+}
+.difficulty-summary-entry {
+	height: var(--inner-size);
+	width: var(--inner-size);
+	border-radius: calc(var(--whole-size) / 2);
+	border-color: var(--diff-color);
+	border-width: var(--border-width);
+	border-style: solid;
+	font-size: calc(var(--inner-size) * 0.75);
+	text-align: center;
+	margin-right: 2px;
+	display: inline-block;
+}
+
+/* intro slider (base) */
+.song-intro-slider {
+	top: calc(var(--height) * var(--playfield-top));
+    height: calc(var(--height) * var(--playfield-height));
+	left: 0;
+    width: 100%;
+    position: absolute;
+    background: var(--playfield-cover-color);
+	text-align: center;
+    overflow: hidden;
+}
+.song-intro-slider > .intro-slider-text {width: 100%;}
+.song-intro-slider > .intro-slider-text > div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.song-intro-slider > .intro-slider-text > div.song-intro-slider-subtitle {
+	font-size: 12px;
+}

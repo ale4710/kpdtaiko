@@ -354,7 +354,7 @@ function selectSong() {
 			diffLvlIndicator = document.createElement('div');
 			diffEl.classList.add(
 				'difficulty', 
-				makeDifficultyClassName(diff.difficultySort)
+				difficultySummary.makeDifficultyClassName(diff.difficultySort)
 			);
 
 			diffLvlIndicator.classList.add('difficulty-indicator');

@@ -1,3 +1,7 @@
+var introSlider = new IntroSlider(eid('screen'));
+introSlider.element.id = 'intro-slider';
+introSlider.toggleShow(true);
+
 var playIntro = (function(){
 	var fhandler = new PreviousFocusHandler();
 	var introTO;
@@ -45,11 +49,8 @@ var playIntro = (function(){
 		
 		introTO = setTimeout(function(){
 			introCancelable = false;
-			let introSlider = eid('intro-slider');
-			introSlider.classList.add('intro-out');
-			introSlider.addEventListener('transitionend', function(){
-				location = url;
-			});
+			window.parent.globalIntroSlider.toggleShow(true);
+			location = url;
 		}, 1500);
 	}
 })();

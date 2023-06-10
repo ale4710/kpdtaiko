@@ -23,6 +23,9 @@ function start() {
 	]).then((results)=>{
 		console.log(results);
 		
+		window.parent.globalIntroSlider.toggleShow(false);
+		updateCornerLoadingDisplay(false);
+		
 		if(
 			(audioCtx.state === 'running') &&
 			(results[1].status === 'fulfilled')

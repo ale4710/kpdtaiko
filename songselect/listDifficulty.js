@@ -25,17 +25,26 @@ function selectDifficulty() {
 	}
 	
 	//data for intro sequence
-	if(getSettingValue('show-difficulty-on-intro') === 1) {
-		eid('intro-slider-difficulty').innerHTML = '';
-		eid('intro-slider-difficulty').appendChild(createDifficultyHTMLElement(
-			parseFloat(actEl().dataset.difficultyLevel),
-			parseInt(actEl().dataset.difficultySort)
-		));
-	} else {
-		eid('intro-slider-difficulty-container').classList.add('hidden');
+	{
+		let showDifficulty = (getSettingValue('show-difficulty-on-intro') === 1);
+		let title = songToPlay.title;
+		let subtitle = (songToPlay.artist || songToPlay.subtitle || null);
+		let dlevel = parseFloat(actEl().dataset.difficultyLevel);
+		let dsort = parseInt(actEl().dataset.difficultySort);
+		
+		[
+			introSlider,
+			window.parent.globalIntroSlider
+		].forEach((is)=>{
+			is.toggleDifficultyShow(showDifficulty);
+			is.updateData(
+				title,
+				subtitle,
+				dlevel,
+				dsort
+			);
+		});
 	}
-	eid('intro-slider-title-text').textContent = songToPlay.title;
-	eid('intro-slider-artist').textContent = songToPlay.artist || songToPlay.subtitle || null;
 	
 	playIntro('/game/index.html#' + urlprms.toString());
 }

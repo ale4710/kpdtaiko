@@ -1,3 +1,7 @@
+//misc stuff
+var globalIntroSlider = new IntroSlider();
+
+//script
 var appStartUrl = '/settings/index.html#bootup';
 
 var f = document.createElement('iframe');

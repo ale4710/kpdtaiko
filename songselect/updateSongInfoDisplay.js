@@ -4,6 +4,8 @@ var audioLoadingTimeout;
 
 var audioStartAtPreviewPoint = (getSettingValue('audio-start-at-preview-point') === 1);
 
+var songInfoDisplayDifficultySummary = new difficultySummary.DifficultySummary(eid('song-info-difficulty-summary-container'));
+
 function updateSongInfoDisplay() {
 	console.log('updateSongInfoDisplay');
 	
@@ -37,18 +39,13 @@ function updateSongInfoDisplay() {
 	lastc.classList.add('last');
 	
 	//difficulty summary
-	let diffSummaryContainer = eid('song-info-difficulty-summary');
-	while(diffSummaryContainer.children.length !== 0) {
-		diffSummaryContainer.children[0].remove();
-	}
+	songInfoDisplayDifficultySummary.clearDifficulties();
 	let localDifficultySummary = [].concat(curSong.difficultySummary);
 	localDifficultySummary.sort((a,b)=>{return a.sort - b.sort});
 	localDifficultySummary.forEach((dentry)=>{
-		diffSummaryContainer.appendChild(
-			createDifficultyHTMLElement(
-				dentry.difficulty,
-				dentry.sort
-			)
+		songInfoDisplayDifficultySummary.addDifficulty(
+			dentry.difficulty,
+			dentry.sort
 		);
 	});
 	
