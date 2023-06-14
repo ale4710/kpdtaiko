@@ -18,9 +18,6 @@ body.loading iframe {
 }
 
 #loading-display {
-	bottom: 5px;
-	right: 5px;
-	position: absolute;
 	display: none;
 }
 body.loading #loading-display {

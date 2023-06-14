@@ -69,3 +69,10 @@
 .song-intro-slider > .intro-slider-text > div.song-intro-slider-subtitle {
 	font-size: 12px;
 }
+
+/* misc misc */
+.bottom-right-of-screen-text {
+	bottom: 5px;
+	right: 5px;
+	position: absolute;
+}

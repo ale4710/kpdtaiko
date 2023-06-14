@@ -10,7 +10,7 @@ var advertManager = (function(){
 		delete interface.initialize;
 		
 		//to disable uncomment below
-		//return Promise.resolve();
+		return Promise.resolve();
 		
 		return addGlobalReference(0, '/common/lib/kaiads.v5.min')
 		.then(function(){
