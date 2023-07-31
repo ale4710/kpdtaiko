@@ -19,6 +19,7 @@
 		'topCharacter',
         'draw',
         'drawNoteTools',
+		'drawHitEffect',
         'drawSelect',
         'infoAndScore',
         'autoplay',

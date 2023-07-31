@@ -22,7 +22,7 @@
 #playfield #notes-display {
     left: 0;
     width: 100%;
-	z-index: -1;
+	/* z-index: -1; */
     /* width: calc((1 - var(--drum-display-width)) * var(--width)); */
 }
 #playfield #notes-display .note {
@@ -92,6 +92,17 @@
 }
 #playfield #notes-display .note.missed {background: #666}
 #playfield #notes-display .note.balloon {background: none}
+
+ #playfield > #notes-display > #notes-display-target-effects-container {
+	width: calc(var(--playfield-height) * var(--height));
+	height: 100%;
+	top: 0;
+	left: 0;
+ }
+ #playfield > #notes-display > #notes-display-target-effects-container > canvas {
+	 left: 0;
+	 bottom: 0;
+ }
 
 #playfield #notes-display > .info-hitarea {
 	width: calc(var(--playfield-height) * var(--height));

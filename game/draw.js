@@ -230,6 +230,7 @@ function draw() {
         if(preDrawFn){preDrawFn()}
         barlineManager.draw();
         drawFn(gf);
+		drawNoteHitEffect();
     }
 }
 

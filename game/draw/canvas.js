@@ -1,6 +1,6 @@
 (function() {
     //initialize
-    var canvas = document.createElement('canvas'),
+    var canvas = document.createElement('canvas');
     ctx = canvas.getContext('2d');
 
     canvas.width = notesDisplay.clientWidth;
@@ -30,7 +30,11 @@
         //prerendering notes!!!!
 
         //utility fns
-        function drawNote(/* ctxtu,  */type, size, x, y, oxd, half) {
+        function drawNote(type, size, x, y, oxd, half, ctxtu = ctx) {
+			//oxd: boolean: for the x axis, do NOT draw at the center of the circle? in other words, use the "origin x directly?"
+			//half: number: 0: do not // 1: left half // 2: right half
+			//ctxtu: Canvas Context: context to use
+			
             var idtu = notes[size][type];
 
             if(idtu) {
@@ -50,7 +54,7 @@
                 //drw = Math.floor(drw);
 				drw = (drw | 0);
             
-                ctx.drawImage(
+                ctxtu.drawImage(
                     idtu,
 
                     //source dims
@@ -156,6 +160,43 @@
         drawFnReset = function(){
             ctx.clearRect(0,0,canvas.width,canvas.height);
         }
+		
+		//effects
+		{
+			let efCanvas = document.createElement('canvas');
+			efCanvas.width = canvas.height; //yes
+			let yOffset = Math.floor(canvas.height * 1); //the (* 1) is a height multiplier
+			efCanvas.height = canvas.height + yOffset;
+			eid('notes-display-target-effects-container').appendChild(efCanvas);
+			
+			let efCtx = efCanvas.getContext('2d');
+			
+			drawNoteHitEffectReset = function(){efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);};
+			drawNoteHitEffect = function(){
+				noteHitEffectManager.update();
+				drawNoteHitEffectReset();
+				if(noteHitEffectManager.activeNotesOrder.length !== 0) {
+					let now = curTime();
+					noteHitEffectManager.activeNotesOrder.forEach((id)=>{
+						let activeNote = noteHitEffectManager.activeNotes[id];
+						let percent = (now - activeNote.time) / noteHitEffectManager.activeTime;
+						percent = Math.max(0, percent);
+						
+						let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
+						efCtx.globalAlpha = 1 - (percent * 0.7);
+						drawNote(
+							activeNote.type,
+							activeNote.size,
+							(efCanvas.width * (0.5 - (percent * 0.75))) | 0,
+							((yOffset * jumpMultiply) + drawOffset[activeNote.size]) | 0,
+							false,
+							undefined,
+							efCtx
+						);
+					});
+				}
+			};
+		}
 
 
         var drawNoteObjectsCache = [];

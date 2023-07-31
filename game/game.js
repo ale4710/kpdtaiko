@@ -246,11 +246,15 @@ function miss(disappear) {
     postJudge(judgeStyles.miss);
     infoAddHit('miss');
 	
-	window.dispatchEvent(new CustomEvent('gamemissed', {
-		detail: {
-			combo: combo
-		}
-	}));
+	{
+		let lo = gameFile.objects[latestObject];
+		window.dispatchEvent(new CustomEvent('gamehit', {detail: {
+			combo: combo,
+			judgement: 0,
+			type: lo.type,
+			big: lo.big
+		}}));
+	}
 }
 
 //balloon stuff
@@ -311,7 +315,18 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                                 disappearAndNext();
                                 outputJudgeOffset(delay);
                                 postJudge(judgeStyles[hitWindowKey[hit]]);
+								if(cur.type <= 2) {
+									noteHitEffectManager.add(
+										['don', 'kat'][cur.type],
+										cur.big && 'big' || 'normal'
+									);
+								}
                                 infoAddHit(hitWindowKey[hit]);
+								window.dispatchEvent(new CustomEvent('gamehit', {detail: {
+									judgement: hit,
+									type: cur.type,
+									big: cur.big
+								}}));
                             }
                         } else {
                             outputJudgeOffset('Color', null);
