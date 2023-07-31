@@ -10,16 +10,18 @@ var drawNoteParameters = {
 	borderSize: 0.125 //wrt noteSize
 };
 
+var drawNoteConstants = {
+	noteTypes: [
+		'don',
+		'kat',
+		'drumroll',
+		'balloon'
+	],
+	noteSizes: ['normal','big']
+};
+
 function createNoteTools(canvas, noteImgFormat){
     return (new Promise((resolve, reject)=>{
-        var noteTypes = [
-            'don',
-            'kat',
-            'drumroll',
-            'balloon'
-        ];
-        var noteSizes = ['normal','big'];
-    
         var targetPos = canvas.height / 2;
     
         var noteDims = {
@@ -59,10 +61,10 @@ function createNoteTools(canvas, noteImgFormat){
             function contPrerender(s,t) {
                 //console.log(s,t);
     
-                var sizekw = noteSizes[s],
+                var sizekw = drawNoteConstants.noteSizes[s],
                 tns = noteDims[sizekw],
                 tnbd = noteBorderDims[sizekw],
-                type = noteTypes[t];
+                type = drawNoteConstants.noteTypes[t];
 
                 if(!(sizekw in notes)) {
                     notes[sizekw] = {}
@@ -126,9 +128,9 @@ function createNoteTools(canvas, noteImgFormat){
                     notes[sizekw][type] = img;
     
                     proceedPath: {
-                        if(++t === noteTypes.length) {
+                        if(++t === drawNoteConstants.noteTypes.length) {
                             t = 0;
-                            if(++s === noteSizes.length) {
+                            if(++s === drawNoteConstants.noteSizes.length) {
                                 //this is the only async thingy, so we will put it here.
                                 finish();
                                 break proceedPath;
@@ -165,8 +167,8 @@ function createNoteTools(canvas, noteImgFormat){
         function finish() {
             delete this.finish;
             resolve({
-                typeKeywords: noteTypes,
-                sizeKeywords: noteSizes,
+                typeKeywords: drawNoteConstants.noteTypes,
+                sizeKeywords: drawNoteConstants.noteSizes,
                 colors: drawNoteParameters.colors,
                 dimentions: noteDims,
                 innerDimentions: noteBorderDims,
