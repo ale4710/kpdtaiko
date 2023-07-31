@@ -34,6 +34,7 @@ function waitDrawReady() {
 
 function drawReset() {
     if(drawFnReset) {drawFnReset()}
+	noteHitEffect.reset();
     if(barlineManager){barlineManager.reset();}
 
     latestObjectDrawn = 0;
@@ -230,7 +231,7 @@ function draw() {
         if(preDrawFn){preDrawFn()}
         barlineManager.draw();
         drawFn(gf);
-		drawNoteHitEffect();
+		noteHitEffect.draw();
     }
 }
 

@@ -288,7 +288,7 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
         ready
     ) {
 
-        playSound(['don','kat'][action]);
+        playSound(drawNoteConstants.noteTypes[action]);
 
         var cur = gameFile.objects[latestObject];
         if(cur) {
@@ -317,12 +317,6 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                                 disappearAndNext();
                                 outputJudgeOffset(delay);
                                 postJudge(judgeStyles[hitWindowKey[hit]]);
-								if(cur.type <= 2) {
-									noteHitEffectManager.add(
-										['don', 'kat'][cur.type],
-										cur.big && 'big' || 'normal'
-									);
-								}
                                 infoAddHit(hitWindowKey[hit]);
 								window.dispatchEvent(new CustomEvent('gamehit', {detail: {
 									judgement: hit,
@@ -349,6 +343,7 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                             text: drumrollHit,
                             className: 'number'
                         }, true);
+						window.dispatchEvent(new CustomEvent('gamedrumrollhit'));
                     }
                     break;
                 case 3: //balloon
@@ -362,11 +357,13 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                             postJudge(judgeStyles.pop);
 							infoAddBalloon();
                             if(balloonPopSound){playSound('pop');}
+							window.dispatchEvent(new CustomEvent('gameballoonpop'));
                         } else {
                             postJudge({
                                 text: cur.limit - balloonHit,
                                 className: 'number'
                             }, true);
+							window.dispatchEvent(new CustomEvent('gameballoonhit'));
                         }
                     }
                     break;

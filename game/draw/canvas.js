@@ -162,43 +162,78 @@
 			eid('notes-display-target-effects-container').appendChild(efCanvas);
 			let efCtx = efCanvas.getContext('2d');
 			
-			let jumpOffsets = {};
-			drawNoteHitEffectReset = function(){
-				efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);
-			};
-			drawNoteHitEffectRemoved = function(id){
-				delete jumpOffsets[id];
-			};
-			drawNoteHitEffect = function(){
-				noteHitEffectManager.update();
-				efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);
-				if(noteHitEffectManager.activeNotesOrder.length !== 0) {
-					let now = curTime();
-					noteHitEffectManager.activeNotesOrder.forEach((id)=>{
-						let activeNote = noteHitEffectManager.activeNotes[id];
-						let percent = (now - activeNote.time) / noteHitEffectManager.activeTime;
-						percent = Math.max(0, percent);
-						
-						let offset = drawOffset[activeNote.size];
-						
-						let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
-						{
-							let thisJumpOffset = jumpOffsets[id] || (Math.random() * 0.3);
-							jumpOffsets[id] = thisJumpOffset;
-							jumpMultiply = thisJumpOffset + (jumpMultiply * (1 - thisJumpOffset));
-						}
-						//efCtx.globalAlpha = 1 - (percent * 0.7);
-						drawNote(
-							activeNote.type,
-							activeNote.size,
-							(efCanvas.width * (0.5 - (percent * 0.9))) | 0,
-							((yOffset * jumpMultiply) + offset) | 0,
-							false,
-							undefined,
-							efCtx
-						);
-					});
+			let activeTime = 500;
+			
+			class HitEffect {
+				constructor(type, size) {
+					this.type = type;
+					this.size = size;
+					this.jumpOffset = Math.random() * 0.3;
+					this.moveOffset = Math.random() * 0.2;
+					this.startTime = curTime();
 				}
+				
+				getPercentage(currentTime) {
+					let percent = (currentTime - this.startTime) / activeTime;
+					return Math.max(0, percent);
+				}
+				
+				draw(currentTime) {
+					let percent = this.getPercentage(currentTime);
+					
+					let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
+					jumpMultiply = this.jumpOffset + (jumpMultiply * (1 - this.jumpOffset));
+					
+					let originOffset = drawOffset[this.size];
+					
+					let x = (efCanvas.width * (0.5 - (percent * (0.9 + this.moveOffset))));
+					let y = (yOffset * jumpMultiply) + originOffset;
+					
+					drawNote(
+						this.type,
+						this.size,
+						x | 0,
+						y | 0,
+						false,
+						undefined,
+						efCtx
+					);
+					return true;
+				}
+			}
+			
+			let activeEffects = [];
+			window.addEventListener('gamehit', (ev)=>{
+				activeEffects.push(new HitEffect(
+					drawNoteConstants.noteTypes[ev.detail.type],
+					drawNoteConstants.noteSizes[Number(ev.detail.big)]
+				));
+			});
+			window.addEventListener('gamedrumrollhit', ()=>{
+				activeEffects.push(new HitEffect(
+					'drumroll',
+					drawNoteConstants.noteSizes[Number(gameFile.objects[latestObject].big)]
+				));
+			});
+			noteHitEffect.draw = function(){
+				let now = curTime();
+				
+				while(activeEffects.length !== 0) {
+					if(activeEffects[0].getPercentage(now) > 1) {
+						console.log('remove eff');
+						activeEffects.shift();
+					} else {
+						break;
+					}
+				}
+				
+				efCtx.clearRect(0, 0, efCanvas.width, efCanvas.height);
+				activeEffects.forEach((ef)=>{
+					ef.draw(now);
+				});
+			};
+			noteHitEffect.reset = function(){
+				activeEffects.length = 0;
 			};
 		}
 
