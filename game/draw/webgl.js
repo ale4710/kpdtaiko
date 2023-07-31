@@ -176,10 +176,6 @@
     
 			//drawing
             var drawNoteObjectsCache = [];
-			
-			//hit effect
-			drawNoteHitEffectReset = emptyfn;
-			drawNoteHitEffect = emptyfn;
 
 			//everything else
             drawFnReset = function(){
