@@ -165,16 +165,21 @@
 		{
 			let efCanvas = document.createElement('canvas');
 			efCanvas.width = canvas.height; //yes
-			let yOffset = Math.floor(canvas.height * 1); //the (* 1) is a height multiplier
+			let yOffset = Math.floor(canvas.height * 1.2); //the (* 1) is a height multiplier
 			efCanvas.height = canvas.height + yOffset;
 			eid('notes-display-target-effects-container').appendChild(efCanvas);
-			
 			let efCtx = efCanvas.getContext('2d');
 			
-			drawNoteHitEffectReset = function(){efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);};
+			let jumpOffsets = {};
+			drawNoteHitEffectReset = function(){
+				efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);
+			};
+			drawNoteHitEffectRemoved = function(id){
+				delete jumpOffsets[id];
+			};
 			drawNoteHitEffect = function(){
 				noteHitEffectManager.update();
-				drawNoteHitEffectReset();
+				efCtx.clearRect(0,0,efCanvas.width,efCanvas.height);
 				if(noteHitEffectManager.activeNotesOrder.length !== 0) {
 					let now = curTime();
 					noteHitEffectManager.activeNotesOrder.forEach((id)=>{
@@ -182,13 +187,20 @@
 						let percent = (now - activeNote.time) / noteHitEffectManager.activeTime;
 						percent = Math.max(0, percent);
 						
+						let offset = drawOffset[activeNote.size];
+						
 						let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
-						efCtx.globalAlpha = 1 - (percent * 0.7);
+						{
+							let thisJumpOffset = jumpOffsets[id] || (Math.random() * 0.3);
+							jumpOffsets[id] = thisJumpOffset;
+							jumpMultiply = thisJumpOffset + (jumpMultiply * (1 - thisJumpOffset));
+						}
+						//efCtx.globalAlpha = 1 - (percent * 0.7);
 						drawNote(
 							activeNote.type,
 							activeNote.size,
-							(efCanvas.width * (0.5 - (percent * 0.75))) | 0,
-							((yOffset * jumpMultiply) + drawOffset[activeNote.size]) | 0,
+							(efCanvas.width * (0.5 - (percent * 0.9))) | 0,
+							((yOffset * jumpMultiply) + offset) | 0,
 							false,
 							undefined,
 							efCtx

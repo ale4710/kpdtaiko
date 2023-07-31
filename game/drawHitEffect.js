@@ -1,10 +1,11 @@
 var drawNoteHitEffect;
+var drawNoteHitEffectRemoved;
 var drawNoteHitEffectReset;
 
 var noteHitEffectManager = (function(){
 	let interface = {};
 	
-	interface.activeTime = 400;
+	interface.activeTime = 500;
 	
 	let activeNotes = {};
 	let activeNotesOrder = [];
@@ -25,6 +26,7 @@ var noteHitEffectManager = (function(){
 				//expired
 				activeNotesOrder.shift();
 				delete activeNotes[activeId];
+				(drawNoteHitEffectRemoved || emptyfn)(activeId);
 			} else {
 				//okay (everything past is not expired)
 				break;
