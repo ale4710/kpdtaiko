@@ -46,8 +46,12 @@ function outputGameplayInfoFinalExtra() {
 		eid('game-stats-early').textContent = td.early;
 		{
 			let avg = '--.--';
-			if(!isNaN(td.average)) {avg = td.average.toFixed(2);}
+			if(!isNaN(td.mean)) {avg = td.mean.toFixed(2);}
 			eid('game-stats-average').textContent = avg;
+			
+			let stddev = '--.--';
+			if(!isNaN(td.stddev)) {stddev = td.stddev.toFixed(2);}
+			eid('game-stats-stddev').textContent = stddev;
 		}
 		// -- combo map --
 		let missMapMinValue = 25;

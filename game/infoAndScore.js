@@ -107,24 +107,39 @@ function getAverageError() {
 }
 
 function analyzeTimeData() {
-	var late = 0, early = 0, allMs = 0;
-
-	hitDataMs.forEach((ms)=>{
-		//late/early
-		if(ms > 0) {
-			late++;
-		} else {
-			early++;
-		}
-		
-		//for average
-		allMs += ms;
-	});
+	let late = 0; 
+	let early = 0;
+	let mean;
+	{
+		let allMs = 0;
+		hitDataMs.forEach((ms)=>{
+			//late/early
+			if(ms > 0) {
+				late++;
+			} else {
+				early++;
+			}
+			
+			//for average
+			allMs += ms;
+		});
+		mean = (allMs / hitDataMs.length)
+	}
+	
+	let stddev;
+	{
+		let dms = 0;
+		hitDataMs.forEach((ms)=>{
+			dms += Math.pow(ms - mean, 2);
+		});
+		stddev = Math.sqrt(dms / hitDataMs.length);
+	}
 	
 	return {
 		late: late,
 		early: early,
-		average: (allMs / hitDataMs.length)
+		mean: mean,
+		stddev: stddev
 	};
 }
 
