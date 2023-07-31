@@ -2,6 +2,7 @@ var urlParams = (new URLSearchParams(location.hash.substr(1)));
 
 function postError(msg) {
 	showNavbar(true);
+	window.parent.globalIntroSlider.toggleShow(false);
 	messageBox.create(
 		'Error!',
 		msg,
@@ -91,12 +92,14 @@ function firstLoad(loaderFn) {
 						mediaPlayMode = 2
 						initAudioControl();
 						showNavbar(true);
+						window.parent.globalIntroSlider.toggleShow(false);
 						messageBox.create(
 							'Warning!',
 							'The audio could not be loaded. Would you like to continue?',
 							{
 								right: messageBox.makeOpt(()=>{
 									showNavbar(false);
+									window.parent.globalIntroSlider.toggleShow(true);
 									resolve();
 								}, 'yes'),
 								left: messageBox.makeOpt(exitToSongSelect, 'no'),
