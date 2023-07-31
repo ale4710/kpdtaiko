@@ -242,17 +242,19 @@ function miss(disappear) {
         notesMissed.push(latestObject);
     }
     
+	let missedObject = gameFile.objects[latestObject];
+	let comboOnMissed = combo;
+	
 	nextObject();
     postJudge(judgeStyles.miss);
     infoAddHit('miss');
 	
 	{
-		let lo = gameFile.objects[latestObject];
 		window.dispatchEvent(new CustomEvent('gamehit', {detail: {
-			combo: combo,
+			combo: comboOnMissed,
 			judgement: 0,
-			type: lo.type,
-			big: lo.big
+			type: missedObject.type,
+			big: missedObject.big
 		}}));
 	}
 }
