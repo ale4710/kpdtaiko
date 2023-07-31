@@ -3,11 +3,10 @@
     var canvas = document.createElement('canvas');
     ctx = canvas.getContext('2d');
 
-    canvas.width = notesDisplay.clientWidth;
-    canvas.height = notesDisplay.clientHeight;
+    canvas.width = notesDisplayCanvasContainer.clientWidth;
+    canvas.height = notesDisplayCanvasContainer.clientHeight;
 
-    notesDisplay.appendChild(canvas);
-    canvas.style.zIndex = 1;
+    notesDisplayCanvasContainer.appendChild(canvas);
 
     //numbers and keywords and stuff
     createNoteTools(canvas, 'imgbitmap').then((noteDimH)=>{
@@ -77,9 +76,9 @@
                 bcctx = barlineCanvas.getContext('2d'),
                 barlinesOnScreen = [];
 
-                barlineCanvas.width = notesDisplay.clientWidth;
-                barlineCanvas.height = notesDisplay.clientHeight;
-                notesDisplay.appendChild(barlineCanvas);
+                barlineCanvas.width = notesDisplayCanvasContainer.clientWidth;
+                barlineCanvas.height = notesDisplayCanvasContainer.clientHeight;
+                notesDisplayCanvasContainer.insertBefore(barlineCanvas, canvas);
 
                 //for easy erasing
                 bcctx.globalCompositeOperation = 'copy';

@@ -1,6 +1,7 @@
 var drawReady = false;
 
 var notesDisplay = eid('notes-display');
+var notesDisplayCanvasContainer = eid('notes-display-canvas-container');
 
 var latestObjectDrawn;
 var noDrawObjects;
