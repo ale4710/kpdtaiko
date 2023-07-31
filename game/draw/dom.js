@@ -163,7 +163,9 @@
             };
         })()
     );
-
+	
+	drawNoteHitEffectReset = emptyfn;
+	drawNoteHitEffect = emptyfn;
 
     drawFn = function(gf) {
         //barlines
