@@ -37,7 +37,10 @@ function end(messageOverride) {
     var message;
 	if(messageOverride) {
 		message = messageOverride;
-	} else if(isPerfectAccuracy()) {
+	} else if(
+		isPerfectAccuracy() &&
+		(statistics.balloonTotal === balloonsInChart) //if missed a balloon it is not perfect
+	) {
         message = 'Perfect!';
     } else if(isFullCombo()) {
         message = 'Full Combo!';
