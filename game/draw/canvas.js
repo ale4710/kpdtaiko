@@ -50,24 +50,20 @@
                         }
                     }
                 }
-
-                //drw = Math.floor(drw);
+				
 				drw = (drw | 0);
             
                 ctxtu.drawImage(
                     idtu,
 
                     //source dims
-                    //Math.floor(drx), 
 					(drx | 0), //floor
                     0,
                     drw,
                     idtu.height,
 
                     //dest dims
-                    Math.floor(x - ((drw / 2) * !oxd)),
-                    //Math.floor(y),
-					//((x - ((drw / 2) * !oxd)) | 0),
+                    (x - ((drw / 2) * !oxd)) | 0,
 					(y | 0),
                     drw,
                     idtu.height
@@ -117,10 +113,6 @@
                             barlineExistedBefore = true;
                         
                             let cb = barlinesOnScreen[i];
-                            /* let lp = Math.floor(lgnxp(
-                                cb.time,
-                                cb.lookAhead
-                            )); */
 							let lp = lgnxp(
                                 cb.time,
                                 cb.lookAhead
@@ -285,14 +277,12 @@
                         case 2: //drumroll
                             var now = curTime();
                             var sx = 0;
-                            var ex = Math.floor(lgnxp(curObj.time + curObj.length, curObj.lookAhead));
-							//var ex = ((lgnxp(curObj.time + curObj.length, curObj.lookAhead)) | 0); //floor (but it only works when positive)
+							var ex = ((lgnxp(curObj.time + curObj.length, curObj.lookAhead)) | 0); //floor
                             var tns = noteDims[cur.size];
                         
                             //draw the start?
                             if(!cur.startGone) {
-                                sx = Math.floor(lgnxp(curObj.time, curObj.lookAhead));
-								//sx = ((lgnxp(curObj.time, curObj.lookAhead)) | 0);
+								sx = ((lgnxp(curObj.time, curObj.lookAhead)) | 0); //floor
                             
                                 drawNote(
                                     cur.type,
