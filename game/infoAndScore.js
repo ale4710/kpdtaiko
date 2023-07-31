@@ -4,7 +4,8 @@ function outputInfo(title,artist,difficulty) {
     eid('info-difficulty').textContent = difficulty;
 }
 
-var balloonExists = false;
+var balloonsInChart = 0;
+var drumrollExists = false;
 
 var statistics;
 var hitData = [];
@@ -15,6 +16,7 @@ function infoReset() {
         normalNoteCount: 0,
         maxCombo: 0,
         drumrollTotal: 0,
+		balloonTotal: 0,
         hits: {
             good: 0,
             okay: 0,
@@ -49,6 +51,9 @@ function infoAddHit(hit) {
 function infoAddDrumroll() {
     statistics.drumrollTotal++;
 }
+function infoAddBalloon() {
+	statistics.balloonTotal++;
+}
 function getAccuracy() {
     return (getAccuracyRaw() * 100).toFixed(2) + '%';
 }
@@ -74,7 +79,11 @@ function outputGameplayInfoFinal() {
     eid('game-stats-good').textContent = statistics.hits.good;
     eid('game-stats-okay').textContent = statistics.hits.okay;
     eid('game-stats-miss').textContent = statistics.hits.miss;
-
+	{
+		let missedBalloons = balloonsInChart - statistics.balloonTotal;
+		eid('game-stats-miss-balloon').classList.toggle('hidden', missedBalloons === 0);
+		eid('game-stats-miss-balloon').textContent = missedBalloons;
+	}
     //accuracy
     eid('game-stats-accuracy').textContent = getAccuracy();
     if(isPerfectAccuracy()) {eid('game-stats-accuracy').classList.add('hilight')}
@@ -85,7 +94,7 @@ function outputGameplayInfoFinal() {
 
 	//drumroll
     eid('game-stats-drumroll').textContent = (
-		balloonExists? statistics.drumrollTotal : 'N/A'
+		drumrollExists? statistics.drumrollTotal : 'N/A'
 	);
 }
 

@@ -3,14 +3,12 @@ var gameLoopReferenceNumber;
 var latestObject = 0;
 
 function start() {
-	//return;
     gameFile.objects.forEach((v,i)=>{
 		//set id
 		v.id = i;
-		//also check for drumroll
-		if(v.type === 2) {
-			balloonExists = true;
-		}
+		//also check for drumroll and balloon
+		if(v.type === 2) {drumrollExists = true}
+		if(v.type === 3) {balloonsInChart++}
 	});
     gameFile.barlines.forEach((v,i)=>{v.id = i;});
     console.log('ready!', gameFile);
@@ -62,6 +60,8 @@ function start() {
 		gameAnim();
 		
 		curpage = gamePageN;
+		
+		start = undefined;
 	});
 }
 
@@ -358,6 +358,7 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                         if(balloonHit === cur.limit) {
                             disappearAndNext();
                             postJudge(judgeStyles.pop);
+							infoAddBalloon();
                             if(balloonPopSound){playSound('pop');}
                         } else {
                             postJudge({

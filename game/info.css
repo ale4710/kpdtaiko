@@ -108,6 +108,9 @@ body.ended.show-stats #game-stats {
 	font-size: 12px;
 }
 
+#game-stats #game-stats-miss-balloon {font-size: 12px;}
+#game-stats #game-stats-miss-balloon::before {content: "+";}
+
 /* details */
 #game-stats-details { /*showing in modal style*/
 	width: 100%;
