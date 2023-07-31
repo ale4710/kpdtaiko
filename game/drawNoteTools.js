@@ -1,3 +1,15 @@
+var drawNoteParameters = {
+	colors: {
+		don: '#ff0000',
+		kat: '#4444ff',
+		drumroll: '#ffff00',
+		balloon: '#000000'
+	},
+	noteSize: 0.5, //wrt canvas. (note: diameter, not radius)
+	bigNoteSize: 0.75, //wrt canvas
+	borderSize: 0.125 //wrt noteSize
+};
+
 function createNoteTools(canvas, noteImgFormat){
     return (new Promise((resolve, reject)=>{
         var noteTypes = [
@@ -5,32 +17,23 @@ function createNoteTools(canvas, noteImgFormat){
             'kat',
             'drumroll',
             'balloon'
-        ],
-        noteSizes = ['normal','big'],
-        colors = {
-            [noteTypes[0]]: '#ff0000',
-            [noteTypes[1]]: '#4444ff',
-            [noteTypes[2]]: '#ffff00',
-            [noteTypes[3]]: '#000000'
-        },
-        noteSize = 0.5, //wrt canvas. (note: diameter, not radius)
-        bigNoteSize = 0.75, //wrt canvas
-        borderSize = 0.125; //wrt noteSize
+        ];
+        var noteSizes = ['normal','big'];
     
         var targetPos = canvas.height / 2;
     
         var noteDims = {
-            normal: Math.floor(canvas.height * noteSize),
-            big: Math.floor(canvas.height * bigNoteSize)
-        },
-        noteBorderDims = {},
-        drawOffset = {};
+            normal: Math.floor(canvas.height * drawNoteParameters.noteSize),
+            big: Math.floor(canvas.height * drawNoteParameters.bigNoteSize)
+        };
+        var noteBorderDims = {};
+        var drawOffset = {};
     
         Object.keys(noteDims).forEach((size)=>{
             drawOffset[size] = Math.floor((canvas.height / 2) - (noteDims[size] / 2));
     
             var tnbd = {};
-            tnbd.borderSize = Math.floor(noteDims[size] * borderSize);
+            tnbd.borderSize = Math.floor(noteDims[size] * drawNoteParameters.borderSize);
             tnbd.innerHeight = Math.floor(noteDims[size] - (tnbd.borderSize * 2));
             noteBorderDims[size] = tnbd;
         });
@@ -82,7 +85,7 @@ function createNoteTools(canvas, noteImgFormat){
                 var pos = Math.floor(tns/2),
                 r = Math.floor(tnbd.innerHeight / 2);
     
-                bufferCtx.fillStyle = colors[type];
+                bufferCtx.fillStyle = drawNoteParameters.colors[type];
                 //bufferCtx.globalCompositeOperation = 'source-over';
                 bufferCtx.beginPath();
                 bufferCtx.arc(
@@ -164,13 +167,13 @@ function createNoteTools(canvas, noteImgFormat){
             resolve({
                 typeKeywords: noteTypes,
                 sizeKeywords: noteSizes,
-                colors: colors,
+                colors: drawNoteParameters.colors,
                 dimentions: noteDims,
                 innerDimentions: noteBorderDims,
                 dimentionsPercentage: {
-                    note: noteSize,
-                    big: bigNoteSize,
-                    border: borderSize
+                    note: drawNoteParameters.noteSize,
+                    big: drawNoteParameters.bigNoteSize,
+                    border: drawNoteParameters.borderSize
                 },
 
                 notesImgs: notes,
