@@ -220,7 +220,6 @@
 				
 				while(activeEffects.length !== 0) {
 					if(activeEffects[0].getPercentage(now) > 1) {
-						console.log('remove eff');
 						activeEffects.shift();
 					} else {
 						break;
