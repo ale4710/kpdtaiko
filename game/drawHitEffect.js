@@ -42,5 +42,15 @@ var noteHitEffectManager = (function(){
 		};
 	};
 	
+	interface.remove = function(id){
+		if(id in activeNotes) {
+			delete activeNotes[id];
+			activeNotesOrder.splice(
+				activeNotesOrder.indexOf(id),
+				1
+			);
+		}
+	};
+	
 	return interface;
 })();
