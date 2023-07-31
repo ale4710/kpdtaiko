@@ -1,5 +1,7 @@
-var noteHitEffect = {
-	draw: emptyfn,
-	update: emptyfn,
-	reset: emptyfn
-};
+if(true) {
+	var noteHitEffect = {
+		draw: emptyfn,
+		update: emptyfn,
+		reset: emptyfn
+	};
+}
