@@ -100,8 +100,8 @@
 	left: 0;
  }
  #playfield > #notes-display > #notes-display-target-effects-container > canvas {
-	 left: 0;
-	 bottom: 0;
+	left: 0;
+	bottom: 0;
  }
 
 #playfield #notes-display > .info-hitarea {
@@ -109,17 +109,17 @@
     text-align: center;
 	--position: 100%;
 }
-#playfield #notes-display:not(.info-hitarea-bottom) > .info-hitarea {
+body:not(.info-hitarea-bottom) #playfield #notes-display > .info-hitarea {
 	bottom: var(--position);
 }
-#playfield #notes-display.info-hitarea-bottom > .info-hitarea {
+body.info-hitarea-bottom #playfield #notes-display > .info-hitarea {
 	top: var(--position);
 }
 
-#playfield #notes-display:not(.info-hitarea-bottom) > div#judge {
+body:not(.info-hitarea-bottom) #playfield #notes-display > div#judge {
     --nudge-amount: -20%;
 }
-#playfield #notes-display.info-hitarea-bottom > div#judge {
+body.info-hitarea-bottom #playfield #notes-display > div#judge {
     --nudge-amount: 20%;
 }
 #judge {left: 0}

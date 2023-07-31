@@ -144,6 +144,7 @@ function analyzeTimeData() {
 }
 
 var showJudgeOffset = getSettingValue('show-judge-offset') === 1;
+document.body.classList.toggle('show-judge-offset', showJudgeOffset);
 function outputJudgeOffset(offset,manLate) {
     if(showJudgeOffset) {
         if(typeof(offset) === 'number') {

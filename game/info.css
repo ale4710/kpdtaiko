@@ -39,6 +39,8 @@ body.ended.show-stats #song-info > div {
     overflow: hidden;
     padding: 0 3%;
 }
+body.info-hitarea-bottom #song-info > div {margin-left: calc(var(--playfield-height) * var(--height) * 1);}
+body.info-hitarea-bottom.show-judge-offset #song-info > div {margin-left: calc(var(--playfield-height) * var(--height) * 2);}
 
 #info-title {font-size: 16px;}
 #song-info .subtitle {font-size: 12px;}
