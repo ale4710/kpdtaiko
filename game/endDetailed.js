@@ -17,7 +17,7 @@ function outputGameplayInfoFinalExtra() {
 		{
 			let targetCont = eid('game-stats-histogram-target-container');
 			let targets = targetCont.children;
-			while(targets.length !== 0) {targets.remove()}
+			while(targets.length !== 0) {targets[0].remove()}
 			targets = undefined;
 			//template
 			let target = document.createElement('div');
