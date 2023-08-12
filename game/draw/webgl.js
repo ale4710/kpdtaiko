@@ -136,7 +136,9 @@
 				};
 				
 				window.addEventListener('gamehit', (ev)=>{
-					startEffect(ev.detail.type, Number(ev.detail.big));
+					if(ev.detail.judgement !== 0) {
+						startEffect(ev.detail.type, Number(ev.detail.big));
+					}
 				});
 				window.addEventListener('gamedrumrollhit', ()=>{
 					startEffect(

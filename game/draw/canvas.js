@@ -203,10 +203,12 @@
 			
 			let activeEffects = [];
 			window.addEventListener('gamehit', (ev)=>{
-				activeEffects.push(new HitEffect(
-					drawNoteConstants.noteTypes[ev.detail.type],
-					drawNoteConstants.noteSizes[Number(ev.detail.big)]
-				));
+				if(ev.detail.judgement !== 0) {
+					activeEffects.push(new HitEffect(
+						drawNoteConstants.noteTypes[ev.detail.type],
+						drawNoteConstants.noteSizes[Number(ev.detail.big)]
+					));
+				}
 			});
 			window.addEventListener('gamedrumrollhit', ()=>{
 				activeEffects.push(new HitEffect(
