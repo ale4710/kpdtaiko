@@ -43,7 +43,7 @@ var settingsList = {
         type: 0,
         values: [
             'Hide',
-            'Show',
+            'Show Always',
             'Show When Not Good'
         ],
         default: 0
