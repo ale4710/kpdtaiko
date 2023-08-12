@@ -101,7 +101,8 @@ function gameLoop(proceed) {
     metronome.check();
     checking();
     (autoplay || emptyfn)();
-	
+    
+    noteHitEffect.update();
 	bottomStage.update();
 	
 	gameLoopAdditional.forEach((fn)=>{fn();});

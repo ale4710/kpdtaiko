@@ -77,6 +77,8 @@
                 return ((getNoteXpos(time, la, to) * width) + noteTools.targetPos);
             }
 
+			//note sprites
+			var noteSpriteCache = [];
             function makeNoteSprite(tex) {
                 var s = PIXI.Sprite.from(tex);
                 s.anchor.set(0.5);
@@ -84,7 +86,96 @@
                 pxapp.stage.addChild(s);
                 return s;
             }
+            function getNoteSprite(tex) {
+				if(!tex) {throw 'pass a texture'}
+				let s = noteSpriteCache.pop();
+				if(s) {
+					s.texture =tex;
+					return s;
+				} else {
+					return makeNoteSprite(tex);
+				}
+			};
+			
+			//hit effect
+			if(noteHitEffect) {
+				let activeTime = 500;
+				
+				let activeEffects = [];
+				let inactiveEffects = [];
+				
+				function startEffect(type, size) {
+					let efInstance = inactiveEffects.pop() || {};
+					
+					//efInstance.type = type; //no need to save this info
+					efInstance.size = size;
+					efInstance.startTime = curTime();
+					
+					efInstance.sprite = getNoteSprite(
+						pxTextures
+							[drawNoteConstants.noteSizes[size]]
+							[drawNoteConstants.noteTypes[type]]
+					);
+					efInstance.sprite.visible = true;
+					
+					activeEffects.push(efInstance);
+				};
+				
+				function makeEffectInstanceInactive(efInstance) {
+					//it is your responsibility to remove it from activeEffects
+					inactiveEffects.push(efInstance);
+					
+					let s = efInstance.sprite;
+					noteSpriteCache.push(s);
+					delete efInstance.sprite;
+					
+					s.visible = false;
+				};
+				
+				window.addEventListener('gamehit', (ev)=>{
+					startEffect(ev.detail.type, Number(ev.detail.big));
+				});
+				window.addEventListener('gamedrumrollhit', ()=>{
+					startEffect(
+						2, //drumroll
+						Number(gameFile.objects[latestObject].big)
+					);
+				});
+				
+				noteHitEffect.reset = function(){
+					while(activeEffects.length !== 0) {
+						let ef = activeEffects.pop();
+						makeEffectInstanceInactive(ef);
+					}
+				};
+				
+				noteHitEffect.update = function(){
+					if(activeEffects.length !== 0) {
+						console.log('nhe upd');
+						let now = curTime();
+						
+						for(let i = 0; i < activeEffects.length;) {
+							let efInstance = activeEffects[i];
+							let percent = Math.max(0, (
+								(now - efInstance.startTime) / activeTime
+							));
+							
+							if(percent > 1) {
+								activeEffects.shift();
+								makeEffectInstanceInactive(efInstance);
+							} else {
+								efInstance.sprite.x = height * (0.5 - percent);
 
+								let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
+								efInstance.sprite.y = (height / 2) + (yOffset * jumpMultiply);
+								i++;
+							}
+						}
+					}
+				};
+			}
+
+			//barlines
             barlineManager = barlineInitialize(
                 (function(){
                     var barlinesOnScreen = [],
@@ -192,7 +283,12 @@
                 if(objectsPrinted) {
                     objectsPrinted.forEach((op)=>{
                         drawNoteObjectsCache.push(op);
-                        op.sprite.visible = false;
+                        
+                        let s = op.sprite;
+                        delete op.sprite;
+                        noteSpriteCache.push(s);
+                        
+                        s.visible = false;
 
                         if('drumrollParts' in op) {
                             var bp = op.drumrollParts;
@@ -230,11 +326,7 @@
                         //assign a texture
 
                         var texToUse = pxTextures[objectPrintInfo.size][objectPrintInfo.type];
-                        if('sprite' in objectPrintInfo) {
-                            objectPrintInfo.sprite.texture = texToUse;
-                        } else {
-                            objectPrintInfo.sprite = makeNoteSprite(texToUse);
-                        }
+                        objectPrintInfo.sprite = getNoteSprite(texToUse);
                         objectPrintInfo.sprite.y = yOffset + halfHeight;
 
                         var zi = gf.length - objectPrintInfo.id;
@@ -364,7 +456,12 @@
                             noDrawObjects.indexOf(cur.id) !== -1
                         ) {
                             drawNoteObjectsCache.push(cur);
-                            cur.sprite.visible = false;
+                            
+                            let s = cur.sprite;
+                            delete cur.sprite;
+                            s.visible = false;
+                            noteSpriteCache.push(s);
+                            
                             objectsPrinted.splice(i,1);
                         } else {
                             cur.sprite.visible = true;
