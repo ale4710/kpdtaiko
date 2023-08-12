@@ -91,6 +91,17 @@ var settingsList = {
         ],
         default: 1
     },
+    
+	'judge-position': {
+        label: 'Judgement Position',
+        type: 0,
+        values: [
+            'Top',
+            'Bottom'
+        ],
+        default: 0
+    },
+
 
     'show-background': {
         label: 'Show Background',
@@ -458,6 +469,7 @@ var settingsListCategories = {
 			'category-top-character',
 			'category-bottom-stage',
             'show-judge-offset',
+            'judge-position',
 			'judge-animation-mode',
 			'show-bpm',
             'show-notes'
