@@ -111,6 +111,9 @@
 					efInstance.size = size;
 					efInstance.startTime = curTime();
 					
+					efInstance.jumpOffset = Math.random() * 0.3;
+					efInstance.moveOffset = Math.random() * 0.2;
+					
 					efInstance.sprite = getNoteSprite(
 						pxTextures
 							[drawNoteConstants.noteSizes[size]]
@@ -163,9 +166,10 @@
 								activeEffects.shift();
 								makeEffectInstanceInactive(efInstance);
 							} else {
-								efInstance.sprite.x = height * (0.5 - percent);
+								efInstance.sprite.x = height * (0.5 - (percent * (0.9 + efInstance.moveOffset)));
 
 								let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
+								jumpMultiply = efInstance.jumpOffset + (jumpMultiply * (1 - efInstance.jumpOffset));
 								efInstance.sprite.y = (height / 2) + (yOffset * jumpMultiply);
 								i++;
 							}
