@@ -177,8 +177,8 @@
 					return Math.max(0, percent);
 				}
 				
-				draw(currentTime) {
-					let percent = this.getPercentage(currentTime);
+				draw(percent) {
+					//let percent = this.getPercentage(currentTime);
 					
 					let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
 					jumpMultiply = this.jumpOffset + (jumpMultiply * (1 - this.jumpOffset));
@@ -217,18 +217,17 @@
 			noteHitEffect.draw = function(){
 				let now = curTime();
 				
-				while(activeEffects.length !== 0) {
-					if(activeEffects[0].getPercentage(now) > 1) {
+				efCtx.clearRect(0, 0, efCanvas.width, efCanvas.height);
+				for(let i = 0; i < activeEffects.length; ) {
+					let activeEffect = activeEffects[i];
+					let percent = activeEffect.getPercentage(now);
+					if(percent > 1) {
 						activeEffects.shift();
 					} else {
-						break;
+						activeEffect.draw(percent);
+						i++;
 					}
 				}
-				
-				efCtx.clearRect(0, 0, efCanvas.width, efCanvas.height);
-				activeEffects.forEach((ef)=>{
-					ef.draw(now);
-				});
 			};
 			noteHitEffect.reset = function(){
 				activeEffects.length = 0;
