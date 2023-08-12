@@ -95,19 +95,21 @@ function reset() {
 }
 
 var gameLoopAdditional = [];
+var gameLoopDt = new dtKeeper();
 function gameLoop(proceed) {
+	let dt = gameLoopDt.check();
     //draw();
     timerUpdate();
     metronome.check();
     checking();
     (autoplay || emptyfn)();
 	
-	bottomStage.update();
+	bottomStage.update(dt);
 	
 	gameLoopAdditional.forEach((fn)=>{fn();});
 
     if(proceed !== false) {
-        eid('ups').textContent = fpsCheck('ups');
+        eid('ups').textContent = (1000 / dt).toFixed(2);
         
         //gameLoopReferenceNumber = requestAnimationFrame(gameLoop);
         gameLoopReferenceNumber = setTimeout(gameLoop);
@@ -116,11 +118,12 @@ function gameLoop(proceed) {
 
 var gameAnimRefNum;
 var gameAnimMethod = getSettingValue('draw-loop-method');
+var gameAnimDt = new dtKeeper();
 function gameAnim(proceed) {
     draw();
 
     if(proceed !== false) {
-        eid('fps').textContent = fpsCheck('fps');
+        eid('fps').textContent = (1000 / gameAnimDt.check()).toFixed(2);
         if(gameAnimMethod === 0) {
 			gameAnimRefNum = requestAnimationFrame(gameAnim);
 		} else {
