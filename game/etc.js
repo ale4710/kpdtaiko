@@ -21,11 +21,17 @@ function printBg(url) {
 	document.body.classList.add('background-image-exists');
 }
 
-var fpsCheckPrev = {};
-function fpsCheck(ref) {
-    var tfs = fpsCheckPrev[ref] || 0, nw = (window.performance.now());
-    fpsCheckPrev[ref] = nw;
-    return (1000 / (nw - tfs)).toFixed(2);
+class dtKeeper {
+	constructor() {
+		this.lastTime = -Infinity;
+	}
+	
+	check() {
+		let now = performance.now();
+		let dt = now - this.lastTime;
+		this.lastTime = now;
+		return dt;
+	}
 }
 
 function cycleValue(val,max) {
