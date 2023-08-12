@@ -1,7 +1,9 @@
 (function() {
-    var width = notesDisplay.clientWidth,
-    height = notesDisplay.clientHeight,
-    halfHeight = height / 2;
+    var width = notesDisplay.clientWidth;
+    var height = notesDisplay.clientHeight;
+    var yOffset = Math.floor(height * 1.2);
+    var realHeight = height + yOffset;
+    var halfHeight = height / 2;
 
     Promise.all([
 		addGlobalReference(0, '../common/lib/pixi.min'),
@@ -10,18 +12,26 @@
         pixiReady = null;
 		pxapp = (new PIXI.Application({
 			width: width,
-			height: height,
+			height: realHeight,
 			transparent: true
 		}));
 
-        notesDisplay.appendChild(pxapp.view);
+		{
+			let pxappViewContainer = document.createElement('div');
+			pxappViewContainer.style.top = -yOffset + 'px';
+			pxappViewContainer.style.left = 0;
+			pxappViewContainer.style.position = 'absolute';
+			
+			pxappViewContainer.appendChild(pxapp.view);
+			notesDisplayCanvasContainer.appendChild(pxappViewContainer);
+		}
 
         pxapp.stage.sortableChildren = true;
         pxapp.stage.sortDirty = false;
     
         createNoteTools({
-            width: pxapp.renderer.view.width,
-            height: pxapp.renderer.view.height
+            width: width,
+            height: height
         }/* images are raw imagedata */).then((noteTools)=>{
             
             //create textures.
@@ -70,7 +80,7 @@
             function makeNoteSprite(tex) {
                 var s = PIXI.Sprite.from(tex);
                 s.anchor.set(0.5);
-                s.y = halfHeight;
+                s.y = yOffset + halfHeight;
                 pxapp.stage.addChild(s);
                 return s;
             }
@@ -106,7 +116,7 @@
                                 var btu = barlinesWaitingRoom.pop();
                                 if(!btu) {
                                     var sprite = barlineGeometery.clone();
-                                    sprite.y = 0;
+                                    sprite.y = yOffset;
                                     //console.log(sprite);
     
                                     pxapp.stage.addChild(sprite);
@@ -133,8 +143,8 @@
                         //drawing the barlines
                         if(barlinesOnScreen.length !== 0) {
                             for(var i = 0; i < barlinesOnScreen.length;) {        
-                                var cb = barlinesOnScreen[i],
-                                lp = (lgnxp(
+                                var cb = barlinesOnScreen[i];
+                                var lp = (lgnxp(
                                     cb.time,
                                     cb.lookAhead
                                 ));
@@ -205,8 +215,8 @@
                     while(drawingOrder[latestObjectDrawn].startDraw <= curTime()) {
                         newObjectAdded = true;
         
-                        var cur = drawingOrder[latestObjectDrawn],
-                        obj = gf[cur.id];
+                        var cur = drawingOrder[latestObjectDrawn];
+                        var obj = gf[cur.id];
         
                         //garbage collection avoidance?
                         var objectPrintInfo = drawNoteObjectsCache.pop();
@@ -225,6 +235,7 @@
                         } else {
                             objectPrintInfo.sprite = makeNoteSprite(texToUse);
                         }
+                        objectPrintInfo.sprite.y = yOffset + halfHeight;
 
                         var zi = gf.length - objectPrintInfo.id;
 
@@ -241,7 +252,7 @@
 
                             drumrollBody.body = pxTextures[objectPrintInfo.size].drumrollBody.clone();
                             drumrollBody.body.zIndex = zi + 0.1;
-                            drumrollBody.body.y = halfHeight;
+                            drumrollBody.body.y = yOffset + halfHeight;
                             drumrollBody.body.pivot.set(
                                 0,
                                 //Math.floor(drumrollBody.body.height / 2)
