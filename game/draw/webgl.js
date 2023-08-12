@@ -151,7 +151,6 @@
 				
 				noteHitEffect.update = function(){
 					if(activeEffects.length !== 0) {
-						console.log('nhe upd');
 						let now = curTime();
 						
 						for(let i = 0; i < activeEffects.length;) {
