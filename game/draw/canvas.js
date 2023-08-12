@@ -153,7 +153,7 @@
         }
 		
 		//effects
-		if(noteHitEffect) {
+		if(noteHitEffect.enabled) {
 			let efCanvas = document.createElement('canvas');
 			efCanvas.width = canvas.height; //yes
 			let yOffset = Math.floor(canvas.height * 1.2); //the (* 1) is a height multiplier

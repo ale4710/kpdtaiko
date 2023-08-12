@@ -98,7 +98,7 @@
 			};
 			
 			//hit effect
-			if(noteHitEffect) {
+			if(noteHitEffect.enabled) {
 				let activeTime = 500;
 				
 				let activeEffects = [];

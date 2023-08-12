@@ -92,6 +92,16 @@ var settingsList = {
         default: 1
     },
     
+    'draw-hit-effect': { //judgeAnimationMode
+        label: 'Hit Effect',
+        type: 0,
+        values: [
+            'Disabled',
+            'Enabled'
+        ],
+        default: 1
+    },
+    
 	'judge-position': {
         label: 'Judgement Position',
         type: 0,
@@ -471,6 +481,7 @@ var settingsListCategories = {
             'show-judge-offset',
             'judge-position',
 			'judge-animation-mode',
+			'draw-hit-effect',
 			'show-bpm',
             'show-notes'
 		]

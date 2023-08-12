@@ -1,7 +1,7 @@
-if(true) {
-	var noteHitEffect = {
-		draw: emptyfn,
-		update: emptyfn,
-		reset: emptyfn
-	};
-}
+
+var noteHitEffect = {
+	enabled: (getSettingValue('draw-hit-effect') === 1),
+	draw: emptyfn,
+	update: emptyfn,
+	reset: emptyfn
+};
