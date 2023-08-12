@@ -103,15 +103,14 @@ function gameLoop(proceed) {
     metronome.check();
     checking();
     (autoplay || emptyfn)();
-	
+
+	noteHitEffect.update(dt);
 	bottomStage.update(dt);
 	
 	gameLoopAdditional.forEach((fn)=>{fn();});
 
     if(proceed !== false) {
         eid('ups').textContent = (1000 / dt).toFixed(2);
-        
-        //gameLoopReferenceNumber = requestAnimationFrame(gameLoop);
         gameLoopReferenceNumber = setTimeout(gameLoop);
     }
 }
@@ -318,7 +317,17 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                                 console.log('miss: too early');
                             } else {
                                 disappearAndNext();
-                                outputJudgeOffset(delay);
+                                if(
+									(judgeOffsetDisplayMode === 1) ||
+									(
+										judgeOffsetDisplayMode === 2 &&
+										hit !== 2
+									)
+                                ) {
+									outputJudgeOffset(delay);
+								} else {
+									blankJudgeOffset();
+								}
                                 postJudge(judgeStyles[hitWindowKey[hit]]);
                                 infoAddHit(hitWindowKey[hit]);
 								window.dispatchEvent(new CustomEvent('gamehit', {detail: {

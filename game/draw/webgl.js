@@ -1,7 +1,9 @@
 (function() {
-    var width = notesDisplay.clientWidth,
-    height = notesDisplay.clientHeight,
-    halfHeight = height / 2;
+    var width = notesDisplay.clientWidth;
+    var height = notesDisplay.clientHeight;
+    var yOffset = Math.floor(height * 1.2);
+    var realHeight = height + yOffset;
+    var halfHeight = height / 2;
 
     Promise.all([
 		addGlobalReference(0, '../common/lib/pixi.min'),
@@ -10,18 +12,26 @@
         pixiReady = null;
 		pxapp = (new PIXI.Application({
 			width: width,
-			height: height,
+			height: realHeight,
 			transparent: true
 		}));
 
-        notesDisplay.appendChild(pxapp.view);
+		{
+			let pxappViewContainer = document.createElement('div');
+			pxappViewContainer.style.top = -yOffset + 'px';
+			pxappViewContainer.style.left = 0;
+			pxappViewContainer.style.position = 'absolute';
+			
+			pxappViewContainer.appendChild(pxapp.view);
+			notesDisplayCanvasContainer.appendChild(pxappViewContainer);
+		}
 
         pxapp.stage.sortableChildren = true;
         pxapp.stage.sortDirty = false;
     
         createNoteTools({
-            width: pxapp.renderer.view.width,
-            height: pxapp.renderer.view.height
+            width: width,
+            height: height
         }/* images are raw imagedata */).then((noteTools)=>{
             
             //create textures.
@@ -67,14 +77,108 @@
                 return ((getNoteXpos(time, la, to) * width) + noteTools.targetPos);
             }
 
+			//note sprites
+			var noteSpriteCache = [];
             function makeNoteSprite(tex) {
                 var s = PIXI.Sprite.from(tex);
                 s.anchor.set(0.5);
-                s.y = halfHeight;
+                s.y = yOffset + halfHeight;
                 pxapp.stage.addChild(s);
                 return s;
             }
+            function getNoteSprite(tex) {
+				if(!tex) {throw 'pass a texture'}
+				let s = noteSpriteCache.pop();
+				if(s) {
+					s.texture =tex;
+					return s;
+				} else {
+					return makeNoteSprite(tex);
+				}
+			};
+			
+			//hit effect
+			if(noteHitEffect.enabled) {
+				let activeTime = 500;
+				
+				let activeEffects = [];
+				let inactiveEffects = [];
+				
+				function startEffect(type, size) {
+					let efInstance = inactiveEffects.pop() || {};
+					
+					//efInstance.type = type; //no need to save this info
+					efInstance.size = size;
+					efInstance.startTime = curTime();
+					
+					efInstance.jumpOffset = Math.random() * 0.3;
+					efInstance.moveOffset = Math.random() * 0.2;
+					
+					efInstance.sprite = getNoteSprite(
+						pxTextures
+							[drawNoteConstants.noteSizes[size]]
+							[drawNoteConstants.noteTypes[type]]
+					);
+					efInstance.sprite.visible = true;
+					
+					activeEffects.push(efInstance);
+				};
+				
+				function makeEffectInstanceInactive(efInstance) {
+					//it is your responsibility to remove it from activeEffects
+					inactiveEffects.push(efInstance);
+					
+					let s = efInstance.sprite;
+					noteSpriteCache.push(s);
+					delete efInstance.sprite;
+					
+					s.visible = false;
+				};
+				
+				window.addEventListener('gamehit', (ev)=>{
+					startEffect(ev.detail.type, Number(ev.detail.big));
+				});
+				window.addEventListener('gamedrumrollhit', ()=>{
+					startEffect(
+						2, //drumroll
+						Number(gameFile.objects[latestObject].big)
+					);
+				});
+				
+				noteHitEffect.reset = function(){
+					while(activeEffects.length !== 0) {
+						let ef = activeEffects.pop();
+						makeEffectInstanceInactive(ef);
+					}
+				};
+				
+				noteHitEffect.update = function(){
+					if(activeEffects.length !== 0) {
+						let now = curTime();
+						
+						for(let i = 0; i < activeEffects.length;) {
+							let efInstance = activeEffects[i];
+							let percent = Math.max(0, (
+								(now - efInstance.startTime) / activeTime
+							));
+							
+							if(percent > 1) {
+								activeEffects.shift();
+								makeEffectInstanceInactive(efInstance);
+							} else {
+								efInstance.sprite.x = height * (0.5 - (percent * (0.9 + efInstance.moveOffset)));
 
+								let jumpMultiply = Math.pow(((percent * 4) - 2), 2) / 4;
+								jumpMultiply = efInstance.jumpOffset + (jumpMultiply * (1 - efInstance.jumpOffset));
+								efInstance.sprite.y = (height / 2) + (yOffset * jumpMultiply);
+								i++;
+							}
+						}
+					}
+				};
+			}
+
+			//barlines
             barlineManager = barlineInitialize(
                 (function(){
                     var barlinesOnScreen = [],
@@ -106,7 +210,7 @@
                                 var btu = barlinesWaitingRoom.pop();
                                 if(!btu) {
                                     var sprite = barlineGeometery.clone();
-                                    sprite.y = 0;
+                                    sprite.y = yOffset;
                                     //console.log(sprite);
     
                                     pxapp.stage.addChild(sprite);
@@ -133,8 +237,8 @@
                         //drawing the barlines
                         if(barlinesOnScreen.length !== 0) {
                             for(var i = 0; i < barlinesOnScreen.length;) {        
-                                var cb = barlinesOnScreen[i],
-                                lp = (lgnxp(
+                                var cb = barlinesOnScreen[i];
+                                var lp = (lgnxp(
                                     cb.time,
                                     cb.lookAhead
                                 ));
@@ -182,7 +286,12 @@
                 if(objectsPrinted) {
                     objectsPrinted.forEach((op)=>{
                         drawNoteObjectsCache.push(op);
-                        op.sprite.visible = false;
+                        
+                        let s = op.sprite;
+                        delete op.sprite;
+                        noteSpriteCache.push(s);
+                        
+                        s.visible = false;
 
                         if('drumrollParts' in op) {
                             var bp = op.drumrollParts;
@@ -205,8 +314,8 @@
                     while(drawingOrder[latestObjectDrawn].startDraw <= curTime()) {
                         newObjectAdded = true;
         
-                        var cur = drawingOrder[latestObjectDrawn],
-                        obj = gf[cur.id];
+                        var cur = drawingOrder[latestObjectDrawn];
+                        var obj = gf[cur.id];
         
                         //garbage collection avoidance?
                         var objectPrintInfo = drawNoteObjectsCache.pop();
@@ -220,11 +329,8 @@
                         //assign a texture
 
                         var texToUse = pxTextures[objectPrintInfo.size][objectPrintInfo.type];
-                        if('sprite' in objectPrintInfo) {
-                            objectPrintInfo.sprite.texture = texToUse;
-                        } else {
-                            objectPrintInfo.sprite = makeNoteSprite(texToUse);
-                        }
+                        objectPrintInfo.sprite = getNoteSprite(texToUse);
+                        objectPrintInfo.sprite.y = yOffset + halfHeight;
 
                         var zi = gf.length - objectPrintInfo.id;
 
@@ -241,7 +347,7 @@
 
                             drumrollBody.body = pxTextures[objectPrintInfo.size].drumrollBody.clone();
                             drumrollBody.body.zIndex = zi + 0.1;
-                            drumrollBody.body.y = halfHeight;
+                            drumrollBody.body.y = yOffset + halfHeight;
                             drumrollBody.body.pivot.set(
                                 0,
                                 //Math.floor(drumrollBody.body.height / 2)
@@ -353,7 +459,12 @@
                             noDrawObjects.indexOf(cur.id) !== -1
                         ) {
                             drawNoteObjectsCache.push(cur);
-                            cur.sprite.visible = false;
+                            
+                            let s = cur.sprite;
+                            delete cur.sprite;
+                            s.visible = false;
+                            noteSpriteCache.push(s);
+                            
                             objectsPrinted.splice(i,1);
                         } else {
                             cur.sprite.visible = true;

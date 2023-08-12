@@ -43,7 +43,8 @@ var settingsList = {
         type: 0,
         values: [
             'Hide',
-            'Show'
+            'Show',
+            'Show When Not Good'
         ],
         default: 0
     },
@@ -91,6 +92,27 @@ var settingsList = {
         ],
         default: 1
     },
+    
+    'draw-hit-effect': { //judgeAnimationMode
+        label: 'Hit Effect',
+        type: 0,
+        values: [
+            'Disabled',
+            'Enabled'
+        ],
+        default: 1
+    },
+    
+	'judge-position': {
+        label: 'Judgement Position',
+        type: 0,
+        values: [
+            'Top',
+            'Bottom'
+        ],
+        default: 0
+    },
+
 
     'show-background': {
         label: 'Show Background',
@@ -458,7 +480,9 @@ var settingsListCategories = {
 			'category-top-character',
 			'category-bottom-stage',
             'show-judge-offset',
+            'judge-position',
 			'judge-animation-mode',
+			'draw-hit-effect',
 			'show-bpm',
             'show-notes'
 		]

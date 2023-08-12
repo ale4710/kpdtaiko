@@ -7,6 +7,10 @@ if(getSettingValue('show-bpm') === 0) {
 	eid('bpm-display-all').classList.add('hidden');
 }
 
+if(getSettingValue('judge-position') === 1) {
+	document.body.classList.add('info-hitarea-bottom');
+}
+
 var modsDisplay = (new ModsView(
 	0,
 	eid('top-info-center')

@@ -143,10 +143,14 @@ function analyzeTimeData() {
 	};
 }
 
-var showJudgeOffset = getSettingValue('show-judge-offset') === 1;
-document.body.classList.toggle('show-judge-offset', showJudgeOffset);
+var judgeOffsetDisplayMode = getSettingValue('show-judge-offset'); //0 = no, 1 = show always, 2 = show when not good
+document.body.classList.toggle(
+	'show-judge-offset', 
+	(judgeOffsetDisplayMode !== 0)
+);
+var judgeOffsetElement = eid('judge-offset');
 function outputJudgeOffset(offset,manLate) {
-    if(showJudgeOffset) {
+    if(judgeOffsetDisplayMode !== 0) {
         if(typeof(offset) === 'number') {
             if(typeof(manLate) === 'undefined') {
                 manLate = (offset > 0);
@@ -155,16 +159,18 @@ function outputJudgeOffset(offset,manLate) {
             offset = offset.toFixed(0);
         }
 
-        eid('judge-offset').textContent = offset;
-        eid('judge-offset').classList.remove('late','early');
+        judgeOffsetElement.textContent = offset;
+        judgeOffsetElement.classList.remove('late','early','hidden');
         
         if(typeof(manLate) === 'boolean') {
-            eid('judge-offset').classList.add(
+            judgeOffsetElement.classList.add(
                 manLate? 'late' : 'early'
             );
         }
     }
-    
+}
+function blankJudgeOffset() {
+	judgeOffsetElement.classList.add('hidden');
 }
 
 function updateBpm(e) {
