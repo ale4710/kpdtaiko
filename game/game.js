@@ -316,7 +316,17 @@ function playerAction(action) { //purely game related stuff. do not handle 'paus
                                 console.log('miss: too early');
                             } else {
                                 disappearAndNext();
-                                outputJudgeOffset(delay);
+                                if(
+									(judgeOffsetDisplayMode === 1) ||
+									(
+										judgeOffsetDisplayMode === 2 &&
+										hit !== 2
+									)
+                                ) {
+									outputJudgeOffset(delay);
+								} else {
+									blankJudgeOffset();
+								}
                                 postJudge(judgeStyles[hitWindowKey[hit]]);
                                 infoAddHit(hitWindowKey[hit]);
 								window.dispatchEvent(new CustomEvent('gamehit', {detail: {
