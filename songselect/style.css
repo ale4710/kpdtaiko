@@ -2,6 +2,9 @@
     --song-info-height: 0.28;
 	--not-song-list-background: var(--background-color-o50);
 }
+
+#main-screen {position: relative}
+
 /* background */
 #song-background-container {
 	z-index: -6;
@@ -206,6 +209,28 @@
 }
 .mods-view img {
     vertical-align: top;
+}
+
+/* sort and group indicator */
+#group-sort-indicator {
+	--spacing: 3px;
+	padding: 0 var(--spacing);
+	--content-font-size: 12px;
+	line-height: 1.2;
+	position: absolute;
+	bottom: 3px;
+	right: 3px;
+	border: 1px solid #fff;
+	background-color: var(--background-color-o75);
+	z-index: 1;
+}
+#group-sort-indicator > div.entry > img {
+	margin-right: var(--spacing);
+	height: var(--content-font-size);
+	vertical-align: middle;
+}
+#group-sort-indicator > div.entry > span {
+	font-size: var(--content-font-size);
 }
 
 /* intro sequence */

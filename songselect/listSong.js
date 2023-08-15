@@ -33,13 +33,16 @@ function reprintList(refocus) {
 		refocus = null;
 	}
 	return (new Promise(function(r){
+		let sortMethod = groupSortManager.getGSmethod('sort');
+		let groupMethod = groupSortManager.getGSmethod('group');
 		printList(
-			groupSortManager.getGSmethod('sort').p,
-			groupSortManager.getGSmethod('group').p,
+			sortMethod.p,
+			groupMethod.p,
 			false,
 			refocus
 		).then((refocusIndex)=>{
-			//console.log(refocusIndex);
+			eid('group-sort-indicator-sort').textContent = sortMethod.l;
+			eid('group-sort-indicator-group').textContent = groupMethod.l;
 			r(function(noUpdateDataDisplay){
 				navigateSongList(refocusIndex, true, !!noUpdateDataDisplay);
 			});
