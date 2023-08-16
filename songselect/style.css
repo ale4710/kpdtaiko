@@ -224,13 +224,11 @@
 	background-color: var(--not-song-list-background);
 	z-index: 1;
 }
-#group-sort-indicator > div.entry:not(:first-child) {
-	margin-left: var(--spacing);
-	padding-left: var(--spacing);
-	border-left: 1px solid #fff;
+#group-sort-indicator > div.entry:not(:last-child) {
+	margin-right: calc(var(--spacing) * 2);
 }
 #group-sort-indicator > div.entry > img {
-	margin-right: calc(var(--spacing) / 2);
+	margin-right: var(--spacing);
 	height: var(--content-font-size);
 	vertical-align: middle;
 }
