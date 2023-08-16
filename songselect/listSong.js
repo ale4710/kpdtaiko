@@ -45,16 +45,16 @@ function reprintList(refocus) {
 			let updated = 0;
 			{
 				let sortEl = eid('group-sort-indicator-sort');
-				sortEl.classList.toggle('hidden', (sortMethod.k === 'title'));
-				if(!sortEl.classList.contains('hidden')) {
+				sortEl.parentElement.classList.toggle('hidden', (sortMethod.k === 'title'));
+				if(!sortEl.parentElement.classList.contains('hidden')) {
 					updated++;
 					sortEl.textContent = sortMethod.l;
 				}
 			}
 			{
 				let groupEl = eid('group-sort-indicator-group');
-				groupEl.classList.toggle('hidden', (groupMethod.k === 'nogroup'));
-				if(!groupEl.classList.contains('hidden')) {
+				groupEl.parentElement.classList.toggle('hidden', (groupMethod.k === 'nogroup'));
+				if(!groupEl.parentElement.classList.contains('hidden')) {
 					updated++;
 					groupEl.textContent = groupMethod.l;
 				}
