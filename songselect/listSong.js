@@ -41,8 +41,27 @@ function reprintList(refocus) {
 			false,
 			refocus
 		).then((refocusIndex)=>{
-			eid('group-sort-indicator-sort').textContent = sortMethod.l;
-			eid('group-sort-indicator-group').textContent = groupMethod.l;
+			//update indicator
+			let updated = 0;
+			{
+				let sortEl = eid('group-sort-indicator-sort');
+				sortEl.classList.toggle('hidden', (sortMethod.k === 'title'));
+				if(!sortEl.classList.contains('hidden')) {
+					updated++;
+					sortEl.textContent = sortMethod.l;
+				}
+			}
+			{
+				let groupEl = eid('group-sort-indicator-group');
+				groupEl.classList.toggle('hidden', (groupMethod.k === 'nogroup'));
+				if(!groupEl.classList.contains('hidden')) {
+					updated++;
+					groupEl.textContent = groupMethod.l;
+				}
+			}
+			eid('group-sort-indicator').classList.toggle('hidden', (updated === 0));
+			
+			//resolve...
 			r(function(noUpdateDataDisplay){
 				navigateSongList(refocusIndex, true, !!noUpdateDataDisplay);
 			});
