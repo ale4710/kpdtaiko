@@ -213,19 +213,24 @@
 
 /* sort and group indicator */
 #group-sort-indicator {
-	--spacing: 3px;
-	padding: 0 var(--spacing);
+	--spacing: 5px;
+	padding: 0 var(--spacing) 2px;
 	--content-font-size: 12px;
 	line-height: 1.2;
 	position: absolute;
-	bottom: 3px;
-	right: 3px;
-	border: 1px solid #fff;
-	background-color: var(--background-color-o75);
+	display: flex;
+	top: 0;
+	right: 0;
+	background-color: var(--not-song-list-background);
 	z-index: 1;
 }
+#group-sort-indicator > div.entry:not(:first-child) {
+	margin-left: var(--spacing);
+	padding-left: var(--spacing);
+	border-left: 1px solid #fff;
+}
 #group-sort-indicator > div.entry > img {
-	margin-right: var(--spacing);
+	margin-right: calc(var(--spacing) / 2);
 	height: var(--content-font-size);
 	vertical-align: middle;
 }
