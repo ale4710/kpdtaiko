@@ -33,13 +33,35 @@ function reprintList(refocus) {
 		refocus = null;
 	}
 	return (new Promise(function(r){
+		let sortMethod = groupSortManager.getGSmethod('sort');
+		let groupMethod = groupSortManager.getGSmethod('group');
 		printList(
-			groupSortManager.getGSmethod('sort').p,
-			groupSortManager.getGSmethod('group').p,
+			sortMethod.p,
+			groupMethod.p,
 			false,
 			refocus
 		).then((refocusIndex)=>{
-			//console.log(refocusIndex);
+			//update indicator
+			let updated = 0;
+			{
+				let sortEl = eid('group-sort-indicator-sort');
+				sortEl.parentElement.classList.toggle('hidden', (sortMethod.k === 'title'));
+				if(!sortEl.parentElement.classList.contains('hidden')) {
+					updated++;
+					sortEl.textContent = sortMethod.l;
+				}
+			}
+			{
+				let groupEl = eid('group-sort-indicator-group');
+				groupEl.parentElement.classList.toggle('hidden', (groupMethod.k === 'nogroup'));
+				if(!groupEl.parentElement.classList.contains('hidden')) {
+					updated++;
+					groupEl.textContent = groupMethod.l;
+				}
+			}
+			eid('group-sort-indicator').classList.toggle('hidden', (updated === 0));
+			
+			//resolve...
 			r(function(noUpdateDataDisplay){
 				navigateSongList(refocusIndex, true, !!noUpdateDataDisplay);
 			});

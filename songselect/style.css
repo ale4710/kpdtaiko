@@ -2,10 +2,14 @@
     --song-info-height: 0.28;
 	--not-song-list-background: var(--background-color-o50);
 }
+
+#main-screen {position: relative}
+
 /* background */
 #song-background-container {
 	z-index: -6;
 	background-color: #fff;
+	--blur: 4px;
 }
 #song-background-overlay {
 	z-index: -1;
@@ -17,7 +21,6 @@
 }
 
 .song-background {
-	--blur: 4px;
 	z-index: -3;
 	object-fit: cover;
 	filter: blur(var(--blur));
@@ -206,6 +209,31 @@
 }
 .mods-view img {
     vertical-align: top;
+}
+
+/* sort and group indicator */
+#group-sort-indicator {
+	--spacing: 5px;
+	padding-bottom: 2px;
+	--content-font-size: 12px;
+	line-height: 1.2;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: var(--not-song-list-background);
+	z-index: 1;
+}
+#group-sort-indicator:not(.hidden) {display: flex}
+#group-sort-indicator > div.entry {
+	margin: 0 var(--spacing);
+}
+#group-sort-indicator > div.entry > img {
+	margin-right: var(--spacing);
+	height: var(--content-font-size);
+	vertical-align: middle;
+}
+#group-sort-indicator > div.entry > span {
+	font-size: var(--content-font-size);
 }
 
 /* intro sequence */
