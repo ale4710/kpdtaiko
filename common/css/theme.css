@@ -40,6 +40,9 @@
 
     --throbber-primary: #fff;
     --throbber-background: #444;
+    
+    --progress-bar-foreground: var(--text-color);
+    --progress-bar-background: var(--background-color);
 
     --focus-invert: 0; /* for menu items with icons */
     --icon-invert: 0; /* for standard icons, against --background-color. please take into account the above setting too */

@@ -221,11 +221,11 @@ input[type=radio]:checked + span::before {
 }
 
 progress {
-    background: var(--time-bar-background);
+    background: var(--progress-bar-background);
     border: none;
 }
 progress::-moz-progress-bar {
-    background: var(--time-bar-foreground);
+    background: var(--progress-bar-foreground);
 }
 
 input[type=range].options-menu-range {
