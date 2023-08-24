@@ -16,6 +16,9 @@
 	background: #000;
 	opacity: 0.6;
 }
+body.idle-screen-showing #song-background-overlay {
+	opacity: 0;
+}
 #song-background {
 	z-index: -2;
 }
@@ -23,10 +26,14 @@
 .song-background {
 	z-index: -3;
 	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+body:not(.idle-screen-showing) .song-background {
 	filter: blur(var(--blur));
 	width: calc(100% + (var(--blur) * 2));
 	height: calc(100% + (var(--blur) * 2));
-	opacity: 0;
 }
 @keyframes song-background-fade-in {
 	from {opacity: 0}
@@ -262,4 +269,30 @@ body.intro #intro-overlay {
 body.intro #intro-slider {
     display: unset;
     transform: translatex(-100%);
+}
+
+/* idle screen stuff */
+	/* note: there is also a thing above that changes the background blur and dim. */
+.header-in-the-background,
+#navbar {
+	transition: transform 0.5s;
+}
+body.idle-screen-showing .header-in-the-background {transform: translateY(-100%);}
+body.idle-screen-showing #navbar {transform: translateY(100%);}
+
+#idle-screen-info {
+	position: absolute;
+	width: 100%;
+	bottom: 10%;
+	text-align: center;
+	background-color: var(--background-color-o75);
+}
+#idle-screen-info-artist {
+	font-size: 14px;
+}
+#idle-screen-info-song-progress {
+	width: 100%;
+	height: 3px;
+	display: block;
+	--progress-bar-background: transparent;
 }

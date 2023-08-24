@@ -13,7 +13,10 @@ audio.addEventListener('ended',()=>{
 	//randomize song on title screen
 	if(
 		randomizeSongOnTitleScreen &&
-		curpage === titleScreen.page
+		(
+			curpage === titleScreen.page ||
+			curpage === idleScreen.page
+		)
 	) {
 		selectRandomSongInSongList();
 	} else {

@@ -16,8 +16,32 @@ var titleScreen = (function() {
 	function exitgame() {
 		window.parent.close();
 	}
-
+	
+	let idleTimeout;
+	function resetIdleTimer() {
+		clearIdleTimer();
+		idleTimeout = setTimeout(()=>{
+			idleScreen.show();
+		}, 30000);
+	};
+	function clearIdleTimer() {
+		clearTimeout(idleTimeout);
+	};
+	
+	function show() {
+		curpage = thisPage;
+		CONTAINER.classList.remove('hidden');
+		menu.navigate(0, true);
+		resetIdleTimer();
+	};
+	
+	function hide() {
+		CONTAINER.classList.add('hidden');
+		clearIdleTimer();
+	};
+	
     function keyhandle(k) {
+		resetIdleTimer();
         switch(k.key) {
             case 'ArrowUp':
                 var u = -1;
@@ -25,10 +49,11 @@ var titleScreen = (function() {
                 menu.navigate(u || 1);
                 break;
             case 'Enter':
+				clearIdleTimer();
                 switch(actEl().dataset.id) {
                     case 'play':
-						CONTAINER.classList.add('hidden');
 						gotoSongList();
+						hide();
                         break;
                     case 'settings':
                         location = '/settings/index.html';
@@ -59,10 +84,7 @@ var titleScreen = (function() {
 
     return {
 		page: thisPage,
-        show: function(){
-			curpage = thisPage;
-			CONTAINER.classList.remove('hidden');
-			menu.navigate(0, true);
-		}
+        show: show,
+		hide: hide
     }
 })();

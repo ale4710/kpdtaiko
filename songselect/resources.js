@@ -20,6 +20,7 @@
 		'updateSongInfoDisplay',
 		'misc',
 		'titleScreen',
+		'idleScreen',
 		'listSong',
 		'listDifficulty',
         'script'
