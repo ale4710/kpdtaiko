@@ -297,7 +297,7 @@ function navigateSongList(
 	); */
 
 	if(!noUpdateSongDisplay) {
-		updateSongInfoDisplay();
+		window.dispatchEvent(new CustomEvent('updatesongdisplay'));
 	}
 
 	//centering

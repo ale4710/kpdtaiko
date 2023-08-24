@@ -1,5 +1,3 @@
-window.addEventListener('songmedialoaded', updateSongInfoDisplay);
-
 var audioLoadingTimeout;
 
 var audioStartAtPreviewPoint = (getSettingValue('audio-start-at-preview-point') === 1);
@@ -7,8 +5,6 @@ var audioStartAtPreviewPoint = (getSettingValue('audio-start-at-preview-point') 
 var songInfoDisplayDifficultySummary = new difficultySummary.DifficultySummary(eid('song-info-difficulty-summary-container'));
 
 function updateSongInfoDisplay() {
-	console.log('updateSongInfoDisplay');
-	
 	scrollers.resetAll();
 	
 	var curSongId = lastSongSelected,
@@ -167,3 +163,6 @@ function updateSongInfoDisplay() {
 		}
 	}
 }
+
+window.addEventListener('songmedialoaded', updateSongInfoDisplay);
+window.addEventListener('updatesongdisplay', updateSongInfoDisplay);
