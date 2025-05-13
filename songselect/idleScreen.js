@@ -18,9 +18,14 @@ var idleScreen = (function() {
 		}
 	}
 	window.addEventListener('songmedialoaded', update);
+	window.addEventListener('updatesongdisplay', update);
 	
 	function audioUpdate() {
-		eid('idle-screen-info-song-progress').value = audio.currentTime / audio.duration;
+		let audioProgress = audio.currentTime / audio.duration;
+		if(!Number.isFinite(audioProgress)) {
+			audioProgress = 0;
+		}
+		eid('idle-screen-info-song-progress').value = audioProgress;
 	};
 	
 	function show() {
@@ -39,8 +44,8 @@ var idleScreen = (function() {
 		audio.removeEventListener('timeupdate', audioUpdate);
 	}
 
-    function keyhandle(k) {
-        switch(k.key) {
+	function keyhandle(k) {
+		switch(k.key) {
 			case 'EndCall':
 			case 'VolumeDown':
 			case 'VolumeUp':
@@ -48,8 +53,8 @@ var idleScreen = (function() {
 			default: 
 				hide();
 				break;
-        }
-    }
+		}
+	}
 	
 	thisPage = addPage(
 		keyhandle,
@@ -58,6 +63,6 @@ var idleScreen = (function() {
 
     return {
 		page: thisPage,
-        show: show
+		show: show
     }
 })();
