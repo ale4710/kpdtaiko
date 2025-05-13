@@ -14,8 +14,7 @@ the name was changed to avoid confusion with another project, and to provide a n
 
 ## links
 [project website](https://alego.web.fc2.com/kaiosapps/kpdtaiko/)  
-[repo on gitlab](https://gitlab.com/ale4710/kpdtaiko)  
-[repo on github](https://github.com/ale4710/kpdtaiko)
+[repo on codeberg](https://codeberg.org/ale4710/kpdtaiko)
 
 ## warning
 there will be bugs, because i did not test it a lot.
