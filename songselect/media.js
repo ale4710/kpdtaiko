@@ -5,8 +5,6 @@ var mediaLoader = (function(){
 	loading = [],
 	failed = [];
 	
-	var mediaLoaded = (new CustomEvent('songmedialoaded'));
-	
 	function rmFromLoading(path) {
 		arraySearchAndRemove(
 			loading,
@@ -27,7 +25,7 @@ var mediaLoader = (function(){
 			console.log('unload', removed);
 		}
 		
-		window.dispatchEvent(mediaLoaded);
+		window.dispatchEvent(new CustomEvent('songmedialoaded'));
 	}
 	
 	function loadMediaError(path) {
