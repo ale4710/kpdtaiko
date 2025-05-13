@@ -1,5 +1,5 @@
 # kpdtaiko
-this is a taiko player for KaiOS. It is currently work in progress.
+this is a taiko player for KaiOS.
 
 kpdtaiko means "KeyPaD taiko", because it is played on a keypad.
 
@@ -7,7 +7,8 @@ this project was previously known as DOMtaiko. it was called DOMtaiko because, o
 
 the name was changed to avoid confusion with another project, and to provide a name that more accurately reflects the project.
 
-[demo on device](https://www.youtube.com/watch?v=OB_leU3yVsg) - shows the application running on an actual device.  
+[demo on device (youtube)](https://www.youtube.com/watch?v=OB_leU3yVsg) - shows the application running on an actual device.  
+[demo on device (bitview)](https://www.bitview.net/watch?v=L6_CesX7F7V) - another video showing it running on an actual device.  
 [old demo on device](https://youtu.be/BOYv75n20d8) - same as the above, but it is an older version of the application.  
 [old demo on pc](https://youtu.be/IpsZ50q9ujw) - provides a better view of the screen, but it is an older version of the application.
 
@@ -100,3 +101,10 @@ in `/common/js/scripts2.js`, look for the following line...
 ...and make sure that the `bg+user+'test'` line is commented out or deleted.
 
 see the "setup" section above for more details.
+
+## licence
+as of 2025-05-13, kpdtaiko is licenced under the BSD 3-Clause License.
+
+basically, you can do whatever you want, but you have to give me credit.
+
+note that this uses other libraries and resources that may be licenced under different terms. see `credits.txt` for details.
